@@ -1,5 +1,5 @@
 class ExerciseModel {
-  int _id;
+  String _id;
   String _exerciseName;
   String _exerciseType;
   double _lastWeight;
@@ -14,7 +14,7 @@ class ExerciseModel {
     this._lastReps,
     this._lastRPE,
   );
-  int get id => _id;
+  String get id => _id;
   String get exerciseName => _exerciseName;
   String get exerciseType => _exerciseType;
   double get lastWeight => _lastWeight.toDouble();

@@ -7,6 +7,8 @@ import 'package:sqflite/sqflite.dart';
 import 'package:workout_notes_app/models/exercise_model.dart';
 
 class ExerciseListDb {
+  ExerciseListDb._();
+  static final instance = ExerciseListDb._();
   Database _db;
   Future<Database> get db async {
     if (_db != null) {

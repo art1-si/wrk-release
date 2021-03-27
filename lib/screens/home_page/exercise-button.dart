@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:workout_notes_app/provider/provider_of_quick_add_button.dart';
-import 'package:workout_notes_app/exercises_selector/type_selector_page.dart';
+
 import 'package:workout_notes_app/plan_page/workout_plans_page.dart';
+import 'package:workout_notes_app/screens/exercises_selector/type_selector_page.dart';
 
 class ExerciseButton extends StatelessWidget {
   const ExerciseButton();

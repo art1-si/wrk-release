@@ -1,41 +1,25 @@
+import 'package:flutter/foundation.dart';
+
 class ExerciseLogModel {
-  int _id;
-  String _exerciseName;
-  String _exerciseType;
-  double _weight;
-  int _reps;
-  String _dateCreated;
-  int _exerciseRPE;
-  String _notes;
+  String id;
+  String exerciseName;
+  String exerciseType;
+  double weight;
+  int reps;
+  String dateCreated;
+  int exerciseRPE;
+  String notes;
 
-  ExerciseLogModel(
-    this._exerciseName,
-    this._exerciseType,
-    this._weight,
-    this._reps,
-    this._dateCreated,
-    this._exerciseRPE,
-    this._notes,
-  );
-  int get id => _id;
-  String get exerciseName => _exerciseName;
-  String get exerciseType => _exerciseType;
-  double get weight => _weight.toDouble();
-  int get reps => _reps;
-  String get dateCreated => _dateCreated;
-  int get exerciseRPE => _exerciseRPE;
-  String get notes => _notes;
-
-  ExerciseLogModel.map(dynamic obj) {
-    this._id = obj["id"];
-    this._exerciseName = obj["exerciseName"];
-    this._exerciseType = obj["exerciseType"];
-    this._weight = obj["weight"].toDouble();
-    this._reps = obj["reps"];
-    this._dateCreated = obj["dateCreated"];
-    this._exerciseRPE = obj["exerciseRPE"];
-    this._notes = obj["notes"];
-  }
+  ExerciseLogModel({
+    @required this.id,
+    @required this.exerciseName,
+    @required this.exerciseType,
+    @required this.weight,
+    @required this.reps,
+    @required this.dateCreated,
+    @required this.exerciseRPE,
+    @required this.notes,
+  });
 
   Map<String, dynamic> toMap() => {
         "id": id,
@@ -48,14 +32,16 @@ class ExerciseLogModel {
         "notes": notes,
       };
 
-  ExerciseLogModel.fromMap(dynamic data) {
-    this._id = data["id"];
-    this._exerciseName = data["exerciseName"];
-    this._exerciseType = data["exerciseType"];
-    this._weight = data["weight"].toDouble();
-    this._reps = data["reps"];
-    this._dateCreated = data["dateCreated"];
-    this._exerciseRPE = data["exerciseRPE"];
-    this._notes = data["notes"];
+  factory ExerciseLogModel.fromMap(Map<dynamic, dynamic> data, String id) {
+    return ExerciseLogModel(
+      id: data["id"],
+      exerciseName: data["exerciseName"],
+      exerciseType: data["exerciseType"],
+      weight: data["weight"].toDouble(),
+      reps: data["reps"],
+      dateCreated: data["dateCreated"],
+      exerciseRPE: data["exerciseRPE"],
+      notes: data["notes"],
+    );
   }
 }
