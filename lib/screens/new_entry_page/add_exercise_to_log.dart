@@ -8,10 +8,10 @@ import 'package:workout_notes_app/models/exercise_plan_model.dart';
 import 'package:workout_notes_app/provider/exercise_log_stream.dart';
 import 'package:workout_notes_app/provider/graph_detail_provider.dart';
 import 'package:workout_notes_app/provider/log_values_provider.dart';
-import 'package:workout_notes_app/widgets/history_view.dart';
-import 'package:workout_notes_app/widgets/log_screen.dart';
-import 'package:workout_notes_app/widgets/my_graph_widget.dart';
-import 'package:workout_notes_app/widgets/rep_max_view.dart';
+import 'package:workout_notes_app/screens/new_entry_page/history_view.dart';
+import 'package:workout_notes_app/screens/new_entry_page/log_screen.dart';
+import 'package:workout_notes_app/screens/new_entry_page/my_graph_widget.dart';
+import 'package:workout_notes_app/screens/new_entry_page/rep_max_view.dart';
 
 class AddExerciseToLog extends StatefulWidget {
   final List<ExerciseModel> selectedExercise;

@@ -7,7 +7,7 @@ import 'package:workout_notes_app/models/exercise_plan_model.dart';
 import 'package:workout_notes_app/provider/exercise_streams.dart';
 import 'package:workout_notes_app/provider/plans_stream.dart';
 import 'package:workout_notes_app/provider/provider_of_quick_add_button.dart';
-import 'package:workout_notes_app/screens/type_selector_page.dart';
+import 'package:workout_notes_app/exercises_selector/type_selector_page.dart';
 import 'package:workout_notes_app/widgets/exercise_open_container.dart';
 
 class PlanPage extends StatefulWidget {

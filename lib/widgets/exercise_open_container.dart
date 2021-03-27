@@ -3,7 +3,8 @@ import 'package:workout_notes_app/database/workout_plan_database.dart';
 import 'package:workout_notes_app/models/exercise_model.dart';
 import 'package:workout_notes_app/models/exercise_plan_model.dart';
 import 'package:workout_notes_app/provider/plans_stream.dart';
-import 'package:workout_notes_app/screens/add_exercise_to_log.dart';
+import 'package:workout_notes_app/screens/new_entry_page/add_exercise_to_log.dart';
+
 import 'package:workout_notes_app/widgets/closed_container.dart';
 
 class MyOpenContainer extends StatelessWidget {

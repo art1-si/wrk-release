@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:workout_notes_app/app.dart';
 import 'package:workout_notes_app/models/exercise_model.dart';
 import 'package:workout_notes_app/provider/exercise_streams.dart';
-import 'package:workout_notes_app/screens/exercise_selector_page.dart';
-import 'package:workout_notes_app/widgets/workout_listTile.dart';
+import 'package:workout_notes_app/screens/exercises_selector/exercise_selector_page.dart';
+
+import 'package:workout_notes_app/screens/plan_page/widget/workout_listTile.dart';
 
 class TypeSelectorPage extends StatelessWidget {
   final ExerciseStreams exerciseStreams = ExerciseStreams();

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:workout_notes_app/logic/1rm_formula.dart';
-import 'package:workout_notes_app/logic/logics.dart';
+import 'package:workout_notes_app/services/1rm_formula.dart';
+import 'package:workout_notes_app/services/logics.dart';
 import 'package:workout_notes_app/models/exercise_log_model.dart';
 
 class RepMaxView extends StatelessWidget {

@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:workout_notes_app/models/exercise_model.dart';
 import 'package:workout_notes_app/provider/exercise_streams.dart';
 import 'package:workout_notes_app/provider/plans_stream.dart';
-import 'package:workout_notes_app/widgets/exercise_listTile.dart';
+
+import 'package:workout_notes_app/screens/exercises_selector/widget/exercise_listTile.dart';
 
 class ExerciseSelectorPage extends StatefulWidget {
   final String exercisesType;
@@ -25,7 +26,6 @@ class _ExerciseSelectorPageState extends State<ExerciseSelectorPage> {
 
   @override
   Widget build(BuildContext context) {
-
     exerciseStreams.addExercisesByTypeToStream(widget.exercisesType);
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,

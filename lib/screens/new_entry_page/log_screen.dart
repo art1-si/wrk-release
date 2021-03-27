@@ -9,8 +9,8 @@ import 'package:workout_notes_app/models/exercise_plan_model.dart';
 import 'package:workout_notes_app/provider/day_selector_provider.dart';
 import 'package:workout_notes_app/provider/exercise_log_stream.dart';
 import 'package:workout_notes_app/provider/log_values_provider.dart';
-import 'package:workout_notes_app/widgets/reps_value_picker.dart';
-import 'package:workout_notes_app/widgets/text_field_number_picker.dart';
+import 'package:workout_notes_app/screens/new_entry_page/reps_value_picker.dart';
+import 'package:workout_notes_app/screens/new_entry_page/text_field_number_picker.dart';
 
 class LogScreen extends StatelessWidget {
   final ExerciseModel selectedExercise;

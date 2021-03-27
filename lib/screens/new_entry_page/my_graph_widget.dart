@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:workout_notes_app/logic/logics.dart';
+import 'package:workout_notes_app/services/logics.dart';
 import 'package:workout_notes_app/models/exercise_log_model.dart';
 import 'package:workout_notes_app/provider/exercise_log_stream.dart';
 import 'dart:ui' as ui;
@@ -63,16 +63,16 @@ class MyGraphWidget extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 8),
           child: Container(
-            height: 300,
+            height: 250,
             //decoration: BoxDecoration(
             //   color: Theme.of(context).primaryColor,
             //    borderRadius: BorderRadius.circular(10)),
             child: Padding(
               padding: const EdgeInsets.only(
                 bottom: 16,
-                left: 16,
-                right: 16.0,
-                top: 16,
+                left: 4,
+                right: 0.0,
+                top: 8,
               ),
               child: Stack(
                 children: [

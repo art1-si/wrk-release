@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:workout_notes_app/models/exercise_plan_model.dart';
 import 'package:workout_notes_app/provider/plans_stream.dart';
-import 'package:workout_notes_app/screens/plan_page.dart';
-import 'package:workout_notes_app/widgets/workout_listTile.dart';
+import 'package:workout_notes_app/screens/plan_page/plan_page.dart';
+
+import 'package:workout_notes_app/screens/plan_page/widget/workout_listTile.dart';
 
 class WorkoutPlansPage extends StatelessWidget {
   final WorkoutPlanStreams planStream = WorkoutPlanStreams();

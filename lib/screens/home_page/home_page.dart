@@ -7,8 +7,9 @@ import 'package:workout_notes_app/models/exercise_model.dart';
 import 'package:workout_notes_app/provider/day_selector_provider.dart';
 import 'package:workout_notes_app/provider/exercise_log_stream.dart';
 import 'package:workout_notes_app/provider/exercise_streams.dart';
-import 'package:workout_notes_app/widgets/exercise-button.dart';
-import 'package:workout_notes_app/widgets/new_log_list_widget.dart';
+import 'package:workout_notes_app/screens/home_page/exercise-button.dart';
+
+import 'package:workout_notes_app/screens/home_page/widget/new_log_list_widget.dart';
 
 class MyHomePage extends StatefulWidget {
   @override

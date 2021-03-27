@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:workout_notes_app/provider/day_selector_provider.dart';
 import 'package:workout_notes_app/provider/provider_of_quick_add_button.dart';
-import 'package:workout_notes_app/screens/home_page.dart';
+
+import 'package:workout_notes_app/screens/home_page/home_page.dart';
 import 'package:workout_notes_app/theme/themes.dart';
 
 class MyApp extends StatelessWidget {
