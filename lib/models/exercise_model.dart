@@ -1,34 +1,21 @@
+import 'package:flutter/foundation.dart';
+
 class ExerciseModel {
-  String _id;
-  String _exerciseName;
-  String _exerciseType;
-  double _lastWeight;
-  int _lastReps;
-  int _lastRPE;
+  String id;
+  String exerciseName;
+  String exerciseType;
+  double lastWeight;
+  int lastReps;
+  int lastRPE;
 
-  ExerciseModel(
-    this._id,
-    this._exerciseName,
-    this._exerciseType,
-    this._lastWeight,
-    this._lastReps,
-    this._lastRPE,
-  );
-  String get id => _id;
-  String get exerciseName => _exerciseName;
-  String get exerciseType => _exerciseType;
-  double get lastWeight => _lastWeight.toDouble();
-  int get lastReps => _lastReps;
-  int get lastRPE => _lastRPE;
-
-  ExerciseModel.map(dynamic obj) {
-    this._id = obj["id"];
-    this._exerciseName = obj["exerciseName"];
-    this._exerciseType = obj["exerciseType"];
-    this._lastWeight = obj["lastWeight"].toDouble();
-    this._lastReps = obj["lastReps"];
-    this._lastRPE = obj["lastRPE"];
-  }
+  ExerciseModel({
+    @required this.id,
+    @required this.exerciseName,
+    @required this.exerciseType,
+    @required this.lastWeight,
+    @required this.lastReps,
+    @required this.lastRPE,
+  });
 
   Map<String, dynamic> toMap() => {
         "id": id,
@@ -39,12 +26,14 @@ class ExerciseModel {
         "lastRPE": lastRPE,
       };
 
-  ExerciseModel.fromMap(dynamic data) {
-    this._id = data["id"];
-    this._exerciseName = data["exerciseName"];
-    this._exerciseType = data["exerciseType"];
-    this._lastWeight = data["lastWeight"].toDouble();
-    this._lastReps = data["lastReps"];
-    this._lastRPE = data["lastRPE"];
+  factory ExerciseModel.fromMap(Map<dynamic, dynamic> value, String id) {
+    return ExerciseModel(
+      id: id,
+      exerciseName: value["exerciseName"],
+      exerciseType: value["exerciseType"],
+      lastWeight: value["lastWeight"].toDouble(),
+      lastReps: value["lastReps"],
+      lastRPE: value["lastRPE"],
+    );
   }
 }

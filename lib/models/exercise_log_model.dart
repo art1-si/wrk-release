@@ -34,7 +34,7 @@ class ExerciseLogModel {
 
   factory ExerciseLogModel.fromMap(Map<dynamic, dynamic> data, String id) {
     return ExerciseLogModel(
-      id: data["id"],
+      id: id,
       exerciseName: data["exerciseName"],
       exerciseType: data["exerciseType"],
       weight: data["weight"].toDouble(),

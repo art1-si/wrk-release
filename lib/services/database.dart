@@ -65,7 +65,8 @@ class FirestoreDatabase implements Database {
       );
 
   @override
-  Stream<List<ExerciseLogModel>> exerciseLogStream() => _service.collectionStream(path: APIPath.exercisesLog(uid), builder: builder)
+  Stream<List<ExerciseLogModel>> exerciseLogStream() => _service
+      .collectionStream(path: APIPath.exercisesLog(uid), builder: (data,documentID)=> ExerciseLogModel.fromMap(data,documentID));
   @override
   Stream<List<ExerciseModel>> exercisesStream() {}
 }
