@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:workout_notes_app/models/exercise_plan_model.dart';
-import 'package:workout_notes_app/provider/plans_stream.dart';
+import 'package:workout_notes_app/data_models/workout_plan.dart';
 import 'package:workout_notes_app/screens/plan_page/plan_page.dart';
-
 import 'package:workout_notes_app/screens/plan_page/widget/workout_listTile.dart';
 
 class WorkoutPlansPage extends StatelessWidget {
-  final WorkoutPlanStreams planStream = WorkoutPlanStreams();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,14 +13,14 @@ class WorkoutPlansPage extends StatelessWidget {
         backgroundColor: Theme.of(context).backgroundColor,
         title: Text("Plans"),
       ),
-      body: StreamBuilder<List<ExercisePlanModel>>(
-        stream: planStream.planNamesStream,
-        builder: (context, AsyncSnapshot<List<ExercisePlanModel>> snapshot) {
-          if (!snapshot.hasData || snapshot.data.isEmpty) {
+      body: StreamBuilder<List<WorkoutPlan>>(
+        stream: null,
+        builder: (context, AsyncSnapshot<List<WorkoutPlan>> snapshot) {
+          if (!snapshot.hasData || snapshot.data!.isEmpty) {
             return Center(child: Text("no data"));
           }
           return ListView.builder(
-            itemCount: snapshot.data.length,
+            itemCount: snapshot.data!.length,
             itemBuilder: (context, int index) {
               return WorkoutListTile(
                 onTap: () {
@@ -31,11 +28,11 @@ class WorkoutPlansPage extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                           builder: (context) => PlanPage(
-                                planName: "${snapshot.data[index].planName}",
+                                planName: "${snapshot.data![index].planName}",
                               )));
                 },
                 title: Text(
-                  "${snapshot.data[index].planName}",
+                  "${snapshot.data![index].planName}",
                   style: Theme.of(context).textTheme.headline6,
                 ),
               );

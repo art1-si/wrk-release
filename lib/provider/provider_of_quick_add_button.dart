@@ -1,7 +1,7 @@
 import 'package:flutter/Material.dart';
 
 class ProviderOfQuickAddButton extends ChangeNotifier {
-  bool _showButton;
+  bool? _showButton;
   String _addQuickPlanName;
 
   ProviderOfQuickAddButton(this._showButton, this._addQuickPlanName);

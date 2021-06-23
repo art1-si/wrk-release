@@ -1,68 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:workout_notes_app/database/asset_db_of_exercises.dart';
-import 'package:workout_notes_app/database/exercise_db.dart';
-import 'package:workout_notes_app/models/exercise_log_model.dart';
-import 'package:workout_notes_app/models/exercise_model.dart';
-import 'package:workout_notes_app/models/exercise_plan_model.dart';
+import 'package:workout_notes_app/data_models/exercise.dart';
+import 'package:workout_notes_app/data_models/exercise_log.dart';
+import 'package:workout_notes_app/data_models/workout_plan.dart';
+
 import 'package:workout_notes_app/provider/day_selector_provider.dart';
-import 'package:workout_notes_app/provider/exercise_log_stream.dart';
+
 import 'package:workout_notes_app/provider/log_values_provider.dart';
 import 'package:workout_notes_app/screens/new_entry_page/reps_value_picker.dart';
 import 'package:workout_notes_app/screens/new_entry_page/text_field_number_picker.dart';
 
 class LogScreen extends StatelessWidget {
-  final ExerciseModel selectedExercise;
-  final bool showPlanDetails;
-  final ExercisePlanModel planDetails;
+  final Exercise selectedExercise;
+
+  final WorkoutPlan? planDetails;
   final int selectedIndex;
   final double weightValue;
   final int repsValue;
   final int rpeValue;
   LogScreen(
-      {Key key,
-      this.selectedExercise,
-      this.showPlanDetails,
+      {Key? key,
+      required this.selectedExercise,
       this.planDetails,
-      this.selectedIndex,
-      this.weightValue,
-      this.repsValue,
-      this.rpeValue})
+      required this.selectedIndex,
+      required this.weightValue,
+      required this.repsValue,
+      required this.rpeValue})
       : super(key: key);
-
-  final ExerciseLogStreams exerciseLogStream = ExerciseLogStreams();
-  final ExerciseLogDatabase logDb = ExerciseLogDatabase();
-  final ExerciseListDb db = ExerciseListDb();
 
   final String notes = "";
 
   //final int exerciseIndex;
 
-  _updateToNewLast(String name, String type, double lastWeight, int lastreps,
-      int lastRPE, id) {
-    var exerciseModelUpdate =
-        ExerciseModel(id, name, type, lastWeight, lastreps, lastRPE);
-    db.updateExercise(exerciseModelUpdate, id);
-  }
-
   //void _onItemTapped(int index) {
   //  rpeValue = index;
   //}
-
-  _handleSubmit(context, weight, reps, rpe) async {
-    var b = Provider.of<DaySelectorModel>(context, listen: false);
-    ExerciseLogModel newExerciseLog = ExerciseLogModel(
-      selectedExercise.exerciseName,
-      selectedExercise.exerciseType,
-      weight,
-      reps,
-      "${b.daySelected.year}-${DateFormat('MM').format(b.daySelected)}-${DateFormat('dd').format(b.daySelected)}",
-      rpe,
-      notes,
-    );
-    await logDb.saveExercise(newExerciseLog);
-  }
 
   _showPlanDetail(BuildContext context, int sets, int minReps, int maxReps,
       int rpe, double restTime) {
@@ -97,22 +70,22 @@ class LogScreen extends StatelessWidget {
     var b = Provider.of<DaySelectorModel>(context, listen: false);
     var logValuesProvider =
         Provider.of<LogValuesProvider>(context, listen: false);
-    logValuesProvider.weightSetter(selectedExercise.lastWeight);
+    logValuesProvider.weightSetter(selectedExercise.lastWeight!);
     print(selectedExercise.lastWeight);
-    logValuesProvider.repsSetter(selectedExercise.lastReps);
+    logValuesProvider.repsSetter(selectedExercise.lastReps!);
     print(selectedExercise.lastReps);
-    logValuesProvider.rpeSetter(selectedExercise.lastRPE);
+    logValuesProvider.rpeSetter(selectedExercise.lastRPE!);
     print(selectedExercise.lastRPE);
     return ListView(
       children: <Widget>[
-        (showPlanDetails)
+        (false) //TODO:
             ? _showPlanDetail(
                 context,
-                planDetails.sets,
-                planDetails.minRepsPerSet,
-                planDetails.maxRepsPerSet,
-                planDetails.rpe,
-                planDetails.restTime)
+                planDetails!.sets,
+                planDetails!.minRepsPerSet,
+                planDetails!.maxRepsPerSet,
+                planDetails!.rpe,
+                planDetails!.restTime)
             : Container(),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 0),
@@ -174,19 +147,7 @@ class LogScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 0),
               child: InkWell(
-                onTap: () {
-                  _handleSubmit(context, logValuesProvider.weightValue,
-                      logValuesProvider.repsValue, logValuesProvider.rpeValue);
-                  _updateToNewLast(
-                    selectedExercise.exerciseName,
-                    selectedExercise.exerciseType,
-                    logValuesProvider.weightValue,
-                    logValuesProvider.repsValue,
-                    logValuesProvider.rpeValue,
-                    selectedExercise.id,
-                  );
-                  exerciseLogStream.addExercieLogToStream();
-                },
+                onTap: () {},
                 child: Container(
                   height: 30,
                   width: 130,
@@ -207,15 +168,14 @@ class LogScreen extends StatelessWidget {
         ),
         Container(
           decoration: BoxDecoration(color: Theme.of(context).backgroundColor),
-          child: StreamBuilder<List<ExerciseLogModel>>(
-            stream: exerciseLogStream.getLogToDate(
-                "${b.daySelected.year}-${DateFormat('MM').format(b.daySelected)}-${DateFormat('dd').format(b.daySelected)}"),
+          child: StreamBuilder<List<ExerciseLog>>(
+            stream: null, //TODO
             builder: (BuildContext context,
-                AsyncSnapshot<List<ExerciseLogModel>> snapshot) {
-              if (!snapshot.hasData || snapshot.data.isEmpty) {
+                AsyncSnapshot<List<ExerciseLog>> snapshot) {
+              if (!snapshot.hasData || snapshot.data!.isEmpty) {
                 return Container();
               }
-              var filteredSnapshot = snapshot.data
+              var filteredSnapshot = snapshot.data!
                   .where((element) =>
                       element.exerciseName == selectedExercise.exerciseName)
                   .toList();
@@ -226,10 +186,7 @@ class LogScreen extends StatelessWidget {
                   itemCount: filteredSnapshot.length,
                   itemBuilder: (context, int index) {
                     return GestureDetector(
-                      onLongPress: () {
-                        exerciseLogStream
-                            .deleteSelectedLog(filteredSnapshot[index].id);
-                      },
+                      onLongPress: () {},
                       child: _LogItem(
                         setField: "Set ${index + 1}",
                         weightField: "${filteredSnapshot[index].weight}",
@@ -254,9 +211,13 @@ class _LogItem extends StatelessWidget {
   final String repsField;
   final String rpeField;
 
-  const _LogItem(
-      {Key key, this.setField, this.weightField, this.repsField, this.rpeField})
-      : super(key: key);
+  const _LogItem({
+    Key? key,
+    required this.setField,
+    required this.weightField,
+    required this.repsField,
+    required this.rpeField,
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Column(

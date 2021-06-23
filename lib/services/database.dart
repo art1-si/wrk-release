@@ -1,72 +1,73 @@
 import 'dart:html';
 
 import 'package:flutter/foundation.dart';
-import 'package:workout_notes_app/database/asset_db_of_exercises.dart';
-import 'package:workout_notes_app/models/exercise_log_model.dart';
-import 'package:workout_notes_app/models/exercise_model.dart';
+import 'package:workout_notes_app/data_models/exercise.dart';
+import 'package:workout_notes_app/data_models/exercise_log.dart';
+
 import 'package:workout_notes_app/services/api_path.dart';
 import 'package:workout_notes_app/services/firebase_service.dart';
 
 abstract class Database {
-  Future<void> createExercise(ExerciseModel exercise);
-  Future<void> createExerciseLog(ExerciseLogModel exerciseLog);
+  Future<void> createExercise(Exercise exercise);
+  Future<void> createExerciseLog(ExerciseLog exerciseLog);
 
-  Future<void> upadateExercise(ExerciseModel exercise);
-  Future<void> upadateExerciseLog(ExerciseLogModel exerciseLog);
+  Future<void> upadateExercise(Exercise exercise);
+  Future<void> upadateExerciseLog(ExerciseLog exerciseLog);
 
-  Future<void> deleteExercise(ExerciseModel exercise);
-  Future<void> deleteExerciseLog(ExerciseLogModel exerciseLog);
+  Future<void> deleteExercise(Exercise exercise);
+  Future<void> deleteExerciseLog(ExerciseLog exerciseLog);
 
-  Stream<List<ExerciseLogModel>> exerciseLogStream();
-  Stream<List<ExerciseModel>> exercisesStream();
+  Stream<List<ExerciseLog>> exerciseLogStream();
+  Stream<List<Exercise>> exercisesStream();
 }
 
 String documentIdFromCurrentDate() => DateTime.now().toIso8601String();
 
 class FirestoreDatabase implements Database {
-  FirestoreDatabase({@required this.uid}) : assert(uid != null);
+  FirestoreDatabase({required this.uid});
   final String uid;
   final _service = FirestoreService.instance;
 
   @override
-  Future<void> createExercise(ExerciseModel exercise) async => _service.setData(
+  Future<void> createExercise(Exercise exercise) async => _service.setData(
         path: APIPath.exercise(exercise.id),
-        data: exercise.toMap(),
+        data: exercise.toJson(),
       );
   @override
-  Future<void> createExerciseLog(ExerciseLogModel exerciseLog) async =>
+  Future<void> createExerciseLog(ExerciseLog exerciseLog) async =>
       _service.setData(
         path: APIPath.exerciseLog(uid, exerciseLog.id),
-        data: exerciseLog.toMap(),
+        data: exerciseLog.toJson(),
       );
 
   @override
-  Future<void> upadateExercise(ExerciseModel exercise) async =>
-      _service.updateData(
+  Future<void> upadateExercise(Exercise exercise) async => _service.updateData(
         path: APIPath.exercise(exercise.id),
-        data: exercise.toMap(),
+        data: exercise.toJson(),
       );
   @override
-  Future<void> upadateExerciseLog(ExerciseLogModel exerciseLog) async =>
+  Future<void> upadateExerciseLog(ExerciseLog exerciseLog) async =>
       _service.updateData(
         path: APIPath.exerciseLog(uid, exerciseLog.id),
-        data: exerciseLog.toMap(),
+        data: exerciseLog.toJson(),
       );
 
   @override
-  Future<void> deleteExercise(ExerciseModel exercise) async =>
-      _service.deleteData(
+  Future<void> deleteExercise(Exercise exercise) async => _service.deleteData(
         path: APIPath.exercise(exercise.id),
       );
   @override
-  Future<void> deleteExerciseLog(ExerciseLogModel exerciseLog) async =>
+  Future<void> deleteExerciseLog(ExerciseLog exerciseLog) async =>
       _service.deleteData(
         path: APIPath.exerciseLog(uid, exerciseLog.id),
       );
 
   @override
-  Stream<List<ExerciseLogModel>> exerciseLogStream() => _service
-      .collectionStream(path: APIPath.exercisesLog(uid), builder: (data,documentID)=> ExerciseLogModel.fromMap(data,documentID));
+  Stream<List<ExerciseLog>> exerciseLogStream() => _service.collectionStream(
+      path: APIPath.exercisesLog(uid),
+      builder: (data, documentID) => ExerciseLog.fromJson(data));
   @override
-  Stream<List<ExerciseModel>> exercisesStream() {}
+  Stream<List<Exercise>> exercisesStream() {
+    return 
+  }
 }

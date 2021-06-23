@@ -1,33 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:workout_notes_app/database/workout_plan_database.dart';
-import 'package:workout_notes_app/models/exercise_model.dart';
-import 'package:workout_notes_app/models/exercise_plan_model.dart';
-import 'package:workout_notes_app/provider/plans_stream.dart';
+import 'package:workout_notes_app/data_models/exercise.dart';
+import 'package:workout_notes_app/data_models/workout_plan.dart';
+
 import 'package:workout_notes_app/screens/new_entry_page/add_exercise_to_log.dart';
 
 import 'package:workout_notes_app/widgets/closed_container.dart';
 
 class MyOpenContainer extends StatelessWidget {
   final int selectedIndex;
-  final List<ExerciseModel> selectedExercises;
+  final List<Exercise> selectedExercises;
   final bool showPlanDetail;
-  final List<ExercisePlanModel> planDetail;
-  final ExercisePlanModel workout;
+  final List<WorkoutPlan> planDetail;
+  final WorkoutPlan workout;
 
-  MyOpenContainer(
-      {Key key,
-      this.selectedIndex,
-      this.selectedExercises,
-      this.showPlanDetail,
-      this.planDetail,
-      this.workout})
-      : super(key: key);
-  final WorkoutPlanDatabase planDb = WorkoutPlanDatabase();
-  final WorkoutPlanStreams planStreams = WorkoutPlanStreams();
-  _deleteOnLongPress(int id) {
-    planDb.deleteExercise(id);
-    planStreams.fetchWorkoutPlanFromDb();
-  }
+  MyOpenContainer({
+    Key? key,
+    required this.selectedIndex,
+    required this.selectedExercises,
+    required this.showPlanDetail,
+    required this.planDetail,
+    required this.workout,
+  }) : super(key: key);
 
   Route _animatedRoute() {
     return PageRouteBuilder(
@@ -60,7 +53,7 @@ class MyOpenContainer extends StatelessWidget {
       onTap: () => Navigator.of(context).push(
         _animatedRoute(),
       ),
-      onLongPress: () => _deleteOnLongPress(workout.id),
+      onLongPress: () => null, //TODO: on press open container widget
       child: MyClosedContainer(
         workout: workout,
       ),

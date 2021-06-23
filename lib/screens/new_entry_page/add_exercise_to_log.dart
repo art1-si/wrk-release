@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:workout_notes_app/database/asset_db_of_exercises.dart';
-import 'package:workout_notes_app/database/exercise_db.dart';
-import 'package:workout_notes_app/models/exercise_log_model.dart';
-import 'package:workout_notes_app/models/exercise_model.dart';
-import 'package:workout_notes_app/models/exercise_plan_model.dart';
-import 'package:workout_notes_app/provider/exercise_log_stream.dart';
+import 'package:workout_notes_app/data_models/exercise.dart';
+import 'package:workout_notes_app/data_models/exercise_log.dart';
+import 'package:workout_notes_app/data_models/workout_plan.dart';
+
 import 'package:workout_notes_app/provider/graph_detail_provider.dart';
 import 'package:workout_notes_app/provider/log_values_provider.dart';
 import 'package:workout_notes_app/screens/new_entry_page/history_view.dart';
@@ -13,34 +11,20 @@ import 'package:workout_notes_app/screens/new_entry_page/log_screen.dart';
 import 'package:workout_notes_app/screens/new_entry_page/my_graph_widget.dart';
 import 'package:workout_notes_app/screens/new_entry_page/rep_max_view.dart';
 
-class AddExerciseToLog extends StatefulWidget {
-  final List<ExerciseModel> selectedExercise;
+class AddExerciseToLog extends StatelessWidget {
+  final List<Exercise> selectedExercise;
   final int selectedIndex;
   final bool showPlanDetails;
-  final List<ExercisePlanModel> planDetails;
-  AddExerciseToLog(
-      {Key key,
-      this.selectedExercise,
-      this.showPlanDetails,
-      this.planDetails,
-      this.selectedIndex})
-      : super(key: key);
-  @override
-  _AddExerciseToLogState createState() => _AddExerciseToLogState();
-}
-
-class _AddExerciseToLogState extends State<AddExerciseToLog> {
-  ExerciseListDb db = ExerciseListDb();
-
-  ExerciseLogStreams exerciseLogStream = ExerciseLogStreams();
-  ExerciseLogDatabase logDb = ExerciseLogDatabase();
+  final List<WorkoutPlan>? planDetails;
+  AddExerciseToLog({
+    Key? key,
+    required this.selectedExercise,
+    required this.showPlanDetails,
+    this.planDetails,
+    required this.selectedIndex,
+  }) : super(key: key);
 
   int exerciseIndex = 0;
-  @override
-  void initState() {
-    exerciseIndex = widget.selectedIndex;
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,13 +46,7 @@ class _AddExerciseToLogState extends State<AddExerciseToLog> {
               actions: [
                 GestureDetector(
                   onTap: () {
-                    if (exerciseIndex > 0) {
-                      setState(
-                        () {
-                          exerciseIndex--;
-                        },
-                      );
-                    }
+                    if (exerciseIndex > 0) {}
                   },
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -81,25 +59,15 @@ class _AddExerciseToLogState extends State<AddExerciseToLog> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    if (exerciseIndex < widget.selectedExercise.length - 1) {
-                      setState(
-                        () {
-                          exerciseIndex++;
-
-                          print(
-                              "${widget.selectedExercise[exerciseIndex].lastWeight}");
-                        },
-                      );
-                    }
+                    if (exerciseIndex < selectedExercise.length - 1) {}
                   },
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
                     child: Icon(
                       Icons.keyboard_arrow_right,
-                      color:
-                          (exerciseIndex < widget.selectedExercise.length - 1)
-                              ? Colors.white
-                              : Colors.white30,
+                      color: (exerciseIndex < selectedExercise.length - 1)
+                          ? Colors.white
+                          : Colors.white30,
                     ),
                   ),
                 ),
@@ -108,7 +76,7 @@ class _AddExerciseToLogState extends State<AddExerciseToLog> {
               elevation: 0,
               centerTitle: true,
               title: Text(
-                "${widget.selectedExercise[exerciseIndex].exerciseName}",
+                "${selectedExercise[exerciseIndex].exerciseName}",
                 //style: Theme.of(context).textTheme.headline4,
               ),
               bottom: TabBar(
@@ -129,9 +97,8 @@ class _AddExerciseToLogState extends State<AddExerciseToLog> {
                 Divider(
                   thickness: 1,
                 ),
-                StreamBuilder<List<ExerciseLogModel>>(
-                  stream: exerciseLogStream.getLogToExercise(
-                      widget.selectedExercise[exerciseIndex].exerciseName),
+                StreamBuilder<List<ExerciseLog>>(
+                  stream: null, //TODO
                   builder: (context, snapshot) {
                     if (!snapshot.hasData) {
                       Text("Wait");
@@ -141,33 +108,25 @@ class _AddExerciseToLogState extends State<AddExerciseToLog> {
                         physics: NeverScrollableScrollPhysics(),
                         children: <Widget>[
                           LogScreen(
-                            selectedExercise:
-                                widget.selectedExercise[exerciseIndex],
-                            showPlanDetails: widget.showPlanDetails,
-                            planDetails: (widget.showPlanDetails)
-                                ? widget.planDetails[exerciseIndex]
-                                : null,
-                            selectedIndex: widget.selectedIndex,
-                            repsValue: widget
-                                .selectedExercise[widget.selectedIndex]
-                                .lastReps,
-                            rpeValue: widget
-                                .selectedExercise[widget.selectedIndex].lastRPE,
-                            weightValue: widget
-                                .selectedExercise[widget.selectedIndex]
-                                .lastWeight,
+                            selectedExercise: selectedExercise[exerciseIndex],
+                            selectedIndex: selectedIndex,
+                            repsValue:
+                                selectedExercise[selectedIndex].lastReps!,
+                            rpeValue: selectedExercise[selectedIndex].lastRPE!,
+                            weightValue:
+                                selectedExercise[selectedIndex].lastWeight!,
                           ),
                           ChangeNotifierProvider(
                             create: (context) => GraphDetailProvider(),
                             child: MyGraphWidget(
-                              exerciseLog: snapshot.data,
+                              exerciseLog: snapshot.data!,
                             ),
                           ),
                           HistoryView(
-                            exerciseLog: snapshot.data,
+                            exerciseLog: snapshot.data!,
                           ),
                           RepMaxView(
-                            exerciseLog: snapshot.data,
+                            exerciseLog: snapshot.data!,
                           ),
                         ],
                       ),

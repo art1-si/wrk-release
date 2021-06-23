@@ -13,7 +13,7 @@ class DaySelectorModel extends ChangeNotifier {
   ));
 
   static int n = 0;
-  DateTime _dateSelected = lastMidnight.add(Duration(days: n ?? 0));
+  DateTime _dateSelected = lastMidnight.add(Duration(days: n));
   void daySelectorAdd() async {
     n++;
     _dateSelected = lastMidnight.add(Duration(days: n));

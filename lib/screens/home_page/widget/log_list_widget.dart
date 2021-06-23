@@ -1,38 +1,37 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:workout_notes_app/models/exercise_log_model.dart';
-import 'package:workout_notes_app/models/exercise_model.dart';
-import 'package:workout_notes_app/provider/exercise_streams.dart';
+import 'package:workout_notes_app/data_models/exercise.dart';
+import 'package:workout_notes_app/data_models/exercise_log.dart';
+
 import 'package:workout_notes_app/screens/home_page/widget/log_table.dart';
 
 import 'package:workout_notes_app/screens/new_entry_page/add_exercise_to_log.dart';
 
 class LogListWidget extends StatelessWidget {
-  final List<ExerciseLogModel> snapshotData;
+  final List<ExerciseLog> snapshotData;
 
-  LogListWidget({Key key, this.snapshotData}) : super(key: key);
-  final ExerciseStreams exerciseStreams = ExerciseStreams();
+  LogListWidget({Key? key, required this.snapshotData}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<List<ExerciseModel>>(
-      stream: exerciseStreams.exerciseStream,
-      builder: (context, AsyncSnapshot<List<ExerciseModel>> exerciseSnapshot) {
+    return StreamBuilder<List<Exercise>>(
+      stream: null, //TODO: add stream exercise
+      builder: (context, AsyncSnapshot<List<Exercise>> exerciseSnapshot) {
         if (!exerciseSnapshot.hasData) {
           return Container();
         }
         final List snapshotKeys = [];
-        final List<ExerciseModel> selectedExerciseFromHomePage =
-            <ExerciseModel>[];
-        var groupedSnapshot = groupBy(snapshotData, (obj) => obj.exerciseName);
+        final List<Exercise> selectedExerciseFromHomePage = <Exercise>[];
+        var groupedSnapshot =
+            groupBy(snapshotData, (ExerciseLog obj) => obj.exerciseID);
         for (var element in groupedSnapshot.keys) {
           snapshotKeys.add(element);
         }
         for (var snapshotKey in snapshotKeys) {
           int i = 0;
 
-          var exercise = exerciseSnapshot.data
+          var exercise = exerciseSnapshot.data!
               .where((element) => element.exerciseName == snapshotKey);
 
           selectedExerciseFromHomePage.insertAll(i, exercise);
@@ -48,19 +47,22 @@ class LogListWidget extends StatelessWidget {
           children: <Widget>[
             for (var i = 0; i < snapshotKeys.length; i++)
               _LogItem(
+                index: i,
                 title: "${snapshotKeys[i]}",
-                itemCount: groupedSnapshot[snapshotKeys[i]].length,
-                data: groupedSnapshot[snapshotKeys[i]],
+                itemCount: groupedSnapshot[snapshotKeys[i]]!.length,
+                data: groupedSnapshot[snapshotKeys[i]]!,
                 onTap: () {
                   Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => AddExerciseToLog(
-                              showPlanDetails: false,
-                              selectedIndex: i,
-                              selectedExercise: selectedExerciseFromHomePage
-                                  .reversed
-                                  .toList())));
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => AddExerciseToLog(
+                        showPlanDetails: false,
+                        selectedIndex: i,
+                        selectedExercise:
+                            selectedExerciseFromHomePage.reversed.toList(),
+                      ),
+                    ),
+                  );
                 },
               ),
           ],
@@ -82,13 +84,18 @@ class LogListWidget extends StatelessWidget {
 class _LogItem extends StatelessWidget {
   final String title;
   final int itemCount;
-  final List<ExerciseLogModel> data;
+  final List<ExerciseLog> data;
   final int index;
   final GestureTapCallback onTap;
 
-  const _LogItem(
-      {Key key, this.title, this.itemCount, this.data, this.index, this.onTap})
-      : super(key: key);
+  const _LogItem({
+    Key? key,
+    required this.title,
+    required this.itemCount,
+    required this.data,
+    required this.index,
+    required this.onTap,
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Padding(

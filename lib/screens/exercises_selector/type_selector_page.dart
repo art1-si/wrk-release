@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:workout_notes_app/app.dart';
-import 'package:workout_notes_app/models/exercise_model.dart';
-import 'package:workout_notes_app/provider/exercise_streams.dart';
+import 'package:workout_notes_app/data_models/exercise.dart';
 
 import 'package:workout_notes_app/screens/exercises_selector/exercise_selector_page.dart';
 import 'package:workout_notes_app/screens/plan_page/widget/workout_listTile.dart';
 
 class TypeSelectorPage extends StatelessWidget {
-  final ExerciseStreams exerciseStreams = ExerciseStreams();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,22 +24,22 @@ class TypeSelectorPage extends StatelessWidget {
         ),
       ),
       body: StreamBuilder(
-        stream: exerciseStreams.exerciseTypeStream,
-        builder: (context, AsyncSnapshot<List<ExerciseModel>> snapshot) {
-          if (!snapshot.hasData || snapshot.data.isEmpty) {
+        stream: null, //TODO
+        builder: (context, AsyncSnapshot<List<Exercise>> snapshot) {
+          if (!snapshot.hasData || snapshot.data!.isEmpty) {
             return CircularProgressIndicator();
           }
           return ListView.builder(
-            itemCount: snapshot.data.length,
+            itemCount: snapshot.data!.length,
             itemBuilder: (_, int index) {
               return WorkoutListTile(
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => ExerciseSelectorPage(
                           exercisesType:
-                              "${snapshot.data[index].exerciseType}")));
+                              "${snapshot.data![index].exerciseType}")));
                 },
-                title: Text("${snapshot.data[index].exerciseType}",
+                title: Text("${snapshot.data![index].exerciseType}",
                     style: Theme.of(context).textTheme.headline6),
               );
             },

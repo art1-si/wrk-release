@@ -1,24 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:workout_notes_app/models/exercise_log_model.dart';
-import 'package:workout_notes_app/models/exercise_model.dart';
-import 'package:workout_notes_app/provider/exercise_log_stream.dart';
+import 'package:workout_notes_app/data_models/exercise.dart';
+import 'package:workout_notes_app/data_models/exercise_log.dart';
 
 class MyGraphWidget extends StatefulWidget {
-  final ExerciseModel selectedExercise;
+  final Exercise selectedExercise;
 
-  const MyGraphWidget({Key key, this.selectedExercise}) : super(key: key);
+  const MyGraphWidget({
+    Key? key,
+    required this.selectedExercise,
+  }) : super(key: key);
   @override
   _MyGraphWidgetState createState() => _MyGraphWidgetState();
 }
 
 class _MyGraphWidgetState extends State<MyGraphWidget> {
-  ExerciseLogStreams exerciseLogStream = ExerciseLogStreams();
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<List<ExerciseLogModel>>(
-        stream: exerciseLogStream.exereciseLogStream,
+    return StreamBuilder<List<ExerciseLog>>(
+        stream: null, //TODO
         builder: (BuildContext context,
-            AsyncSnapshot<List<ExerciseLogModel>> historySnapshot) {
+            AsyncSnapshot<List<ExerciseLog>> historySnapshot) {
           if (!historySnapshot.hasData) {
             return Center(
               child: Text(
@@ -26,9 +27,11 @@ class _MyGraphWidgetState extends State<MyGraphWidget> {
                 style: Theme.of(context).textTheme.headline4,
               ),
             );
-          } else if (historySnapshot.data
-              .where((element) => (element.exerciseName ==
-                  widget.selectedExercise.exerciseName))
+          } else if (historySnapshot.data!
+              .where(
+                (element) => (element.exerciseName ==
+                    widget.selectedExercise.exerciseName),
+              )
               .toList()
               .isEmpty) {
             return Center(
@@ -38,7 +41,7 @@ class _MyGraphWidgetState extends State<MyGraphWidget> {
               ),
             );
           }
-          var filteredHistorySnapshot = historySnapshot.data
+          var filteredHistorySnapshot = historySnapshot.data!
               .where((element) => (element.exerciseName ==
                   widget.selectedExercise.exerciseName))
               .toList();
@@ -56,9 +59,9 @@ class _MyGraphWidgetState extends State<MyGraphWidget> {
 }
 
 class DrawGraph extends CustomPainter {
-  final List<ExerciseLogModel> entry;
+  final List<ExerciseLog> entry;
 
-  const DrawGraph({Key key, this.entry});
+  const DrawGraph({Key? key, required this.entry});
 
   @override
   void paint(Canvas canvas, Size size) {

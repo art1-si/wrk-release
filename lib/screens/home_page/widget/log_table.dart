@@ -1,20 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:workout_notes_app/models/exercise_log_model.dart';
+import 'package:workout_notes_app/data_models/exercise_log.dart';
 
 class LogTable extends StatelessWidget {
   final String title;
-  final List<ExerciseLogModel> fieldData;
-  final String field2;
-  final String field3;
+  final List<ExerciseLog> fieldData;
+
   final int itemCount;
 
   const LogTable(
-      {Key key,
-      this.title,
-      this.fieldData,
-      this.field2,
-      this.field3,
-      this.itemCount})
+      {Key? key,
+      required this.title,
+      required this.fieldData,
+      required this.itemCount})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -87,12 +84,12 @@ class _Table extends StatelessWidget {
   final String field4;
   final int index;
   const _Table({
-    Key key,
-    this.field1,
-    this.field2,
-    this.field3,
-    this.index,
-    this.field4,
+    Key? key,
+    required this.field1,
+    required this.field2,
+    required this.field3,
+    required this.index,
+    required this.field4,
   }) : super(key: key);
 
   @override

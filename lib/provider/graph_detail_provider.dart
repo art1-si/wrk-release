@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 
 class GraphDetailProvider extends ChangeNotifier {
-  double _weight;
-  int _reps;
-  String _dateCreated;
+  double? _weight;
+  int? _reps;
+  String? _dateCreated;
 
   get getWeight => _weight;
   get getReps => _reps;

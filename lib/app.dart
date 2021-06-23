@@ -18,10 +18,10 @@ class MyApp extends StatelessWidget {
         )
       ],
       child: MaterialApp(
-        builder: (context, child) {
+        builder: (context, Widget? child) {
           return ScrollConfiguration(
             behavior: MyBehavior(),
-            child: child,
+            child: child!,
           );
         },
         showPerformanceOverlay: false,

@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 
 class LogValuesProvider extends ChangeNotifier {
-  double _weightValue;
-  int _repsValue;
-  int _rpeValue;
+  double? _weightValue;
+  int? _repsValue;
+  int? _rpeValue;
 
   get weightValue => _weightValue ?? 0.0;
   get repsValue => _repsValue;

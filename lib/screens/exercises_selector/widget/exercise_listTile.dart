@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:workout_notes_app/models/exercise_model.dart';
-import 'package:workout_notes_app/models/exercise_plan_model.dart';
-import 'package:workout_notes_app/provider/plans_stream.dart';
+import 'package:workout_notes_app/data_models/exercise.dart';
+import 'package:workout_notes_app/data_models/workout_plan.dart';
 import 'package:workout_notes_app/provider/provider_of_quick_add_button.dart';
 
 import 'package:workout_notes_app/screens/new_entry_page/add_exercise_to_log.dart';
@@ -11,16 +10,14 @@ import 'package:workout_notes_app/screens/plan_page/create_workout_plan_page.dar
 class ExerciseListTile extends StatelessWidget {
   final String exerciseName;
   final int index;
-  final List<ExerciseModel> typeSnapshot;
-  final WorkoutPlanStreams planStream;
+  final List<Exercise> typeSnapshot;
 
-  ExerciseListTile(
-      {Key key,
-      this.exerciseName,
-      this.index,
-      this.typeSnapshot,
-      this.planStream})
-      : super(key: key);
+  ExerciseListTile({
+    Key? key,
+    required this.exerciseName,
+    required this.index,
+    required this.typeSnapshot,
+  }) : super(key: key);
 
   final TextEditingController _workoutNameTextController =
       TextEditingController();
@@ -30,15 +27,14 @@ class ExerciseListTile extends StatelessWidget {
         builder: (BuildContext context) {
           return AlertDialog(
             title: Text("Workout Plans"),
-            content: StreamBuilder<List<ExercisePlanModel>>(
-                stream: planStream.exercisePlanStream,
-                builder:
-                    (context, AsyncSnapshot<List<ExercisePlanModel>> snapshot) {
+            content: StreamBuilder<List<WorkoutPlan>>(
+                stream: null, //TODO: add stream to workout plan
+                builder: (context, AsyncSnapshot<List<WorkoutPlan>> snapshot) {
                   if (!snapshot.hasData) {
                     return Center(child: Text("no data"));
                   }
                   List namesList = [];
-                  for (var planName in snapshot.data) {
+                  for (var planName in snapshot.data!) {
                     namesList.add(planName.planName);
                   }
                   var eachProgramName = namesList.toSet();

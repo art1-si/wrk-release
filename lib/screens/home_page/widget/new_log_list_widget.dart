@@ -1,16 +1,19 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:workout_notes_app/models/exercise_log_model.dart';
-import 'package:workout_notes_app/models/exercise_model.dart';
+import 'package:workout_notes_app/data_models/exercise.dart';
+import 'package:workout_notes_app/data_models/exercise_log.dart';
 
 import 'package:workout_notes_app/screens/home_page/widget/log_table.dart';
 import 'package:workout_notes_app/screens/new_entry_page/add_exercise_to_log.dart';
 
 class NewLogListWidget extends StatefulWidget {
-  final List<ExerciseLogModel> snapshotData;
-  final List<ExerciseModel> exerciseStreamSnasphot;
-  NewLogListWidget({Key key, this.snapshotData, this.exerciseStreamSnasphot})
+  final List<ExerciseLog> snapshotData;
+  final List<Exercise> exerciseStreamSnasphot;
+  NewLogListWidget(
+      {Key? key,
+      required this.snapshotData,
+      required this.exerciseStreamSnasphot})
       : super(key: key);
 
   @override
@@ -20,12 +23,13 @@ class NewLogListWidget extends StatefulWidget {
 class _NewLogListWidgetState extends State<NewLogListWidget> {
   //final ExerciseStreams exerciseStreams = ExerciseStreams();
   List snapshotKeys = [];
-  List<ExerciseModel> selectedExerciseFromHomePage = <ExerciseModel>[];
+  List<Exercise> selectedExerciseFromHomePage = <Exercise>[];
   var groupedSnapshot;
   @override
   void initState() {
     super.initState();
-    groupedSnapshot = groupBy(widget.snapshotData, (obj) => obj.exerciseName);
+    groupedSnapshot =
+        groupBy(widget.snapshotData, (ExerciseLog obj) => obj.exerciseID);
 
     for (var element in groupedSnapshot.keys) {
       snapshotKeys.add(element);
@@ -53,18 +57,22 @@ class _NewLogListWidgetState extends State<NewLogListWidget> {
       children: <Widget>[
         for (var i = 0; i < snapshotKeys.length; i++)
           _LogItem(
+            index: i,
             title: "${snapshotKeys[i]}",
             itemCount: groupedSnapshot[snapshotKeys[i]].length,
             data: groupedSnapshot[snapshotKeys[i]],
             onTap: () {
               Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => AddExerciseToLog(
-                          showPlanDetails: false,
-                          selectedIndex: i,
-                          selectedExercise:
-                              selectedExerciseFromHomePage.reversed.toList())));
+                context,
+                MaterialPageRoute(
+                  builder: (context) => AddExerciseToLog(
+                    showPlanDetails: false,
+                    selectedIndex: i,
+                    selectedExercise:
+                        selectedExerciseFromHomePage.reversed.toList(),
+                  ),
+                ),
+              );
             },
           ),
       ],
@@ -84,13 +92,18 @@ class _NewLogListWidgetState extends State<NewLogListWidget> {
 class _LogItem extends StatelessWidget {
   final String title;
   final int itemCount;
-  final List<ExerciseLogModel> data;
+  final List<ExerciseLog> data;
   final int index;
   final GestureTapCallback onTap;
 
-  const _LogItem(
-      {Key key, this.title, this.itemCount, this.data, this.index, this.onTap})
-      : super(key: key);
+  const _LogItem({
+    Key? key,
+    required this.title,
+    required this.itemCount,
+    required this.data,
+    required this.index,
+    required this.onTap,
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Padding(

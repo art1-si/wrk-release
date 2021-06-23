@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:workout_notes_app/data_models/exercise_log.dart';
 import 'package:workout_notes_app/services/logics.dart';
-import 'package:workout_notes_app/models/exercise_log_model.dart';
-import 'package:workout_notes_app/provider/exercise_log_stream.dart';
+
 import 'dart:ui' as ui;
 
 import 'package:workout_notes_app/provider/graph_detail_provider.dart';
 
 class MyGraphWidget extends StatelessWidget {
-  final List<ExerciseLogModel> exerciseLog;
+  final List<ExerciseLog> exerciseLog;
 
-  MyGraphWidget({Key key, this.exerciseLog}) : super(key: key);
-
-  final ExerciseLogStreams exerciseLogStream = ExerciseLogStreams();
+  MyGraphWidget({Key? key, required this.exerciseLog}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -96,17 +94,17 @@ class MyGraphWidget extends StatelessWidget {
 }
 
 class MyDrawGraph extends StatefulWidget {
-  final List<ExerciseLogModel> snapshotToPass;
+  final List<ExerciseLog> snapshotToPass;
 
-  const MyDrawGraph({Key key, this.snapshotToPass}) : super(key: key);
+  const MyDrawGraph({Key? key, required this.snapshotToPass}) : super(key: key);
   @override
   _MyDrawGraphState createState() => _MyDrawGraphState();
 }
 
 class _MyDrawGraphState extends State<MyDrawGraph> {
-  Offset _tapPosition;
+  Offset? _tapPosition;
   bool isPressed = false;
-  RenderBox referenceBox;
+  RenderBox? referenceBox;
 
   @override
   Widget build(BuildContext context) {
@@ -126,8 +124,8 @@ class _MyDrawGraphState extends State<MyDrawGraph> {
         });
         var distance = listOfXOffset[1] - listOfXOffset.first;
         for (var i = 0; i < listOfXOffset.length; i++) {
-          if (listOfXOffset[i] < _tapPosition.dx + distance / 2 &&
-              listOfXOffset[i] + distance > _tapPosition.dx + distance / 2) {
+          if (listOfXOffset[i] < _tapPosition!.dx + distance / 2 &&
+              listOfXOffset[i] + distance > _tapPosition!.dx + distance / 2) {
             index = i;
           }
         }
@@ -137,7 +135,7 @@ class _MyDrawGraphState extends State<MyDrawGraph> {
       onPanDown: (details) {
         referenceBox = context.findRenderObject();
         setState(() {
-          _tapPosition = referenceBox.globalToLocal(details.globalPosition);
+          _tapPosition = referenceBox!.globalToLocal(details.globalPosition);
         });
         graphDetailProvider
             .changeWeightOnTap(widget.snapshotToPass[index].weight);
@@ -148,7 +146,7 @@ class _MyDrawGraphState extends State<MyDrawGraph> {
       onPanStart: (details) {
         referenceBox = context.findRenderObject();
         setState(() {
-          _tapPosition = referenceBox
+          _tapPosition = referenceBox!
               .globalToLocal(details.globalPosition ?? Offset(0, 0));
         });
         graphDetailProvider
@@ -160,7 +158,7 @@ class _MyDrawGraphState extends State<MyDrawGraph> {
       onPanUpdate: (details) {
         referenceBox = context.findRenderObject();
         setState(() {
-          _tapPosition = referenceBox
+          _tapPosition = referenceBox!
               .globalToLocal(details.globalPosition ?? Offset(0, 0));
         });
         graphDetailProvider

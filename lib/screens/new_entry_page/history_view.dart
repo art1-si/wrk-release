@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:intl/intl.dart';
-import 'package:workout_notes_app/models/exercise_log_model.dart';
-import 'package:workout_notes_app/provider/exercise_log_stream.dart';
+import 'package:workout_notes_app/data_models/exercise_log.dart';
 
 class HistoryView extends StatelessWidget {
-  final List<ExerciseLogModel> exerciseLog;
-
-  final ExerciseLogStreams exerciseLogStream = ExerciseLogStreams();
-
-  HistoryView({Key key, this.exerciseLog}) : super(key: key);
+  HistoryView({
+    Key? key,
+    required this.exerciseLog,
+  }) : super(key: key);
+  final List<ExerciseLog> exerciseLog;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +22,7 @@ class HistoryView extends StatelessWidget {
       );
     }
 
-    return GroupedListView<ExerciseLogModel, String>(
+    return GroupedListView<ExerciseLog, String>(
       groupBy: (element) => element.dateCreated,
       elements: exerciseLog,
       order: GroupedListOrder.DESC,
@@ -47,7 +46,7 @@ class HistoryView extends StatelessWidget {
 class _DateTitle extends StatelessWidget {
   final String date;
 
-  const _DateTitle({Key key, this.date}) : super(key: key);
+  const _DateTitle({Key? key, required this.date}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -78,7 +77,11 @@ class _Table extends StatelessWidget {
   final String repsField;
   final String rpe;
 
-  const _Table({Key key, this.weightField, this.repsField, this.rpe})
+  const _Table(
+      {Key? key,
+      required this.weightField,
+      required this.repsField,
+      required this.rpe})
       : super(key: key);
 
   @override

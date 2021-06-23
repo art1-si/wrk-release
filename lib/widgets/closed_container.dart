@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:workout_notes_app/models/exercise_plan_model.dart';
+import 'package:workout_notes_app/data_models/workout_plan.dart';
 
 class MyClosedContainer extends StatelessWidget {
-  final ExercisePlanModel workout;
+  final WorkoutPlan workout;
 
-  const MyClosedContainer({Key key, this.workout}) : super(key: key);
+  const MyClosedContainer({Key? key, required this.workout}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Padding(
