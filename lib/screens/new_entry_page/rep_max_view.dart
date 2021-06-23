@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:workout_notes_app/data_models/exercise_log.dart';
 import 'package:workout_notes_app/services/1rm_formula.dart';
 import 'package:workout_notes_app/services/logics.dart';
-import 'package:workout_notes_app/models/exercise_log_model.dart';
 
 class RepMaxView extends StatelessWidget {
-  final List<ExerciseLogModel> exerciseLog;
+  final List<ExerciseLog> exerciseLog;
 
   final List<int> oneRMProcents = [
     110,
@@ -21,7 +21,7 @@ class RepMaxView extends StatelessWidget {
     5,
     1
   ];
-  RepMaxView({Key key, this.exerciseLog}) : super(key: key);
+  RepMaxView({Key? key, required this.exerciseLog}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     print(" repmax page build ");

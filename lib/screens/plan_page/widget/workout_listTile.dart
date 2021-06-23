@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 
 class WorkoutListTile extends StatelessWidget {
   final Widget title;
-  final Widget subTitle;
-  final Widget leading;
-  final Widget trailing;
-  final EdgeInsetsGeometry padding;
-  final GestureTapCallback onTap;
+  final Widget? subTitle;
+  final Widget? leading;
+  final Widget? trailing;
+  final EdgeInsetsGeometry? padding;
+  final GestureTapCallback? onTap;
   const WorkoutListTile({
-    Key key,
-    this.title,
+    Key? key,
+    required this.title,
     this.subTitle,
     this.leading,
     this.trailing,

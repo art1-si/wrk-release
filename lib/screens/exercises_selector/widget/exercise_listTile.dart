@@ -49,6 +49,7 @@ class ExerciseListTile extends StatelessWidget {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => CreateWorkoutPlanPage(
+                                    orderIndex: 1, //TODO add orderIndex
                                     exercisePlanName: namesList[index],
                                     exerciseName: selectedExerciseName,
                                   ),
@@ -87,6 +88,7 @@ class ExerciseListTile extends StatelessWidget {
                         builder: (context) => CreateWorkoutPlanPage(
                           exercisePlanName: _workoutNameTextController.text,
                           exerciseName: selectedExerciseName,
+                          orderIndex: 1, //TODO add orderIndex
                         ),
                       ));
                 },
@@ -178,6 +180,7 @@ class ExerciseListTile extends StatelessWidget {
               context,
               MaterialPageRoute(
                 builder: (context) => CreateWorkoutPlanPage(
+                  orderIndex: 1, //TODO add orderIndex
                   exercisePlanName: planName,
                   exerciseName: exerciseName,
                 ),

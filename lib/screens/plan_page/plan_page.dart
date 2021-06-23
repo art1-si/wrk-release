@@ -2,10 +2,8 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:provider/provider.dart';
-import 'package:workout_notes_app/models/exercise_model.dart';
-import 'package:workout_notes_app/models/exercise_plan_model.dart';
-import 'package:workout_notes_app/provider/exercise_streams.dart';
-import 'package:workout_notes_app/provider/plans_stream.dart';
+import 'package:workout_notes_app/data_models/exercise.dart';
+import 'package:workout_notes_app/data_models/workout_plan.dart';
 import 'package:workout_notes_app/provider/provider_of_quick_add_button.dart';
 import 'package:workout_notes_app/screens/exercises_selector/type_selector_page.dart';
 
@@ -14,22 +12,12 @@ import 'package:workout_notes_app/widgets/exercise_open_container.dart';
 class PlanPage extends StatefulWidget {
   final String planName;
 
-  const PlanPage({Key key, this.planName}) : super(key: key);
+  const PlanPage({Key? key, required this.planName}) : super(key: key);
   @override
   _PlanPageState createState() => _PlanPageState();
 }
 
 class _PlanPageState extends State<PlanPage> {
-  WorkoutPlanStreams planStreams = WorkoutPlanStreams();
-  ExerciseStreams exerciseStreams = ExerciseStreams();
-
-  @override
-  void dispose() {
-    planStreams.dispose();
-    exerciseStreams.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     var showButton = Provider.of<ProviderOfQuickAddButton>(context);
@@ -47,9 +35,11 @@ class _PlanPageState extends State<PlanPage> {
                 showButton.setAddQuickPlanName(widget.planName);
                 showButton.setShowButton(true);
                 Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => TypeSelectorPage()));
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => TypeSelectorPage(),
+                  ),
+                );
               },
               child: Icon(
                 Icons.add,
@@ -59,33 +49,33 @@ class _PlanPageState extends State<PlanPage> {
           ),
         ],
       ),
-      body: StreamBuilder<List<ExercisePlanModel>>(
-        stream: planStreams.exercisePlanStream,
-        builder: (context, AsyncSnapshot<List<ExercisePlanModel>> snapshot) {
-          if (!snapshot.hasData || snapshot.data.isEmpty) {
+      body: StreamBuilder<List<WorkoutPlan>>(
+        stream: null, //TODO
+        builder: (context, AsyncSnapshot<List<WorkoutPlan>> snapshot) {
+          if (!snapshot.hasData || snapshot.data!.isEmpty) {
             return Text("NO DATA");
           }
-          List<ExercisePlanModel> workoutPlan = snapshot.data
+          List<WorkoutPlan> workoutPlan = snapshot.data!
               .where((element) => (element.planName == widget.planName))
               .toList();
           return StreamBuilder(
-            stream: exerciseStreams.exerciseStream,
-            builder:
-                (context, AsyncSnapshot<List<ExerciseModel>> exerciseSnapshot) {
+            stream: null, //TODO
+            builder: (context, AsyncSnapshot<List<Exercise>> exerciseSnapshot) {
               if (!exerciseSnapshot.hasData) {
                 return Text("NO DATA");
               }
               List planDaysKeys = [];
-              var groupedPlanDays =
-                  groupBy(workoutPlan, (obj) => obj.weekdayForWorkout);
+              var groupedPlanDays = groupBy(
+                  workoutPlan, (WorkoutPlan obj) => obj.weekdayForWorkout);
               groupedPlanDays.keys.forEach((element) {
                 planDaysKeys.add(element);
               });
 
-              return GroupedListView<ExercisePlanModel, String>(
+              return GroupedListView<WorkoutPlan, String>(
                 physics: AlwaysScrollableScrollPhysics(),
                 elements: workoutPlan,
-                groupBy: (element) => element.weekdayForWorkout,
+                groupBy: (element) => element.weekdayForWorkout
+                    .toString(), //TODO change to day name
                 groupSeparatorBuilder: (value) {
                   return Padding(
                     padding: const EdgeInsets.only(
@@ -109,8 +99,8 @@ class _PlanPageState extends State<PlanPage> {
                   );
                 },
                 indexedItemBuilder: (context, workout, index) {
-                  List<ExerciseModel> exercisesToPass = <ExerciseModel>[];
-                  List<ExercisePlanModel> listToCheck = <ExercisePlanModel>[];
+                  List<Exercise> exercisesToPass = <Exercise>[];
+                  List<WorkoutPlan> listToCheck = <WorkoutPlan>[];
                   listToCheck = workoutPlan
                       .where((element) =>
                           element.weekdayForWorkout ==
@@ -118,7 +108,7 @@ class _PlanPageState extends State<PlanPage> {
                       .toList();
 
                   for (int i = 0; i < listToCheck.length; i++) {
-                    var exercise = exerciseSnapshot.data
+                    var exercise = exerciseSnapshot.data!
                         .where((element) =>
                             element.exerciseName == listToCheck[i].exerciseName)
                         .toList();

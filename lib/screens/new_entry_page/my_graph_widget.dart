@@ -104,7 +104,7 @@ class MyDrawGraph extends StatefulWidget {
 class _MyDrawGraphState extends State<MyDrawGraph> {
   Offset? _tapPosition;
   bool isPressed = false;
-  RenderBox? referenceBox;
+  var referenceBox;
 
   @override
   Widget build(BuildContext context) {
@@ -146,8 +146,7 @@ class _MyDrawGraphState extends State<MyDrawGraph> {
       onPanStart: (details) {
         referenceBox = context.findRenderObject();
         setState(() {
-          _tapPosition = referenceBox!
-              .globalToLocal(details.globalPosition ?? Offset(0, 0));
+          _tapPosition = referenceBox!.globalToLocal(details.globalPosition);
         });
         graphDetailProvider
             .changeWeightOnTap(widget.snapshotToPass[index].weight);
@@ -158,8 +157,7 @@ class _MyDrawGraphState extends State<MyDrawGraph> {
       onPanUpdate: (details) {
         referenceBox = context.findRenderObject();
         setState(() {
-          _tapPosition = referenceBox!
-              .globalToLocal(details.globalPosition ?? Offset(0, 0));
+          _tapPosition = referenceBox!.globalToLocal(details.globalPosition);
         });
         graphDetailProvider
             .changeWeightOnTap(widget.snapshotToPass[index].weight);
@@ -196,7 +194,7 @@ class _MyDrawGraphState extends State<MyDrawGraph> {
           sizeWidth: MediaQuery.of(context).size.width - 50,
           lineColor: Theme.of(context).accentColor,
           entry: widget.snapshotToPass,
-          linePosition: _tapPosition,
+          linePosition: _tapPosition!,
         ),
       ),
     );
@@ -209,10 +207,10 @@ class _OnPressDialog extends StatelessWidget {
   final String dateCreated;
 
   _OnPressDialog({
-    Key key,
-    this.weight,
-    this.reps,
-    this.dateCreated,
+    Key? key,
+    required this.weight,
+    required this.reps,
+    required this.dateCreated,
   }) : super(key: key);
 
   @override
@@ -221,6 +219,7 @@ class _OnPressDialog extends StatelessWidget {
       field1: "WEIGHT $weight",
       field2: "$reps",
       field4: "Date $dateCreated",
+      field3: "rpe",
     );
   }
 }
@@ -231,9 +230,13 @@ class _PopUpTable extends StatelessWidget {
   final String field3;
   final String field4;
 
-  const _PopUpTable(
-      {Key key, this.field1, this.field2, this.field3, this.field4})
-      : super(key: key);
+  const _PopUpTable({
+    Key? key,
+    required this.field1,
+    required this.field2,
+    required this.field3,
+    required this.field4,
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -270,13 +273,13 @@ class LineDivders extends StatelessWidget {
   final double maxWeightValue;
   final Color dividerColor;
 
-  const LineDivders(
-      {Key key,
-      this.minWeightValue,
-      this.maxWeightValue,
-      this.dividerColor,
-      this.entryLength})
-      : super(key: key);
+  const LineDivders({
+    Key? key,
+    required this.minWeightValue,
+    required this.maxWeightValue,
+    required this.dividerColor,
+    required this.entryLength,
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return CustomPaint(
@@ -292,7 +295,7 @@ class LineDivders extends StatelessWidget {
 
 class _DrawLines extends CustomPainter {
   final int entryLength;
-  final double minWeightValue;
+  final double? minWeightValue;
   final double maxWeightValue;
   final Color dividerColor;
 
@@ -326,9 +329,9 @@ class _DrawLines extends CustomPainter {
     if (minWeightValue != null && minWeightValue != maxWeightValue) {
       var weightValue = minWeightValue;
       for (var i = 0; i < 11; i++) {
-        double weightGraphValue = roundDouble(weightValue, 2);
-        double relativeYposition = (weightGraphValue - minWeightValue) /
-            (maxWeightValue - minWeightValue);
+        double weightGraphValue = roundDouble(weightValue!, 2);
+        double relativeYposition = (weightGraphValue - minWeightValue!) /
+            (maxWeightValue - minWeightValue!);
         double yOffset = size.height - relativeYposition * size.height;
 
         canvas.drawLine(
@@ -336,7 +339,7 @@ class _DrawLines extends CustomPainter {
 
         createdWeightParagraph(canvas, yOffset - 12, weightGraphValue);
 
-        weightValue += (maxWeightValue - minWeightValue) / 10;
+        weightValue += (maxWeightValue - minWeightValue!) / 10;
       }
     } else {
       createdWeightParagraph(canvas, size.height / 2, maxWeightValue);
@@ -360,20 +363,21 @@ class _DrawLines extends CustomPainter {
 }
 
 class DrawGraph extends CustomPainter {
-  final Offset linePosition;
-  final List<ExerciseLogModel> entry;
+  final Offset? linePosition;
+  final List<ExerciseLog> entry;
   final Color lineColor;
 
-  final TextStyle paragraphStyle;
+  final TextStyle? paragraphStyle;
   final double sizeWidth;
 
-  const DrawGraph(
-      {Key key,
-      this.linePosition,
-      this.sizeWidth,
-      this.entry,
-      this.lineColor,
-      this.paragraphStyle});
+  const DrawGraph({
+    Key? key,
+    required this.linePosition,
+    required this.sizeWidth,
+    required this.entry,
+    required this.lineColor,
+    this.paragraphStyle,
+  });
 
   createdWeightParagraph(Canvas canvas, paragraphXoffset, index, text) {
     final textStyle = ui.TextStyle(
@@ -419,7 +423,7 @@ class DrawGraph extends CustomPainter {
     var e = entryWithoutRepeatValues.toSet();
     Color gradinetColorStarter = (linePosition == null)
         ? lineColor.withOpacity(0.1)
-        : Colors.orange[300].withOpacity(0.1);
+        : Colors.orange[300]!.withOpacity(0.1);
     Color endGradinetColor = (linePosition == null)
         ? Colors.blue.withOpacity(0.005)
         : Colors.blue.withOpacity(0.005);
@@ -436,13 +440,13 @@ class DrawGraph extends CustomPainter {
       ..style = PaintingStyle.fill
       ..strokeWidth = 2;
     Paint line2 = Paint()
-      ..color = (linePosition == null) ? lineColor : Colors.orange[300]
+      ..color = (linePosition == null) ? lineColor : Colors.orange[300]!
       ..strokeCap = StrokeCap.round
       ..style = PaintingStyle.fill
       ..strokeWidth = 1;
 
     Paint points = Paint()
-      ..color = (linePosition == null) ? lineColor : Colors.orange[300]
+      ..color = (linePosition == null) ? lineColor : Colors.orange[300]!
       ..strokeCap = StrokeCap.round
       ..style = PaintingStyle.fill
       ..strokeWidth = 10;
@@ -516,8 +520,8 @@ class DrawGraph extends CustomPainter {
       var distance = listOfXOffset[1] - listOfXOffset.first;
 
       for (var i = 0; i < listOfXOffset.length; i++) {
-        if (listOfXOffset[i] < linePosition.dx + distance / 2 &&
-            listOfXOffset[i] + distance > linePosition.dx + distance / 2) {
+        if (listOfXOffset[i] < linePosition!.dx + distance / 2 &&
+            listOfXOffset[i] + distance > linePosition!.dx + distance / 2) {
           canvas.drawLine(
               Offset(listOfXOffset[i],
                   (listOfYOffset.isEmpty) ? size.height / 2 : listOfYOffset[i]),

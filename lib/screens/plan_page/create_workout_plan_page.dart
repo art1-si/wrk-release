@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:workout_notes_app/database/workout_plan_database.dart';
-import 'package:workout_notes_app/models/exercise_plan_model.dart';
 
 import 'package:workout_notes_app/screens/plan_page/plan_page.dart';
 
@@ -9,15 +7,17 @@ class CreateWorkoutPlanPage extends StatefulWidget {
   final String exerciseName;
   final int orderIndex;
 
-  const CreateWorkoutPlanPage(
-      {Key key, this.exercisePlanName, this.exerciseName, this.orderIndex})
-      : super(key: key);
+  const CreateWorkoutPlanPage({
+    Key? key,
+    required this.exercisePlanName,
+    required this.exerciseName,
+    required this.orderIndex,
+  }) : super(key: key);
   @override
   _CreateWorkoutPlanPageState createState() => _CreateWorkoutPlanPageState();
 }
 
 class _CreateWorkoutPlanPageState extends State<CreateWorkoutPlanPage> {
-  WorkoutPlanDatabase planDatabase = WorkoutPlanDatabase();
   TextEditingController _setsTextController = TextEditingController();
   TextEditingController _minRepsTextController = TextEditingController();
   TextEditingController _maxRepsTextController = TextEditingController();
@@ -50,20 +50,7 @@ class _CreateWorkoutPlanPageState extends State<CreateWorkoutPlanPage> {
       String notes,
       String workoutDay,
       double restTime,
-      int orderId) async {
-    ExercisePlanModel newExerciseToPlan = ExercisePlanModel(
-        planName,
-        exerciseName,
-        minReps,
-        maxReps,
-        sets,
-        rpe,
-        notes,
-        workoutDay,
-        restTime,
-        orderId);
-    await planDatabase.saveExercise(newExerciseToPlan);
-  }
+      int orderId) async {}
 
   @override
   Widget build(BuildContext context) {
@@ -199,9 +186,9 @@ class _CreateWorkoutPlanPageState extends State<CreateWorkoutPlanPage> {
                           value: dropDownWorkoutDay,
                           style: Theme.of(context).textTheme.bodyText1,
                           dropdownColor: Theme.of(context).primaryColorLight,
-                          onChanged: (String newValue) {
+                          onChanged: (String? newValue) {
                             setState(() {
-                              dropDownWorkoutDay = newValue;
+                              dropDownWorkoutDay = newValue!;
                             });
                           },
                           items: _workoutDays

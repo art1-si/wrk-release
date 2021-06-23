@@ -6,18 +6,19 @@ class RepsNumberPicker extends StatelessWidget {
   final String title;
   final dynamic numberValue;
   final dynamic numberChangeValue;
-  final ValueChanged<dynamic> onValueChange;
-  final bool isDouble;
-  final GestureTapCallback onTapLeftButton;
-  final GestureTapCallback onTapRightButton;
-  RepsNumberPicker(
-      {this.title,
-      this.isDouble,
-      this.numberValue,
-      this.numberChangeValue,
-      this.onValueChange,
-      this.onTapLeftButton,
-      this.onTapRightButton});
+  final ValueChanged<dynamic>? onValueChange;
+  final bool? isDouble;
+  final GestureTapCallback? onTapLeftButton;
+  final GestureTapCallback? onTapRightButton;
+  RepsNumberPicker({
+    required this.title,
+    this.isDouble,
+    this.numberValue,
+    this.numberChangeValue,
+    this.onValueChange,
+    this.onTapLeftButton,
+    this.onTapRightButton,
+  });
 
   @override
   Widget build(BuildContext context) {

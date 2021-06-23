@@ -6,18 +6,19 @@ class WeightNumberPicker extends StatelessWidget {
   final String title;
   final dynamic numberValue;
   final dynamic numberChangeValue;
-  final ValueChanged<dynamic> onValueChange;
-  final bool isDouble;
-  final GestureTapCallback onTapLeftButton;
-  final GestureTapCallback onTapRightButton;
-  WeightNumberPicker(
-      {this.title,
-      this.isDouble,
-      this.numberValue,
-      this.numberChangeValue,
-      this.onValueChange,
-      this.onTapLeftButton,
-      this.onTapRightButton});
+  final ValueChanged<dynamic>? onValueChange;
+  final bool? isDouble;
+  final GestureTapCallback? onTapLeftButton;
+  final GestureTapCallback? onTapRightButton;
+  WeightNumberPicker({
+    required this.title,
+    this.isDouble,
+    this.numberValue,
+    this.numberChangeValue,
+    this.onValueChange,
+    this.onTapLeftButton,
+    this.onTapRightButton,
+  });
 
   @override
   Widget build(BuildContext context) {

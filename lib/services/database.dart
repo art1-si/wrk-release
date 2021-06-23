@@ -1,6 +1,3 @@
-import 'dart:html';
-
-import 'package:flutter/foundation.dart';
 import 'package:workout_notes_app/data_models/exercise.dart';
 import 'package:workout_notes_app/data_models/exercise_log.dart';
 
@@ -68,6 +65,9 @@ class FirestoreDatabase implements Database {
       builder: (data, documentID) => ExerciseLog.fromJson(data));
   @override
   Stream<List<Exercise>> exercisesStream() {
-    return 
+    return _service.collectionStream(
+      path: APIPath.exercisesLog(uid),
+      builder: (data, documentID) => Exercise.fromJson(data),
+    );
   }
 }
