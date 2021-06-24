@@ -1,5 +1,8 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:workout_notes_app/services/auth_base.dart';
+
+
 
 class SignIn with ChangeNotifier {
   SignIn({
@@ -15,6 +18,7 @@ class SignIn with ChangeNotifier {
   Future<void> submit() async {
     try {
       await auth.signInWithEmailAndPassword(email, password);
+      notifyListeners();
     } catch (e) {
       print(e.toString());
     }
