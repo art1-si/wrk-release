@@ -32,12 +32,12 @@ dependencies:
   cloud_firestore: ^2.2.2
   
   intl: ^0.17.0
-  provider: ^4.0.5
+  provider: ^5.0.0
   numberpicker: ^1.2.0
   shared_preferences: ^0.5.7+3
   path_provider: ^1.5.0
   collection: ^1.14.12
-  grouped_list: ^3.2.2
+  grouped_list: ^4.0.0
   animations: ^1.1.2
   freezed_annotation: ^0.14.2
   json_serializable: ^4.1.3

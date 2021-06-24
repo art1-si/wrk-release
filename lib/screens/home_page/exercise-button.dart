@@ -4,9 +4,12 @@ import 'package:workout_notes_app/provider/provider_of_quick_add_button.dart';
 
 import 'package:workout_notes_app/plan_page/workout_plans_page.dart';
 import 'package:workout_notes_app/screens/exercises_selector/type_selector_page.dart';
+import 'package:workout_notes_app/services/database.dart';
 
 class ExerciseButton extends StatelessWidget {
-  const ExerciseButton();
+  const ExerciseButton({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,9 +26,11 @@ class ExerciseButton extends StatelessWidget {
             child: GestureDetector(
               onTap: () {
                 Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => TypeSelectorPage()));
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => TypeSelectorPage(),
+                  ),
+                );
                 showButton.setShowButton(false);
               },
               child: Container(

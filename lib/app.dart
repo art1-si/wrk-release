@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:workout_notes_app/provider/day_selector_provider.dart';
 import 'package:workout_notes_app/provider/provider_of_quick_add_button.dart';
+import 'package:workout_notes_app/screens/home_page/front_page.dart';
 
 import 'package:workout_notes_app/screens/home_page/home_page.dart';
+import 'package:workout_notes_app/screens/home_page/landing_page.dart';
+import 'package:workout_notes_app/services/database.dart';
 import 'package:workout_notes_app/theme/themes.dart';
 
 class MyApp extends StatelessWidget {
@@ -26,7 +29,7 @@ class MyApp extends StatelessWidget {
         },
         showPerformanceOverlay: false,
         theme: ThemesData().defualt,
-        home: MyHomePage(),
+        home: LandingPage(),
       ),
     );
   }
