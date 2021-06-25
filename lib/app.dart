@@ -7,11 +7,14 @@ import 'package:workout_notes_app/screens/home_page/front_page.dart';
 import 'package:workout_notes_app/screens/home_page/home_page.dart';
 import 'package:workout_notes_app/screens/home_page/landing_page.dart';
 import 'package:workout_notes_app/services/database.dart';
+import 'package:workout_notes_app/services/providers.dart';
 import 'package:workout_notes_app/theme/themes.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    
     return MaterialApp(
       builder: (context, Widget? child) {
         return ScrollConfiguration(
