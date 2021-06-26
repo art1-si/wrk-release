@@ -13,7 +13,6 @@ class LandingPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, ScopedReader watch) {
-    final firebaseAuth = context.read(firebaseAuthProvider);
     return AuthWidget(
       signedInBuilder: (_) => Consumer(builder: (context, watch, _) {
         final didCompleteOnBoarding = watch(onboardingViewModelProvider);

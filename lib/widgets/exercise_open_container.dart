@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:workout_notes_app/data_models/exercise.dart';
 import 'package:workout_notes_app/data_models/workout_plan.dart';
 
-import 'package:workout_notes_app/screens/new_entry_page/add_exercise_to_log.dart';
+import 'package:workout_notes_app/screens/new_entry_page/add_exercise_to_log.dart.copy';
 
 import 'package:workout_notes_app/widgets/closed_container.dart';
 

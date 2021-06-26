@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 import 'package:workout_notes_app/provider/day_selector_provider.dart';
 
 class WeekdaysSelector extends StatefulWidget {
@@ -13,7 +12,6 @@ class _WeekdaysSelectorState extends State<WeekdaysSelector> {
 
   @override
   Widget build(BuildContext context) {
-    var datePassing = Provider.of<DaySelectorModel>(context, listen: false);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 0),
       child: Row(

@@ -1,16 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
-import 'package:workout_notes_app/componets/day_selector.dart';
+import 'package:workout_notes_app/componets/day_selector.dart.copy';
 import 'package:workout_notes_app/data_models/exercise.dart';
-import 'package:workout_notes_app/data_models/exercise_log.dart';
-
-import 'package:workout_notes_app/provider/day_selector_provider.dart';
-
-import 'package:workout_notes_app/screens/home_page/exercise-button.dart';
-
-import 'package:workout_notes_app/screens/home_page/widget/new_log_list_widget.dart';
-import 'package:workout_notes_app/services/database.dart';
+import 'package:workout_notes_app/screens/home_page/exercise-button.dart.copu';
 
 class MyHomePage extends StatefulWidget {
   @override
@@ -59,7 +50,12 @@ class _MyHomePageState extends State<MyHomePage> {
                       if (!exerciseSnapshot.hasData) {
                         return Container();
                       }
-                      return Consumer<DaySelectorModel>(
+                      return Container(
+                        color: Colors.green,
+                        height: 200,
+                        width: 200,
+                      );
+                      /* return Consumer<DaySelectorModel>(
                         builder: (context, dateSe, child) {
                           return StreamBuilder<List<ExerciseLog>>(
                               stream: null,
@@ -84,7 +80,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 );
                               });
                         },
-                      );
+                      ); */
                     }),
               ],
             ),

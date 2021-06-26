@@ -7,8 +7,8 @@ import 'package:workout_notes_app/data_models/workout_plan.dart';
 import 'package:workout_notes_app/provider/graph_detail_provider.dart';
 import 'package:workout_notes_app/provider/log_values_provider.dart';
 import 'package:workout_notes_app/screens/new_entry_page/history_view.dart';
-import 'package:workout_notes_app/screens/new_entry_page/log_screen.dart';
-import 'package:workout_notes_app/screens/new_entry_page/my_graph_widget.dart';
+import 'package:workout_notes_app/screens/new_entry_page/log_screen.dart.copy';
+import 'package:workout_notes_app/screens/new_entry_page/my_graph_widget.dart.copy';
 import 'package:workout_notes_app/screens/new_entry_page/rep_max_view.dart';
 
 class AddExerciseToLog extends StatelessWidget {

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:workout_notes_app/app.dart';
 import 'package:workout_notes_app/data_models/exercise.dart';
 
-import 'package:workout_notes_app/screens/exercises_selector/exercise_selector_page.dart';
+import 'package:workout_notes_app/screens/exercises_selector/exercise_selector_page.dart.copy';
 import 'package:workout_notes_app/screens/plan_page/widget/workout_listTile.dart';
 import 'package:workout_notes_app/services/database.dart';
 

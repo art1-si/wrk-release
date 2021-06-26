@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 import 'package:workout_notes_app/data_models/exercise.dart';
 import 'package:workout_notes_app/data_models/exercise_log.dart';
 import 'package:workout_notes_app/data_models/workout_plan.dart';
@@ -8,7 +7,6 @@ import 'package:workout_notes_app/data_models/workout_plan.dart';
 import 'package:workout_notes_app/provider/day_selector_provider.dart';
 
 import 'package:workout_notes_app/provider/log_values_provider.dart';
-import 'package:workout_notes_app/screens/new_entry_page/reps_value_picker.dart';
 import 'package:workout_notes_app/screens/new_entry_page/text_field_number_picker.dart';
 
 class LogScreen extends StatelessWidget {
