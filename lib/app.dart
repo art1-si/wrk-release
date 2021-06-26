@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:workout_notes_app/provider/day_selector_provider.dart';
 import 'package:workout_notes_app/provider/provider_of_quick_add_button.dart';
+import 'package:workout_notes_app/routing/app_routes.dart';
 import 'package:workout_notes_app/screens/home_page/front_page.dart';
 
 import 'package:workout_notes_app/screens/home_page/home_page.dart';
@@ -14,7 +15,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    
+    final firebaseAuth = context.read(firebaseAuthProvider);
     return MaterialApp(
       builder: (context, Widget? child) {
         return ScrollConfiguration(
@@ -25,6 +26,8 @@ class MyApp extends StatelessWidget {
       showPerformanceOverlay: false,
       theme: ThemesData().defualt,
       home: LandingPage(),
+      onGenerateRoute: (settings) =>
+          AppRouter.onGenerateRoute(settings, firebaseAuth),
     );
   }
 }

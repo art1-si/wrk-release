@@ -1,7 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:grouped_list/grouped_list.dart';
-import 'package:provider/provider.dart';
+
 import 'package:workout_notes_app/data_models/exercise.dart';
 import 'package:workout_notes_app/data_models/workout_plan.dart';
 import 'package:workout_notes_app/provider/provider_of_quick_add_button.dart';
@@ -20,7 +20,6 @@ class PlanPage extends StatefulWidget {
 class _PlanPageState extends State<PlanPage> {
   @override
   Widget build(BuildContext context) {
-    var showButton = Provider.of<ProviderOfQuickAddButton>(context);
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
@@ -32,8 +31,6 @@ class _PlanPageState extends State<PlanPage> {
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: InkWell(
               onTap: () {
-                showButton.setAddQuickPlanName(widget.planName);
-                showButton.setShowButton(true);
                 Navigator.push(
                   context,
                   MaterialPageRoute(

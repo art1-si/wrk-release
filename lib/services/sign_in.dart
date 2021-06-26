@@ -1,26 +1,33 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:workout_notes_app/services/auth_base.dart';
 
-
-
-class SignIn with ChangeNotifier {
-  SignIn({
+class SignInViewModel with ChangeNotifier {
+  SignInViewModel({
     required this.auth,
-    required this.email,
-    required this.password,
   });
 
-  final AuthBase auth;
-  String email;
-  String password;
+  final FirebaseAuth auth;
+  bool isLoading = false;
+  dynamic error;
 
-  Future<void> submit() async {
+  Future<void> _signIn(Future<UserCredential> Function() signInMethod) async {
     try {
-      await auth.signInWithEmailAndPassword(email, password);
+      isLoading = true;
       notifyListeners();
+      await signInMethod();
+      error = null;
     } catch (e) {
-      print(e.toString());
+      error = e;
+      rethrow;
+    } finally {
+      isLoading = false;
+      notifyListeners();
     }
+  }
+
+  Future<void> signInAnonymously() async {
+    await _signIn(auth.signInAnonymously);
   }
 }

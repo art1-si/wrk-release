@@ -34,7 +34,10 @@ dependencies:
   intl: ^0.17.0
   shared_preferences: ^2.0.6
   numberpicker: ^1.2.0
-
+  email_password_sign_in_ui:
+    git:
+      url: https://github.com/bizz84/codewithandrea_flutter_packages
+      path: packages/email_password_sign_in_ui
   
   collection: ^1.14.12
   grouped_list: ^4.0.0
