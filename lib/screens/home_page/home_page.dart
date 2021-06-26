@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:workout_notes_app/componets/day_selector.dart.copy';
 import 'package:workout_notes_app/data_models/exercise.dart';
-import 'package:workout_notes_app/screens/home_page/exercise-button.dart.copu';
 
 class MyHomePage extends StatefulWidget {
   @override
@@ -34,12 +32,10 @@ class _MyHomePageState extends State<MyHomePage> {
                   height: 20,
                   color: Colors.transparent,
                 ),
-                const ExerciseButton(),
                 const Divider(
                   height: 40,
                   color: Colors.transparent,
                 ),
-                WeekdaysSelector(),
                 const Divider(
                   height: 12,
                 ),
