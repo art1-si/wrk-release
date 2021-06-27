@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+final selectedDateProvider = ChangeNotifierProvider<DaySelectorModel>(
+  (ref) => DaySelectorModel(),
+);
+
+//TODO: make syntax cleaner
 class DaySelectorModel extends ChangeNotifier {
-  static DateTime now = DateTime.now();
-  static DateTime yesteday = now.subtract(Duration(days: 1));
-  static DateTime _tomorrow = now.add(Duration(days: 1));
-  static DateTime lastMidnight = now.subtract(Duration(
-    hours: now.hour,
-    minutes: now.minute,
-    seconds: now.second,
-    milliseconds: now.millisecond,
-    microseconds: now.microsecond,
+  static DateTime _now = DateTime.now();
+  static DateTime lastMidnight = _now.subtract(Duration(
+    hours: _now.hour,
+    minutes: _now.minute,
+    seconds: _now.second,
+    milliseconds: _now.millisecond,
+    microseconds: _now.microsecond,
   ));
 
   static int n = 0;
@@ -29,17 +33,13 @@ class DaySelectorModel extends ChangeNotifier {
   }
 
   DateTime get daySelected => _dateSelected;
-  DateTime get today => now;
-  DateTime get yesterday => yesteday;
-  DateTime get tomorrow => _tomorrow;
+  DateTime get today => _now;
+  DateTime get yesterday => _now.subtract(Duration(days: 1));
+  DateTime get tomorrow => _now.add(Duration(days: 1));
   void resetDate() {
     n = 0;
     _dateSelected = lastMidnight.add(Duration(days: 0));
     _dateSelected.add(Duration(days: 0));
-    notifyListeners();
-  }
-
-  void justNotify() {
     notifyListeners();
   }
 }
