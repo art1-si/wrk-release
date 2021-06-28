@@ -29,22 +29,9 @@ class EntriesViewModel {
 
   Stream<List<GroupByModel<ExerciseLog>>> get entriesTableModelStream {
     print("entriesTableModelStream");
-    return _allEntriesStreamToDate.map(
-      (entries) {
-        var entriesToTableModel = <GroupByModel<ExerciseLog>>[];
-        var groupEntry =
-            groupBy(entries, (ExerciseLog entry) => entry.exerciseID);
-        print(groupEntry.length);
-        for (var key in groupEntry.keys) {
-          print(key);
-          entriesToTableModel.add(
-            GroupByModel<ExerciseLog>(
-                title: groupEntry[key]!.first.exerciseName,
-                data: groupEntry[key]!),
-          );
-        }
-        return entriesToTableModel;
-      },
-    );
+    return database.groupByValue(
+        data: _allEntriesStreamToDate,
+        groupByValue: (log) => log.exerciseID,
+        titleBuilder: (log) => log.exerciseName);
   }
 }

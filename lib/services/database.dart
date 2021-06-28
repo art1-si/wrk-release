@@ -1,5 +1,7 @@
+import 'package:collection/collection.dart';
 import 'package:workout_notes_app/data_models/exercise.dart';
 import 'package:workout_notes_app/data_models/exercise_log.dart';
+import 'package:workout_notes_app/data_models/group_by_model.dart';
 
 import 'package:workout_notes_app/services/api_path.dart';
 import 'package:workout_notes_app/services/firebase_service.dart';
@@ -66,8 +68,31 @@ class FirestoreDatabase implements Database {
   @override
   Stream<List<Exercise>> exercisesStream() {
     return _service.collectionStream(
-      path: APIPath.exercisesLog(uid),
+      path: APIPath.exercises,
       builder: (data, documentID) => Exercise.fromJson(data),
     );
+  }
+
+  Stream<List<GroupByModel<T>>> groupByValue<T>({
+    required Stream<List<T>> data,
+    required String Function(T) groupByValue,
+    required Function(T) titleBuilder,
+  }) {
+    return data.map((entries) {
+      var entiresToReturn = <GroupByModel<T>>[];
+
+      var groupEntries = groupBy(entries, groupByValue);
+
+      for (var key in groupEntries.keys) {
+        print(key);
+        entiresToReturn.add(
+          GroupByModel<T>(
+              title: titleBuilder(groupEntries[key]!.first),
+              data: groupEntries[key]!),
+        );
+      }
+      return entiresToReturn;
+    });
+    // throw UnimplementedError();
   }
 }
