@@ -14,11 +14,11 @@ class LandingPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, ScopedReader watch) {
     return AuthWidget(
-      signedInBuilder: (_) => Consumer(builder: (context, watch, _) {
+      nonSignedInBuilder: (_) => Consumer(builder: (context, watch, _) {
         final didCompleteOnBoarding = watch(onboardingViewModelProvider);
-        return didCompleteOnBoarding ? SignInPage() : OnboardingPage();
+        return didCompleteOnBoarding ? OnboardingPage() : SignInPage();
       }),
-      nonSignedInBuilder: (_) => MyHomePage(),
+      signedInBuilder: (_) => MyHomePage(),
     );
   }
 }

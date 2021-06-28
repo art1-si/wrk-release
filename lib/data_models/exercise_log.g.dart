@@ -14,7 +14,7 @@ _$_ExerciseLog _$_$_ExerciseLogFromJson(Map<String, dynamic> json) {
     exerciseType: json['exerciseType'] as String,
     weight: (json['weight'] as num).toDouble(),
     reps: json['reps'] as int,
-    setCount: json['setCount'] as int,
+    setCount: json['setCount'] as int?,
     dateCreated: json['dateCreated'] as String,
     exerciseRPE: json['exerciseRPE'] as int,
     notes: json['notes'] as String?,

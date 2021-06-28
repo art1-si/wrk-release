@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:workout_notes_app/data_models/exercise_log.dart';
+import 'package:workout_notes_app/data_models/group_by_model.dart';
 import 'package:workout_notes_app/provider/day_selector_provider.dart';
 import 'package:workout_notes_app/screens/home_page/service/entries_view_model.dart';
 import 'package:workout_notes_app/screens/home_page/widget/entries_table.dart';
 import 'package:workout_notes_app/services/providers.dart';
 
 final entriesTableModelStreamProvider =
-    StreamProvider.autoDispose<List<EntriesTableModel>>((ref) {
+    StreamProvider.autoDispose<List<GroupByModel<ExerciseLog>>>((ref) {
   final database = ref.watch(databaseProvider);
   final date = ref.watch(selectedDateProvider);
   final vm = EntriesViewModel(database: database, toDate: date.daySelected);
@@ -18,6 +20,14 @@ class LogItemBuilder extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, ScopedReader watch) {
-    return Container();
+    final tableEntries = watch(entriesTableModelStreamProvider);
+    print(tableEntries);
+    return tableEntries.when(
+        data: (items) => EntriesTable(model: items),
+        loading: () => CircularProgressIndicator(),
+        error: (e, __) {
+          print(e);
+          return Text("Something went wrong");
+        });
   }
 }

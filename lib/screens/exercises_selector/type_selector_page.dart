@@ -17,7 +17,11 @@ class TypeSelectorPage extends StatelessWidget {
       appBar: AppBar(
         leading: GestureDetector(
           onTap: () => Navigator.push(
-              context, MaterialPageRoute(builder: (context) => MyApp())),
+            context,
+            MaterialPageRoute(
+              builder: (context) => MyApp(),
+            ),
+          ),
           child: Icon(Icons.arrow_back),
         ),
         elevation: 0,

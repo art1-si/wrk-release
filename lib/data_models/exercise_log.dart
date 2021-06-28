@@ -14,7 +14,7 @@ class ExerciseLog with _$ExerciseLog {
     required String exerciseType,
     required double weight,
     required int reps,
-    required int setCount,
+    required int? setCount,
     required String dateCreated,
     required int exerciseRPE,
     String? notes,

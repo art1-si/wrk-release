@@ -1,7 +1,6 @@
-import 'dart:html';
-
 import 'package:collection/collection.dart';
 import 'package:workout_notes_app/data_models/exercise_log.dart';
+import 'package:workout_notes_app/data_models/group_by_model.dart';
 import 'package:workout_notes_app/screens/home_page/widget/entries_table.dart';
 import 'package:workout_notes_app/services/database.dart';
 
@@ -28,15 +27,20 @@ class EntriesViewModel {
             .toList(),
       );
 
-  Stream<List<EntriesTableModel>> get entriesTableModelStream {
+  Stream<List<GroupByModel<ExerciseLog>>> get entriesTableModelStream {
+    print("entriesTableModelStream");
     return _allEntriesStreamToDate.map(
       (entries) {
-        var entriesToTableModel = <EntriesTableModel>[];
+        var entriesToTableModel = <GroupByModel<ExerciseLog>>[];
         var groupEntry =
             groupBy(entries, (ExerciseLog entry) => entry.exerciseID);
+        print(groupEntry.length);
         for (var key in groupEntry.keys) {
+          print(key);
           entriesToTableModel.add(
-            EntriesTableModel(title: key, data: groupEntry[key]!),
+            GroupByModel<ExerciseLog>(
+                title: groupEntry[key]!.first.exerciseName,
+                data: groupEntry[key]!),
           );
         }
         return entriesToTableModel;

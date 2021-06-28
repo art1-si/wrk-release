@@ -27,7 +27,7 @@ class _$ExerciseLogTearOff {
       required String exerciseType,
       required double weight,
       required int reps,
-      required int setCount,
+      required int? setCount,
       required String dateCreated,
       required int exerciseRPE,
       String? notes}) {
@@ -61,7 +61,7 @@ mixin _$ExerciseLog {
   String get exerciseType => throw _privateConstructorUsedError;
   double get weight => throw _privateConstructorUsedError;
   int get reps => throw _privateConstructorUsedError;
-  int get setCount => throw _privateConstructorUsedError;
+  int? get setCount => throw _privateConstructorUsedError;
   String get dateCreated => throw _privateConstructorUsedError;
   int get exerciseRPE => throw _privateConstructorUsedError;
   String? get notes => throw _privateConstructorUsedError;
@@ -84,7 +84,7 @@ abstract class $ExerciseLogCopyWith<$Res> {
       String exerciseType,
       double weight,
       int reps,
-      int setCount,
+      int? setCount,
       String dateCreated,
       int exerciseRPE,
       String? notes});
@@ -139,7 +139,7 @@ class _$ExerciseLogCopyWithImpl<$Res> implements $ExerciseLogCopyWith<$Res> {
       setCount: setCount == freezed
           ? _value.setCount
           : setCount // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       dateCreated: dateCreated == freezed
           ? _value.dateCreated
           : dateCreated // ignore: cast_nullable_to_non_nullable
@@ -170,7 +170,7 @@ abstract class _$ExerciseLogCopyWith<$Res>
       String exerciseType,
       double weight,
       int reps,
-      int setCount,
+      int? setCount,
       String dateCreated,
       int exerciseRPE,
       String? notes});
@@ -227,7 +227,7 @@ class __$ExerciseLogCopyWithImpl<$Res> extends _$ExerciseLogCopyWithImpl<$Res>
       setCount: setCount == freezed
           ? _value.setCount
           : setCount // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       dateCreated: dateCreated == freezed
           ? _value.dateCreated
           : dateCreated // ignore: cast_nullable_to_non_nullable
@@ -275,7 +275,7 @@ class _$_ExerciseLog implements _ExerciseLog {
   @override
   final int reps;
   @override
-  final int setCount;
+  final int? setCount;
   @override
   final String dateCreated;
   @override
@@ -353,7 +353,7 @@ abstract class _ExerciseLog implements ExerciseLog {
       required String exerciseType,
       required double weight,
       required int reps,
-      required int setCount,
+      required int? setCount,
       required String dateCreated,
       required int exerciseRPE,
       String? notes}) = _$_ExerciseLog;
@@ -374,7 +374,7 @@ abstract class _ExerciseLog implements ExerciseLog {
   @override
   int get reps => throw _privateConstructorUsedError;
   @override
-  int get setCount => throw _privateConstructorUsedError;
+  int? get setCount => throw _privateConstructorUsedError;
   @override
   String get dateCreated => throw _privateConstructorUsedError;
   @override

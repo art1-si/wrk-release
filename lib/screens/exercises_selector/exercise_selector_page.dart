@@ -1,18 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:workout_notes_app/data_models/exercise.dart';
 
-import 'package:workout_notes_app/screens/exercises_selector/widget/exercise_listTile.dart';
 
-class ExerciseSelectorPage extends StatefulWidget {
+class ExerciseSelectorPage extends StatelessWidget {
   final String exercisesType;
 
   ExerciseSelectorPage({Key? key, required this.exercisesType})
       : super(key: key);
-  @override
-  _ExerciseSelectorPageState createState() => _ExerciseSelectorPageState();
-}
 
-class _ExerciseSelectorPageState extends State<ExerciseSelectorPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
