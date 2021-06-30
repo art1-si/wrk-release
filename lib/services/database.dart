@@ -1,4 +1,5 @@
 import 'package:collection/collection.dart';
+import 'package:uuid/uuid.dart';
 import 'package:workout_notes_app/data_models/exercise.dart';
 import 'package:workout_notes_app/data_models/exercise_log.dart';
 import 'package:workout_notes_app/data_models/group_by_model.dart';
@@ -26,6 +27,8 @@ class FirestoreDatabase implements Database {
   FirestoreDatabase({required this.uid});
   final String uid;
   final _service = FirestoreService.instance;
+
+  var uuid = Uuid();
 
   @override
   Future<void> createExercise(Exercise exercise) async => _service.setData(
@@ -84,7 +87,7 @@ class FirestoreDatabase implements Database {
       var groupEntries = groupBy(entries, groupByValue);
 
       for (var key in groupEntries.keys) {
-        print(key);
+        print("groupByValue function at work $key");
         entiresToReturn.add(
           GroupByModel<T>(
               title: titleBuilder(groupEntries[key]!.first),

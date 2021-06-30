@@ -11,6 +11,7 @@ final exerciseViewModelProvider = ChangeNotifierProvider(
     database: ref.watch(databaseProvider),
   ),
 );
+// ignore: top_level_function_literal_block
 final exerciseStreamProvider = StreamProvider((ref) {
   final exerciseModelProvider = ref.watch(exerciseViewModelProvider);
   return exerciseModelProvider.groupedExercisesByType;
@@ -18,13 +19,16 @@ final exerciseStreamProvider = StreamProvider((ref) {
 
 class ExerciseViewModel with ChangeNotifier {
   ExerciseViewModel({required this.database});
+  bool showExercisesForSelectedType = false;
   final FirestoreDatabase database;
 
-  Stream<List<GroupByModel<Exercise>>> get groupedExercisesByType =>
-      database.groupByValue<Exercise>(
-          data: _exercises,
-          groupByValue: (exercise) => exercise.exerciseType,
-          titleBuilder: (exercise) => exercise.exerciseType);
+  Stream<List<GroupByModel<Exercise>>> get groupedExercisesByType {
+    print("hi");
+    return database.groupByValue<Exercise>(
+        data: _exercises,
+        groupByValue: (exercise) => exercise.exerciseType,
+        titleBuilder: (exercise) => exercise.exerciseType);
+  }
 
   Stream<List<Exercise>> get _exercises => database.exercisesStream();
 }

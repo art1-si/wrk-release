@@ -1,4 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:workout_notes_app/data_models/exercise.dart';
 import 'package:workout_notes_app/data_models/exercise_log.dart';
 import 'package:workout_notes_app/provider/day_selector_provider.dart';
 import 'package:workout_notes_app/screens/exercises_selector/type_selector_page.dart';
@@ -24,6 +28,23 @@ class MyHomePage extends StatelessWidget {
       ),
     ];
   }
+
+  /* Future<String> _loadAVaultAsset(BuildContext context) async {
+    return await DefaultAssetBundle.of(context)
+        .loadString("assets/exercises.json");
+  }
+
+  Future<List> loadVault(BuildContext context) async {
+    String jsonString = await _loadAVaultAsset(context);
+    final jsonResponse = json.decode(jsonString);
+    if (jsonResponse != null) {
+      jsonResponse.forEach((e) {
+        var ee = Exercise.fromJson(e);
+        print(ee);
+      });
+    }
+    return jsonResponse;
+  } */
 
   @override
   Widget build(BuildContext context) {
@@ -60,19 +81,6 @@ class MyHomePage extends StatelessWidget {
                   onPressed: () {
                     final database = context.read(databaseProvider);
                     final date = context.read(selectedDateProvider);
-                    database.createExerciseLog(
-                      ExerciseLog(
-                        id: documentIdFromCurrentDate(),
-                        exerciseID: "exerciseID2",
-                        exerciseName: "exerciseName2",
-                        exerciseType: "exerciseType2",
-                        weight: 22,
-                        reps: 1,
-                        setCount: 1,
-                        dateCreated: date.daySelected.toString(),
-                        exerciseRPE: 10,
-                      ),
-                    );
                   },
                   child: Text("Add mock data"),
                 ),
