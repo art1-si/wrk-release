@@ -4,11 +4,11 @@ import 'package:intl/intl.dart';
 import 'package:workout_notes_app/data_models/exercise_log.dart';
 
 class HistoryView extends StatelessWidget {
+  final List<ExerciseLog> exerciseLog;
   HistoryView({
     Key? key,
     required this.exerciseLog,
   }) : super(key: key);
-  final List<ExerciseLog> exerciseLog;
 
   @override
   Widget build(BuildContext context) {

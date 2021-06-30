@@ -10,7 +10,7 @@ class AddExerciseLogPageViewModel extends ChangeNotifier {
   List<Exercise>? _selectedExercises;
   int _exerciseIndex = 0;
 
-  Exercise get seletedExercise => _selectedExercises![_exerciseIndex];
+  Exercise get selectedExercise => _selectedExercises![_exerciseIndex];
 
   bool get indexIsOnZero => _exerciseIndex == 0;
 

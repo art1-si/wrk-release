@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:workout_notes_app/data_models/exercise_log.dart';
+import 'package:workout_notes_app/screens/new_entry_page/tabs/history_view.dart';
 
 import 'package:workout_notes_app/screens/new_entry_page/tabs/log_screen.dart';
 import 'package:workout_notes_app/screens/new_entry_page/services/add_exercise_log_page_view_model.dart';
+import 'package:workout_notes_app/screens/new_entry_page/tabs/my_graph_widget.dart';
+import 'package:workout_notes_app/screens/new_entry_page/tabs/rep_max_view.dart';
+import 'package:workout_notes_app/services/providers.dart';
+import 'package:workout_notes_app/widgets/center_progress_indicator.dart';
 
 class AddExerciseToLog extends ConsumerWidget {
   AddExerciseToLog({
@@ -11,7 +17,8 @@ class AddExerciseToLog extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, ScopedReader watch) {
-    var exerciseProvider = watch(addExerciseLogProvider);
+    final exerciseProvider = watch(addExerciseLogProvider);
+    final _exerciseLogStream = watch(exerciseLogStream);
     return DefaultTabController(
       length: 4,
       child: GestureDetector(
@@ -63,51 +70,66 @@ class AddExerciseToLog extends ConsumerWidget {
             elevation: 0,
             centerTitle: true,
             title: Text(
-              exerciseProvider.seletedExercise.exerciseName,
+              exerciseProvider.selectedExercise.exerciseName,
               //style: Theme.of(context).textTheme.headline4,
             ),
-            bottom: TabBar(
-                indicatorWeight: 0.1,
-                indicatorColor: Colors.transparent,
-                labelStyle: TextStyle(fontSize: 13),
-                labelColor: Colors.white,
-                unselectedLabelStyle: TextStyle(fontSize: 12),
-                tabs: <Widget>[
-                  Text("LOG"),
-                  Text("GRAPH"),
-                  Text("HISTORY"),
-                  Text("%RM"),
-                ]),
+            bottom: _bottom(),
           ),
-          body: Column(
-            children: [
-              Divider(
-                thickness: 1,
+          body: _exerciseLogStream.when(
+            data: (exerciseLog) => _body(exerciseLog: exerciseLog),
+            loading: () => CenterProgressIndicator(),
+            error: (error, __) => Center(
+              child: Text("Something went wrong\nerror"),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  _bottom() {
+    return TabBar(
+        indicatorWeight: 0.1,
+        indicatorColor: Colors.transparent,
+        labelStyle: TextStyle(fontSize: 13),
+        labelColor: Colors.white,
+        unselectedLabelStyle: TextStyle(fontSize: 12),
+        tabs: <Widget>[
+          Text("LOG"),
+          Text("GRAPH"),
+          Text("HISTORY"),
+          Text("%RM"),
+        ]);
+  }
+
+  Widget _body({
+    required List<ExerciseLog> exerciseLog,
+  }) {
+    return Column(
+      children: [
+        Divider(
+          thickness: 1,
+        ),
+        Expanded(
+          child: TabBarView(
+            physics: NeverScrollableScrollPhysics(),
+            children: <Widget>[
+              LogScreen(
+                exerciseLog: exerciseLog,
               ),
-              Expanded(
-                child: TabBarView(
-                  physics: NeverScrollableScrollPhysics(),
-                  children: <Widget>[
-                    LogScreen(),
-                    Container(),
-                    Container(),
-                    Container(),
-                    /* MyGraphWidget(
-                          //exerciseLog: snapshot.data!,
-                        ),
-                        HistoryView(
-                          //exerciseLog: snapshot.data!,
-                        ),
-                        RepMaxView(
-                          //exerciseLog: snapshot.data!,
-                        ), */
-                  ],
-                ),
+              MyGraphWidget(
+                exerciseLog: exerciseLog,
+              ),
+              HistoryView(
+                exerciseLog: exerciseLog,
+              ),
+              RepMaxView(
+                exerciseLog: exerciseLog,
               ),
             ],
           ),
         ),
-      ),
+      ],
     );
   }
 }

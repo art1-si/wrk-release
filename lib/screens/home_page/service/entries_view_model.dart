@@ -11,26 +11,43 @@ bool compairDatesToDay(DateTime date1, DateTime date2) {
 }
 
 class EntriesViewModel {
-  EntriesViewModel({required this.database, required this.toDate});
+  EntriesViewModel(
+      {this.byExerciseID, required this.database, required this.toDate});
 
   final FirestoreDatabase database;
   final DateTime toDate;
+  final String? byExerciseID;
 
-  Stream<List<ExerciseLog>> get _allEntriesStreamToDate => database
+  Stream<List<ExerciseLog>> get allEntriesStreamToDate => database
       .exerciseLogStream()
       .map(
-        (entries) => entries
-            .where(
-              (entry) =>
-                  compairDatesToDay(DateTime.parse(entry.dateCreated), toDate),
-            )
-            .toList(),
+        (entries) => entries.where((entry) {
+          if (byExerciseID == null) {
+            return compairDatesToDay(DateTime.parse(entry.dateCreated), toDate);
+          } else {
+            return compairDatesToDay(
+                    DateTime.parse(entry.dateCreated), toDate) &&
+                entry.exerciseID == byExerciseID;
+          }
+        }).toList(),
       );
+  Stream<List<ExerciseLog>> get getEntriesByExercise =>
+      database.exerciseLogStream().map(
+            (entries) => entries.where(
+              (entry) {
+                if (byExerciseID == null) {
+                  throw UnimplementedError();
+                } else {
+                  return entry.exerciseID == byExerciseID;
+                }
+              },
+            ).toList(),
+          );
 
   Stream<List<GroupByModel<ExerciseLog>>> get entriesTableModelStream {
     print("entriesTableModelStream");
     return database.groupByValue(
-        data: _allEntriesStreamToDate,
+        data: allEntriesStreamToDate,
         groupByValue: (log) => log.exerciseID,
         titleBuilder: (log) => log.exerciseName);
   }
