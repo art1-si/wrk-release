@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'dart:ui' as ui;
 
 import 'package:workout_notes_app/data_models/exercise_log.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:workout_notes_app/screens/new_entry_page/tabs/graph_page.dart/services/graph_model_provider.dart';
 
 class MyDrawGraph extends StatefulWidget {
   final List<ExerciseLog> snapshotToPass;
@@ -68,23 +70,33 @@ class _MyDrawGraphState extends State<MyDrawGraph> {
           _tapPosition = null;
         });
       },
-      child: CustomPaint(
-        size: Size(
-          MediaQuery.of(context).size.width,
-          MediaQuery.of(context).size.height,
-        ),
-        painter: DrawGraph(
-          sizeWidth: MediaQuery.of(context).size.width - 50,
-          lineColor: Theme.of(context).accentColor,
-          entry: widget.snapshotToPass,
-          linePosition: _tapPosition!,
-        ),
+      child: Consumer(
+        builder: (context, watch, child) {
+          final _graphProvider =
+              watch(graphProvider(widget.snapshotToPass)); //TODO make it better
+          return CustomPaint(
+            size: Size(
+              MediaQuery.of(context).size.width,
+              MediaQuery.of(context).size.height,
+            ),
+            painter: DrawGraph(
+              sizeWidth: MediaQuery.of(context).size.width - 50,
+              lineColor: Theme.of(context).accentColor,
+              entry: widget.snapshotToPass,
+              linePosition: _tapPosition,
+              maxValue: _graphProvider.maxValue,
+              minValue: _graphProvider.minValue,
+            ),
+          );
+        },
       ),
     );
   }
 }
 
 class DrawGraph extends CustomPainter {
+  final double minValue;
+  final double maxValue;
   final Offset? linePosition;
   final List<ExerciseLog> entry;
   final Color lineColor;
@@ -94,6 +106,8 @@ class DrawGraph extends CustomPainter {
 
   const DrawGraph({
     Key? key,
+    required this.minValue,
+    required this.maxValue,
     required this.linePosition,
     required this.sizeWidth,
     required this.entry,
@@ -101,48 +115,16 @@ class DrawGraph extends CustomPainter {
     this.paragraphStyle,
   });
 
-  createdWeightParagraph(Canvas canvas, paragraphXoffset, index, text) {
-    final textStyle = ui.TextStyle(
-      color: Colors.white54,
-      fontSize: 10,
-      letterSpacing: 1.5,
-    );
-    final paragraphStyle = ui.ParagraphStyle(
-      textDirection: TextDirection.ltr,
-    );
-    final paragraphBuilder = ui.ParagraphBuilder(paragraphStyle)
-      ..pushStyle(textStyle)
-      ..addText('$text');
-    final constraints = ui.ParagraphConstraints(width: 50);
-    final paragraph = paragraphBuilder.build();
-    paragraph.layout(constraints);
-    return canvas.drawParagraph(paragraph, Offset(0, paragraphXoffset));
-  }
-
   @override
   void paint(Canvas canvas, Size size) {
     int index = 0;
-    double maxWeightValue = 0;
-    double minWeightValue = 1000000;
-    double len = 50;
-    double len2 = (size.width - 50) / (entry.length - 1);
+
+    double distance = 50;
+    double nextDistance = (size.width - 50) / (entry.length - 1);
     double lastWeighValue = entry.first.weight;
     List listOfXOffset = <double>[];
     List listOfYOffset = <double>[];
-    var entryWithoutRepeatValues = [];
 
-    entry.forEach((element) {
-      entryWithoutRepeatValues.add(element.weight);
-
-      if (element.weight > maxWeightValue) {
-        maxWeightValue = element.weight;
-      }
-      if (element.weight < minWeightValue) {
-        minWeightValue = element.weight;
-      }
-    });
-
-    var e = entryWithoutRepeatValues.toSet();
     Color gradinetColorStarter = (linePosition == null)
         ? lineColor.withOpacity(0.1)
         : Colors.orange[300]!.withOpacity(0.1);
@@ -174,58 +156,71 @@ class DrawGraph extends CustomPainter {
       ..strokeWidth = 10;
 
     index = 0;
-    maxWeightValue = 0;
-    minWeightValue = 1000;
-    len = 50;
-    len2 = (sizeWidth - 50) / (entry.length - 1);
+
+    distance = 50;
+    nextDistance = (sizeWidth - 50) / (entry.length - 1);
     lastWeighValue = entry.first.weight;
 
-    if (entry.isNotEmpty && e.length > 1) {
+    if (entry.isNotEmpty) {
       entry.forEach((element) {
+        print(element.dateCreated);
         double weightGraphValue = element.weight;
-        double relativeYposition = (weightGraphValue - minWeightValue) /
-            (maxWeightValue - minWeightValue);
+        double relativeYposition =
+            (weightGraphValue - minValue) / (maxValue - minValue);
         double yOffset = size.height - relativeYposition * size.height;
 
-        double lastRelativeYposition = (lastWeighValue - minWeightValue) /
-            (maxWeightValue - minWeightValue);
+        double lastRelativeYposition =
+            (lastWeighValue - minValue) / (maxValue - minValue);
         double yLastOffset = size.height - lastRelativeYposition * size.height;
 
-        listOfXOffset.add(len);
+        listOfXOffset.add(distance);
         listOfYOffset.add(yOffset);
-        canvas.drawLine(Offset(len, yOffset),
-            Offset(((len == 50) ? len : len - len2), yLastOffset), line2);
 
+        //Draw main line
+        canvas.drawLine(
+            Offset(distance, yOffset),
+            Offset(((distance == 50) ? distance : distance - nextDistance),
+                yLastOffset),
+            line2);
+
+        //Draw background
         canvas.drawPath(
           Path()
-            ..moveTo((len == 50) ? len : len - len2, size.height - 5)
-            ..lineTo(len, size.height - 5)
-            ..lineTo(len, yOffset)
-            ..lineTo((len == 50) ? len : len - len2, yLastOffset),
+            ..moveTo((distance == 50) ? distance : distance - nextDistance,
+                size.height - 5)
+            ..lineTo(distance, size.height - 5)
+            ..lineTo(distance, yOffset)
+            ..lineTo((distance == 50) ? distance : distance - nextDistance,
+                yLastOffset),
           shadowLine2,
         );
 
-        len = len + len2;
+        distance = distance + nextDistance;
         lastWeighValue = element.weight;
         index++;
       });
     } else {
       listOfXOffset = [];
-      len = 50;
-      len2 = (sizeWidth - 50) / (entry.length - 1);
+      distance = 50;
+      nextDistance = (sizeWidth - 50) / (entry.length - 1);
       entry.forEach((element) {
-        listOfXOffset.add(len);
-        canvas.drawLine(Offset(len, size.height / 2),
-            Offset(((len == 50) ? len : len - len2), size.height / 2), line2);
+        listOfXOffset.add(distance);
+        canvas.drawLine(
+            Offset(distance, size.height / 2),
+            Offset(((distance == 50) ? distance : distance - nextDistance),
+                size.height / 2),
+            line2);
         canvas.drawPath(
           Path()
-            ..moveTo((len == 50) ? len : len - len2, size.height - 5)
-            ..lineTo(len, size.height - 5)
-            ..lineTo(len, size.height / 2)
-            ..lineTo((len == 50) ? len : len - len2, size.height / 2),
+            ..moveTo((distance == 50) ? distance : distance - nextDistance,
+                size.height - 5)
+            ..lineTo(distance, size.height - 5)
+            ..lineTo(distance, size.height / 2)
+            ..lineTo((distance == 50) ? distance : distance - nextDistance,
+                size.height / 2),
           shadowLine2,
         );
-        len = len + len2;
+        distance = distance + nextDistance;
       });
     }
 

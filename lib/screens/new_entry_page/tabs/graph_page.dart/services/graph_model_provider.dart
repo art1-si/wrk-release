@@ -38,4 +38,19 @@ class GraphModelProvider extends ChangeNotifier {
       _minValue = 0;
     }
   }
+
+  void findOffsets() {
+    exerciseLog.forEach((log) {});
+  }
+}
+
+class GraphModel {
+  GraphModel({
+    required this.x,
+    required this.y,
+    required this.corespondingLog,
+  });
+  final double x;
+  final double y;
+  final ExerciseLog corespondingLog;
 }

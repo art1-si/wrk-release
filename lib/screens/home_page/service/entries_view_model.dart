@@ -41,7 +41,7 @@ class EntriesViewModel {
                   return entry.exerciseID == byExerciseID;
                 }
               },
-            ).toList(),
+            ).sortedBy((element) => element.id),
           );
 
   Stream<List<GroupByModel<ExerciseLog>>> get entriesTableModelStream {
