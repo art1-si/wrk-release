@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:workout_notes_app/data_models/exercise.dart';
 import 'package:workout_notes_app/data_models/exercise_log.dart';
 import 'package:workout_notes_app/screens/new_entry_page/tabs/history_view.dart';
 
 import 'package:workout_notes_app/screens/new_entry_page/tabs/log_screen.dart';
 import 'package:workout_notes_app/screens/new_entry_page/services/add_exercise_log_page_view_model.dart';
-import 'package:workout_notes_app/screens/new_entry_page/tabs/my_graph_widget.dart';
+import 'package:workout_notes_app/screens/new_entry_page/tabs/graph_page.dart/my_graph_widget.dart';
 import 'package:workout_notes_app/screens/new_entry_page/tabs/rep_max_view.dart';
 import 'package:workout_notes_app/services/providers.dart';
 import 'package:workout_notes_app/widgets/center_progress_indicator.dart';
@@ -76,7 +77,10 @@ class AddExerciseToLog extends ConsumerWidget {
             bottom: _bottom(),
           ),
           body: _exerciseLogStream.when(
-            data: (exerciseLog) => _body(exerciseLog: exerciseLog),
+            data: (exerciseLog) => _body(
+              exerciseLog: exerciseLog,
+              exercise: exerciseProvider.selectedExercise,
+            ),
             loading: () => CenterProgressIndicator(),
             error: (error, __) => Center(
               child: Text("Something went wrong\nerror"),
@@ -104,6 +108,7 @@ class AddExerciseToLog extends ConsumerWidget {
 
   Widget _body({
     required List<ExerciseLog> exerciseLog,
+    required Exercise exercise,
   }) {
     return Column(
       children: [
@@ -116,6 +121,7 @@ class AddExerciseToLog extends ConsumerWidget {
             children: <Widget>[
               LogScreen(
                 exerciseLog: exerciseLog,
+                exercise: exercise,
               ),
               MyGraphWidget(
                 exerciseLog: exerciseLog,

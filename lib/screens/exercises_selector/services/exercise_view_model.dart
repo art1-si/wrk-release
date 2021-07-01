@@ -12,7 +12,7 @@ final exerciseViewModelProvider = ChangeNotifierProvider(
   ),
 );
 // ignore: top_level_function_literal_block
-final exerciseStreamProvider = StreamProvider((ref) {
+final exerciseStreamProvider = StreamProvider.autoDispose((ref) {
   final exerciseModelProvider = ref.watch(exerciseViewModelProvider);
   return exerciseModelProvider.groupedExercisesByType;
 });
