@@ -56,7 +56,7 @@ class MyGraphWidget extends ConsumerWidget {
                     entryLength: exerciseLog.length,
                   ),
                   MyDrawGraph(
-                    snapshotToPass: _graphProvider.exerciseLog,
+                    graphProvider: _graphProvider,
                   ),
                 ],
               ),
