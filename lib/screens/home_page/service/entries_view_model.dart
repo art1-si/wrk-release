@@ -1,8 +1,23 @@
 import 'package:collection/collection.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:workout_notes_app/data_models/exercise_log.dart';
 import 'package:workout_notes_app/data_models/group_by_model.dart';
-import 'package:workout_notes_app/screens/home_page/widget/entries_table.dart';
+import 'package:workout_notes_app/provider/day_selector_provider.dart';
+import 'package:workout_notes_app/screens/new_entry_page/services/add_exercise_log_page_view_model.dart';
 import 'package:workout_notes_app/services/database.dart';
+import 'package:workout_notes_app/services/providers.dart';
+
+final exerciseLogStream = StreamProvider.autoDispose<List<ExerciseLog>>((ref) {
+  final database = ref.watch(databaseProvider);
+  final date = ref.watch(selectedDateProvider).daySelected;
+  final seletedExercise = ref.watch(addExerciseLogProvider).selectedExercise.id;
+  final vm = EntriesViewModel(
+    database: database,
+    toDate: date,
+    byExerciseID: seletedExercise,
+  );
+  return vm.getEntriesByExercise;
+});
 
 bool compairDatesToDay(DateTime date1, DateTime date2) {
   return date1.year == date2.year &&

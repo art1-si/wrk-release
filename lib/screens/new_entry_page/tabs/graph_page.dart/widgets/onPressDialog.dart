@@ -1,25 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:workout_notes_app/screens/new_entry_page/tabs/graph_page.dart/services/details_provider.dart';
 
-class OnPressDialog extends StatelessWidget {
-  final double weight;
-  final int reps;
-  final String dateCreated;
-
+class OnPressDialog extends ConsumerWidget {
   OnPressDialog({
     Key? key,
-    required this.weight,
-    required this.reps,
-    required this.dateCreated,
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return _PopUpTable(
-      field1: "WEIGHT $weight",
-      field2: "$reps",
-      field4: "Date $dateCreated",
-      field3: "rpe",
-    );
+  Widget build(BuildContext context, ScopedReader watch) {
+    final details = watch(detailsProvider);
+    print("details: ${details.logDetails}");
+    if (details.logDetails != null) {
+      return _PopUpTable(
+        field1: "WEIGHT ${details.logDetails!.corespondingLog.weight}",
+        field2: "${details.logDetails!.corespondingLog.reps}",
+        field4: "Date ${details.logDetails!.corespondingLog.dateCreated}",
+        field3: "rpe",
+      );
+    }
+    return Container();
   }
 }
 

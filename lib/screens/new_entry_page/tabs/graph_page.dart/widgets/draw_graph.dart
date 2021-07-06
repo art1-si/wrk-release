@@ -6,33 +6,28 @@ import 'package:workout_notes_app/screens/new_entry_page/tabs/graph_page.dart/se
 class DrawGraph extends CustomPainter {
   final double minValue;
   final double maxValue;
-  final Offset? linePosition;
   final GraphModelProvider graphProvider;
 
   final Color lineColor;
 
-  final TextStyle? paragraphStyle;
   final double sizeWidth;
 
   const DrawGraph({
     Key? key,
     required this.minValue,
     required this.maxValue,
-    required this.linePosition,
     required this.sizeWidth,
     required this.graphProvider,
     required this.lineColor,
-    this.paragraphStyle,
   });
 
   @override
   void paint(Canvas canvas, Size size) {
     final entry = graphProvider.findOffsets(size: size);
-    print("graph size $size");
-    Color gradinetColorStarter = (linePosition == null)
+    Color gradinetColorStarter = (graphProvider.pressedPosition == null)
         ? lineColor.withOpacity(0.1)
         : Colors.orange[300]!.withOpacity(0.1);
-    Color endGradinetColor = (linePosition == null)
+    Color endGradinetColor = (graphProvider.pressedPosition == null)
         ? Colors.blue.withOpacity(0.005)
         : Colors.blue.withOpacity(0.005);
     final gradient = LinearGradient(
@@ -48,24 +43,22 @@ class DrawGraph extends CustomPainter {
       ..style = PaintingStyle.fill
       ..strokeWidth = 2;
     Paint line2 = Paint()
-      ..color = (linePosition == null) ? lineColor : Colors.orange[300]!
+      ..color = (graphProvider.pressedPosition == null)
+          ? lineColor
+          : Colors.orange[300]!
       ..strokeCap = StrokeCap.round
       ..style = PaintingStyle.fill
       ..strokeWidth = 1;
 
     Paint points = Paint()
-      ..color = (linePosition == null) ? lineColor : Colors.orange[300]!
+      ..color = (graphProvider.pressedPosition == null)
+          ? lineColor
+          : Colors.orange[300]!
       ..strokeCap = StrokeCap.round
       ..style = PaintingStyle.fill
       ..strokeWidth = 10;
 
     entry.forEach((element) {
-      print("x :${element.x}");
-
-      print("y :${element.y}");
-      print("next x :${element.nextX}");
-
-      print("next y :${element.nextY}");
       //Draw main line
       canvas.drawLine(Offset(element.x, element.y),
           Offset(element.nextX, element.nextY), line2);
@@ -80,25 +73,13 @@ class DrawGraph extends CustomPainter {
         shadowLine2,
       );
     });
-
-    /* if (linePosition != null && listOfXOffset.isNotEmpty) {
-      var distance = listOfXOffset[1] - listOfXOffset.first;
-
-      for (var i = 0; i < listOfXOffset.length; i++) {
-        if (listOfXOffset[i] < linePosition!.dx + distance / 2 &&
-            listOfXOffset[i] + distance > linePosition!.dx + distance / 2) {
-          canvas.drawLine(
-              Offset(listOfXOffset[i],
-                  (listOfYOffset.isEmpty) ? size.height / 2 : listOfYOffset[i]),
-              Offset(listOfXOffset[i],
-                  (listOfYOffset.isEmpty) ? size.height / 2 : listOfYOffset[i]),
-              points);
-        }
-      }
-    } */
+    if (graphProvider.tappedLog != null) {
+      canvas.drawLine(
+          Offset(graphProvider.tappedLog!.x, graphProvider.tappedLog!.y),
+          Offset(graphProvider.tappedLog!.x, graphProvider.tappedLog!.y),
+          points);
+    }
   }
-
-  void _drawLine(GraphModel points) {}
 
   @override
   bool shouldRepaint(CustomPainter oldDelegate) {

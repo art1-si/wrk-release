@@ -1,14 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:workout_notes_app/data_models/exercise_log.dart';
-import 'package:workout_notes_app/screens/exercises_selector/services/exercise_view_model.dart';
+import 'package:workout_notes_app/screens/home_page/service/entries_view_model.dart';
+import 'package:workout_notes_app/screens/new_entry_page/tabs/graph_page.dart/services/details_provider.dart';
 import 'package:workout_notes_app/services/providers.dart';
 
-AutoDisposeChangeNotifierProvider<GraphModelProvider> graphProvider(
-    List<ExerciseLog> exerciseLog) {
-  return ChangeNotifierProvider.autoDispose(
-      (ref) => GraphModelProvider(exerciseLog: exerciseLog));
-}
+final container = ProviderContainer();
+final graphProvider = ChangeNotifierProvider.autoDispose
+    .family<GraphModelProvider, List<ExerciseLog>>(
+        (ref, log) => GraphModelProvider(exerciseLog: log));
 
 class GraphModelProvider extends ChangeNotifier {
   GraphModelProvider({required this.exerciseLog}) {
@@ -16,13 +16,24 @@ class GraphModelProvider extends ChangeNotifier {
   }
   final List<ExerciseLog> exerciseLog;
   double _maxValue = 0;
+  Offset? _pressedPosition;
   double _minValue = double.infinity;
+  List<GraphModel>? _graphLogPosition;
+  GraphModel? _tappedExerciseLog;
 
   double get maxValue => _maxValue;
   double get minValue => _minValue;
+  List<GraphModel>? get graphLogPosition => _graphLogPosition;
+  GraphModel? get tappedLog => _tappedExerciseLog;
+  Offset? get pressedPosition => _pressedPosition;
+
+  void setPressedPosition(Offset? value) {
+    print("new offset: $value");
+    _pressedPosition = value;
+    notifyListeners();
+  }
 
   void setMinAndMaxValue() {
-    print("is setting");
     if (exerciseLog.length > 1) {
       exerciseLog.forEach((element) {
         if (element.weight > _maxValue) {
@@ -45,9 +56,6 @@ class GraphModelProvider extends ChangeNotifier {
         (weightGraphValue - minValue) / (maxValue - minValue);
     double yOffset = height - relativeYposition * height;
 
-    /* double lastRelativeYposition =
-            (lastWeighValue - minValue) / (maxValue - minValue);
-        double yLastOffset = height - lastRelativeYposition * height; */
     return yOffset;
   }
 
@@ -79,7 +87,28 @@ class GraphModelProvider extends ChangeNotifier {
       isLast = exerciseLog.length == nextValueIndex;
       distance = distance + nextDistance;
     });
+    _graphLogPosition = _results;
     return _results;
+  }
+
+  void setTappedLog() {
+    if (pressedPosition != null) {
+      if (_graphLogPosition != null && _graphLogPosition!.length > 1) {
+        var distance =
+            _graphLogPosition!.first.nextX - _graphLogPosition!.first.x;
+        for (var position in _graphLogPosition!) {
+          if (position.x < pressedPosition!.dx + distance / 2 &&
+              position.nextX > pressedPosition!.dx + distance / 2) {
+            _tappedExerciseLog = position;
+            container.read(detailsProvider).setDetails(position);
+            print("position ${position.corespondingLog.weight}");
+            break;
+          }
+        }
+      }
+    } else {
+      _tappedExerciseLog = null;
+    }
   }
 }
 
