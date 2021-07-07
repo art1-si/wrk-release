@@ -11,14 +11,14 @@ class DaySelectorModel extends ChangeNotifier {
 
   static int n = 0;
   DateTime _dateSelected = _now.add(Duration(days: n));
-  void daySelectorAdd() async {
+  void increment() async {
     n++;
     _dateSelected = _now.add(Duration(days: n));
     _dateSelected.add(Duration(days: n));
     notifyListeners();
   }
 
-  void daySelectorSub() {
+  void decrement() {
     n--;
     _dateSelected = _now.add(Duration(days: n));
     _dateSelected.add(Duration(days: n));

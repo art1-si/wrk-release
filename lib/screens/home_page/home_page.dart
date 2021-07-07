@@ -11,6 +11,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:workout_notes_app/services/database.dart';
 import 'package:workout_notes_app/services/providers.dart';
 import 'package:workout_notes_app/services/strings.dart';
+import 'package:workout_notes_app/widgets/day_selector.dart';
 
 class MyHomePage extends StatelessWidget {
   List<Widget> _header() {
@@ -76,6 +77,7 @@ class MyHomePage extends StatelessWidget {
                   },
                   child: Text(Strings.exercise),
                 ),
+                DaySelector(),
                 LogItemBuilder(),
                 TextButton(
                   onPressed: () {

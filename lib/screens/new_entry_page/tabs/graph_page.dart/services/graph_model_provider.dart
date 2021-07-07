@@ -23,25 +23,6 @@ class GraphProvider extends ChangeNotifier {
     _pressedPosition = value;
     notifyListeners();
   }
-
-  void setTappedLog() {
-    if (pressedPosition != null) {
-      if (_graphLogPosition != null && _graphLogPosition!.length > 1) {
-        var distance =
-            _graphLogPosition!.first.nextX - _graphLogPosition!.first.x;
-        for (var position in _graphLogPosition!) {
-          if (position.x < pressedPosition!.dx + distance / 2 &&
-              position.nextX > pressedPosition!.dx + distance / 2) {
-            _tappedExerciseLog = position;
-            print("position ${position.corespondingLog.weight}");
-            break;
-          }
-        }
-      }
-    } else {
-      _tappedExerciseLog = null;
-    }
-  }
 }
 
 class GraphModel {

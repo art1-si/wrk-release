@@ -67,8 +67,10 @@ class DrawGraph extends CustomPainter {
     });
     if (tappedEntryIndex != null) {
       canvas.drawLine(
-          Offset(entries[tappedEntryIndex!].x, entries[tappedEntryIndex!].y),
-          Offset(entries[tappedEntryIndex!].x, entries[tappedEntryIndex!].y),
+          Offset(entries[tappedEntryIndex!].x * size.width,
+              entries[tappedEntryIndex!].y * size.height),
+          Offset(entries[tappedEntryIndex!].x * size.width,
+              entries[tappedEntryIndex!].y * size.height),
           points);
     }
   }

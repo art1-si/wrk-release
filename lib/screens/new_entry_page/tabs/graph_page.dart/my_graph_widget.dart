@@ -35,7 +35,7 @@ class MyGraphWidget extends ConsumerWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 8),
           child: Container(
-            height: 250,
+            height: 200,
             child: Padding(
               padding: const EdgeInsets.only(
                 bottom: 16,

@@ -85,8 +85,8 @@ class EntriesViewModel {
     var _results = <GraphModel>[];
     double width = 1.0;
     bool isLast = false;
-    var distance = 0.0;
-    var nextDistance = (width) / (exerciseLog.length);
+    var distance = 0.07;
+    var nextDistance = (width - 0.1) / (exerciseLog.length - 1);
     int nextValueIndex = 1;
     exerciseLog.forEach((log) {
       double nextValue = exerciseLog.length > nextValueIndex
