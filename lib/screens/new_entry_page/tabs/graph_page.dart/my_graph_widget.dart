@@ -18,9 +18,9 @@ class MyGraphWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, ScopedReader watch) {
-    final _graphProvider = watch(graphProvider(exerciseLog));
+    final _graphProvider = watch(graphProvider);
 
-    if (_graphProvider.exerciseLog.isEmpty) {
+    if (exerciseLog.isEmpty) {
       return Center(
         child: Text(
           "EMPTY LOG",
@@ -47,8 +47,8 @@ class MyGraphWidget extends ConsumerWidget {
                 children: [
                   LineDividers(
                     dividerColor: Theme.of(context).dividerColor,
-                    minWeightValue: _graphProvider.minValue,
-                    maxWeightValue: _graphProvider.maxValue,
+                    minWeightValue: 1,
+                    maxWeightValue: 2,
                     entryLength: exerciseLog.length,
                   ),
                   MyDrawGraph(

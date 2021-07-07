@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:workout_notes_app/data_models/exercise.dart';
 import 'package:workout_notes_app/data_models/exercise_log.dart';
 import 'package:workout_notes_app/screens/home_page/service/entries_view_model.dart';
+import 'package:workout_notes_app/screens/new_entry_page/tabs/graph_page.dart/services/graph_model_provider.dart';
 import 'package:workout_notes_app/screens/new_entry_page/tabs/history_view.dart';
 
 import 'package:workout_notes_app/screens/new_entry_page/tabs/log_screen.dart';
@@ -77,10 +78,12 @@ class AddExerciseToLog extends ConsumerWidget {
             bottom: _bottom(),
           ),
           body: _exerciseLogStream.when(
-            data: (exerciseLog) => _body(
-              exerciseLog: exerciseLog,
-              exercise: exerciseProvider.selectedExercise,
-            ),
+            data: (exerciseLog) {
+              return _body(
+                exerciseLog: exerciseLog,
+                exercise: exerciseProvider.selectedExercise,
+              );
+            },
             loading: () => CenterProgressIndicator(),
             error: (error, __) => Center(
               child: Text("Something went wrong\nerror"),

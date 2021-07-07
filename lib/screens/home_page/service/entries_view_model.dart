@@ -4,6 +4,7 @@ import 'package:workout_notes_app/data_models/exercise_log.dart';
 import 'package:workout_notes_app/data_models/group_by_model.dart';
 import 'package:workout_notes_app/provider/day_selector_provider.dart';
 import 'package:workout_notes_app/screens/new_entry_page/services/add_exercise_log_page_view_model.dart';
+import 'package:workout_notes_app/screens/new_entry_page/tabs/graph_page.dart/services/graph_model_provider.dart';
 import 'package:workout_notes_app/services/database.dart';
 import 'package:workout_notes_app/services/providers.dart';
 
@@ -17,6 +18,17 @@ final exerciseLogStream = StreamProvider.autoDispose<List<ExerciseLog>>((ref) {
     byExerciseID: seletedExercise,
   );
   return vm.getEntriesByExercise;
+});
+final graphEntriesStream = StreamProvider.autoDispose((ref) {
+  final database = ref.watch(databaseProvider);
+  final date = ref.watch(selectedDateProvider).daySelected;
+  final seletedExercise = ref.watch(addExerciseLogProvider).selectedExercise.id;
+  final vm = EntriesViewModel(
+    database: database,
+    toDate: date,
+    byExerciseID: seletedExercise,
+  );
+  return vm.graphEntries;
 });
 
 bool compairDatesToDay(DateTime date1, DateTime date2) {
@@ -33,6 +45,79 @@ class EntriesViewModel {
   final DateTime toDate;
   final String? byExerciseID;
 
+  double _minValue = double.infinity;
+  double _maxValue = 0;
+
+  double get maxValue => _maxValue;
+  double get minValue => _minValue;
+
+  void setMinAndMaxValue(List<ExerciseLog> exerciseLog) {
+    if (exerciseLog.length > 1) {
+      exerciseLog.forEach((element) {
+        if (element.weight > _maxValue) {
+          _maxValue = element.weight;
+        }
+        if (element.weight < _minValue) {
+          _minValue = element.weight;
+        }
+      });
+    } else if (exerciseLog.isNotEmpty) {
+      _maxValue = exerciseLog.first.weight * 2;
+
+      _minValue = 0;
+    }
+  }
+
+  double getRelativeYposition({
+    required double value,
+  }) {
+    double height = 1.0;
+
+    double weightGraphValue = value;
+    double relativeYposition =
+        (weightGraphValue - minValue) / (maxValue - minValue);
+    double yOffset = height - relativeYposition * height;
+
+    return yOffset;
+  }
+
+  List<GraphModel> findOffsets({required List<ExerciseLog> exerciseLog}) {
+    var _results = <GraphModel>[];
+    double width = 1.0;
+    bool isLast = false;
+    var distance = 0.0;
+    var nextDistance = (width) / (exerciseLog.length);
+    int nextValueIndex = 1;
+    exerciseLog.forEach((log) {
+      double nextValue = exerciseLog.length > nextValueIndex
+          ? exerciseLog[nextValueIndex].weight
+          : log.weight;
+      var _yPosition = getRelativeYposition(value: log.weight);
+      var _nextYPosition = getRelativeYposition(value: nextValue);
+      _results.add(
+        GraphModel(
+          x: distance,
+          nextX: isLast ? distance : distance + nextDistance,
+          y: _yPosition,
+          nextY: _nextYPosition,
+          corespondingLog: log,
+        ),
+      );
+
+      nextValueIndex++;
+      isLast = exerciseLog.length == nextValueIndex;
+      distance = distance + nextDistance;
+    });
+    return _results;
+  }
+
+  Stream<List<GraphModel>> get graphEntries =>
+      getEntriesByExercise.map((exerciseLog) {
+        setMinAndMaxValue(exerciseLog);
+        final _graphEntries = findOffsets(exerciseLog: exerciseLog);
+        return _graphEntries;
+      });
+
   Stream<List<ExerciseLog>> get allEntriesStreamToDate => database
       .exerciseLogStream()
       .map(
@@ -46,6 +131,7 @@ class EntriesViewModel {
           }
         }).toList(),
       );
+
   Stream<List<ExerciseLog>> get getEntriesByExercise =>
       database.exerciseLogStream().map(
             (entries) => entries.where(

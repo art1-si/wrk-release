@@ -4,30 +4,23 @@ import 'package:flutter/material.dart';
 import 'package:workout_notes_app/screens/new_entry_page/tabs/graph_page.dart/services/graph_model_provider.dart';
 
 class DrawGraph extends CustomPainter {
-  final double minValue;
-  final double maxValue;
-  final GraphModelProvider graphProvider;
-
-  final Color lineColor;
-
-  final double sizeWidth;
-
   const DrawGraph({
     Key? key,
-    required this.minValue,
-    required this.maxValue,
-    required this.sizeWidth,
-    required this.graphProvider,
+    required this.entries,
     required this.lineColor,
+    required this.tappedEntryIndex,
   });
+
+  final List<GraphModel> entries;
+  final int? tappedEntryIndex;
+  final Color lineColor;
 
   @override
   void paint(Canvas canvas, Size size) {
-    final entry = graphProvider.findOffsets(size: size);
-    Color gradinetColorStarter = (graphProvider.pressedPosition == null)
+    Color gradinetColorStarter = (tappedEntryIndex == null)
         ? lineColor.withOpacity(0.1)
         : Colors.orange[300]!.withOpacity(0.1);
-    Color endGradinetColor = (graphProvider.pressedPosition == null)
+    Color endGradinetColor = (tappedEntryIndex == null)
         ? Colors.blue.withOpacity(0.005)
         : Colors.blue.withOpacity(0.005);
     final gradient = LinearGradient(
@@ -43,40 +36,39 @@ class DrawGraph extends CustomPainter {
       ..style = PaintingStyle.fill
       ..strokeWidth = 2;
     Paint line2 = Paint()
-      ..color = (graphProvider.pressedPosition == null)
-          ? lineColor
-          : Colors.orange[300]!
+      ..color = (tappedEntryIndex == null) ? lineColor : Colors.orange[300]!
       ..strokeCap = StrokeCap.round
       ..style = PaintingStyle.fill
       ..strokeWidth = 1;
 
     Paint points = Paint()
-      ..color = (graphProvider.pressedPosition == null)
-          ? lineColor
-          : Colors.orange[300]!
+      ..color = (tappedEntryIndex == null) ? lineColor : Colors.orange[300]!
       ..strokeCap = StrokeCap.round
       ..style = PaintingStyle.fill
       ..strokeWidth = 10;
 
-    entry.forEach((element) {
+    entries.forEach((element) {
+      double _dx = element.x * size.width;
+      double _dy = element.y * size.height;
+      double _nextDx = element.nextX * size.width;
+      double _nextDy = element.nextY * size.height;
       //Draw main line
-      canvas.drawLine(Offset(element.x, element.y),
-          Offset(element.nextX, element.nextY), line2);
+      canvas.drawLine(Offset(_dx, _dy), Offset(_nextDx, _nextDy), line2);
 
       //Draw background
       canvas.drawPath(
         Path()
-          ..moveTo(element.x, element.y)
-          ..lineTo(element.x, size.height)
-          ..lineTo(element.nextX, size.height)
-          ..lineTo(element.nextX, element.nextY),
+          ..moveTo(_dx, _dy)
+          ..lineTo(_dx, size.height)
+          ..lineTo(_nextDx, size.height)
+          ..lineTo(_nextDx, _nextDy),
         shadowLine2,
       );
     });
-    if (graphProvider.tappedLog != null) {
+    if (tappedEntryIndex != null) {
       canvas.drawLine(
-          Offset(graphProvider.tappedLog!.x, graphProvider.tappedLog!.y),
-          Offset(graphProvider.tappedLog!.x, graphProvider.tappedLog!.y),
+          Offset(entries[tappedEntryIndex!].x, entries[tappedEntryIndex!].y),
+          Offset(entries[tappedEntryIndex!].x, entries[tappedEntryIndex!].y),
           points);
     }
   }
