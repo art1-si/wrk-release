@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:workout_notes_app/screens/exercises_selector/services/exercise_view_model.dart';
 import 'package:workout_notes_app/screens/exercises_selector/widget/exercise_tile_widget.dart';
 
 class TypeSelectorPage extends StatelessWidget {

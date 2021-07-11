@@ -29,7 +29,15 @@ class DaySelector extends ConsumerWidget {
               ),
             ),
           ),
-          Text(date.daySelected.toString()),
+          GestureDetector(
+            onDoubleTap: () => date.resetDate(),
+            child: Text(
+              date.daySelectedToText(),
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
           GestureDetector(
             onTap: () {
               context.read(selectedDateProvider).increment();

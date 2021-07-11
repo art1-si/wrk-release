@@ -16,6 +16,11 @@ final exerciseStreamProvider = StreamProvider.autoDispose((ref) {
   final exerciseModelProvider = ref.watch(exerciseViewModelProvider);
   return exerciseModelProvider.groupedExercisesByType;
 });
+final exerciseStream = StreamProvider.autoDispose((ref) {
+  final exerciseModelProvider = ref.watch(exerciseViewModelProvider);
+
+  return exerciseModelProvider.exercises;
+});
 
 class ExerciseViewModel with ChangeNotifier {
   ExerciseViewModel({required this.database});
@@ -25,10 +30,12 @@ class ExerciseViewModel with ChangeNotifier {
   Stream<List<GroupByModel<Exercise>>> get groupedExercisesByType {
     print("hi");
     return database.groupByValue<Exercise>(
-        data: _exercises,
-        groupByValue: (exercise) => exercise.exerciseType,
-        titleBuilder: (exercise) => exercise.exerciseType);
+      data: exercises,
+      groupByValue: (exercise) => exercise.exerciseType,
+      titleBuilder: (exercise) => exercise.exerciseType,
+      dataID: (exercise) => exercise.id,
+    );
   }
 
-  Stream<List<Exercise>> get _exercises => database.exercisesStream();
+  Stream<List<Exercise>> get exercises => database.exercisesStream();
 }

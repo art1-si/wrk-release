@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 
 final selectedDateProvider = ChangeNotifierProvider<DaySelectorModel>(
   (ref) => DaySelectorModel(),
 );
+
+extension on DateTime {
+  String prettyToString() {
+    final formatter = DateFormat("MMMMEEEEd");
+    return formatter.format(this);
+  }
+}
 
 //TODO: make syntax cleaner
 class DaySelectorModel extends ChangeNotifier {
@@ -42,5 +50,17 @@ class DaySelectorModel extends ChangeNotifier {
       Duration(days: 0),
     );
     notifyListeners();
+  }
+
+  String daySelectedToText() {
+    if (_dateSelected == _now) {
+      return "TODAY";
+    } else if (_dateSelected == tomorrow) {
+      return "TOMORROW";
+    } else if (_dateSelected == yesterday) {
+      return "YESTERDAY";
+    } else {
+      return _dateSelected.prettyToString();
+    }
   }
 }

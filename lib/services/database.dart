@@ -80,6 +80,7 @@ class FirestoreDatabase implements Database {
     required Stream<List<T>> data,
     required String Function(T) groupByValue,
     required Function(T) titleBuilder,
+    required Function(T) dataID,
   }) {
     return data.map((entries) {
       var entiresToReturn = <GroupByModel<T>>[];
@@ -87,11 +88,12 @@ class FirestoreDatabase implements Database {
       var groupEntries = groupBy(entries, groupByValue);
 
       for (var key in groupEntries.keys) {
-        print("groupByValue function at work $key");
         entiresToReturn.add(
           GroupByModel<T>(
-              title: titleBuilder(groupEntries[key]!.first),
-              data: groupEntries[key]!),
+            title: titleBuilder(groupEntries[key]!.first),
+            data: groupEntries[key]!,
+            exerciseID: dataID(groupEntries[key]!.first),
+          ),
         );
       }
       return entiresToReturn;

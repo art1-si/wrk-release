@@ -148,8 +148,10 @@ class EntriesViewModel {
   Stream<List<GroupByModel<ExerciseLog>>> get entriesTableModelStream {
     print("entriesTableModelStream");
     return database.groupByValue(
-        data: allEntriesStreamToDate,
-        groupByValue: (log) => log.exerciseID,
-        titleBuilder: (log) => log.exerciseName);
+      data: allEntriesStreamToDate,
+      groupByValue: (log) => log.exerciseID,
+      titleBuilder: (log) => log.exerciseName,
+      dataID: (log) => log.exerciseID,
+    );
   }
 }

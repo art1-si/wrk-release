@@ -1,15 +1,6 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:workout_notes_app/data_models/exercise.dart';
-import 'package:workout_notes_app/data_models/exercise_log.dart';
-import 'package:workout_notes_app/provider/day_selector_provider.dart';
 import 'package:workout_notes_app/screens/exercises_selector/type_selector_page.dart';
 import 'package:workout_notes_app/screens/home_page/widget/log_item_builder.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:workout_notes_app/services/database.dart';
-import 'package:workout_notes_app/services/providers.dart';
 import 'package:workout_notes_app/services/strings.dart';
 import 'package:workout_notes_app/widgets/day_selector.dart';
 
@@ -29,23 +20,6 @@ class MyHomePage extends StatelessWidget {
       ),
     ];
   }
-
-  /* Future<String> _loadAVaultAsset(BuildContext context) async {
-    return await DefaultAssetBundle.of(context)
-        .loadString("assets/exercises.json");
-  }
-
-  Future<List> loadVault(BuildContext context) async {
-    String jsonString = await _loadAVaultAsset(context);
-    final jsonResponse = json.decode(jsonString);
-    if (jsonResponse != null) {
-      jsonResponse.forEach((e) {
-        var ee = Exercise.fromJson(e);
-        print(ee);
-      });
-    }
-    return jsonResponse;
-  } */
 
   @override
   Widget build(BuildContext context) {
@@ -79,13 +53,6 @@ class MyHomePage extends StatelessWidget {
                 ),
                 DaySelector(),
                 LogItemBuilder(),
-                TextButton(
-                  onPressed: () {
-                    final database = context.read(databaseProvider);
-                    final date = context.read(selectedDateProvider);
-                  },
-                  child: Text("Add mock data"),
-                ),
               ],
             ),
           ),

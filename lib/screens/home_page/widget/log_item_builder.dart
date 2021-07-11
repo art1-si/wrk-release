@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:workout_notes_app/data_models/exercise.dart';
 import 'package:workout_notes_app/data_models/exercise_log.dart';
 import 'package:workout_notes_app/data_models/group_by_model.dart';
 import 'package:workout_notes_app/provider/day_selector_provider.dart';
@@ -16,14 +17,17 @@ final entriesTableModelStreamProvider =
 });
 
 class LogItemBuilder extends ConsumerWidget {
-  const LogItemBuilder({Key? key}) : super(key: key);
+  const LogItemBuilder({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context, ScopedReader watch) {
     final tableEntries = watch(entriesTableModelStreamProvider);
-    print(tableEntries);
     return tableEntries.when(
-        data: (items) => EntriesTable(model: items),
+        data: (items) => EntriesTable(
+              model: items,
+            ),
         loading: () => CircularProgressIndicator(),
         error: (e, __) {
           print(e);

@@ -45,7 +45,9 @@ class _ExerciseListTile extends ConsumerWidget {
                 return ListTile(
                   title: Text(exercises.selectedExercises![index].exerciseName),
                   onTap: () {
-                    exercises.setSelectedExerciseIndex(index);
+                    context
+                        .read(addExerciseLogProvider)
+                        .setSelectedExerciseIndex(index);
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -67,7 +69,9 @@ class _ExerciseListTile extends ConsumerWidget {
         return ListTile(
           title: Text(data[index].title),
           onTap: () {
-            exercises.selectExercises(data[index].data);
+            context
+                .read(addExerciseLogProvider)
+                .selectExercises(data[index].data);
           },
         );
       },
