@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_riverpod/src/provider.dart';
 import 'package:workout_notes_app/data_models/exercise_log.dart';
 import 'package:workout_notes_app/data_models/group_by_model.dart';
 import 'package:workout_notes_app/screens/exercises_selector/services/exercise_view_model.dart';

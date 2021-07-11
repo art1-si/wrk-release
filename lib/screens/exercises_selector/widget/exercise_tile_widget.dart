@@ -14,7 +14,7 @@ class ExerciseTileWidget extends ConsumerWidget {
   Widget build(BuildContext context, ScopedReader watch) {
     final exercises = watch(exerciseStreamProvider);
     return exercises.when(
-      data: (data) => _ExerciseListTile(data: data),
+      data: (data) => _ExerciseListTile.create(context, data: data),
       loading: () => CenterProgressIndicator(),
       error: (e, __) => Center(
         child: Text("SOMETHING WENT WRONG\n$e"),
@@ -24,6 +24,13 @@ class ExerciseTileWidget extends ConsumerWidget {
 }
 
 class _ExerciseListTile extends ConsumerWidget {
+  static Widget create(BuildContext context,
+      {required List<GroupByModel<Exercise>> data}) {
+    final _exercises = context.read(addExerciseLogProvider);
+    _exercises.selectExercisesWithoutNotify(null);
+    return _ExerciseListTile(data: data);
+  }
+
   const _ExerciseListTile({Key? key, required this.data}) : super(key: key);
   final List<GroupByModel<Exercise>> data;
 
@@ -35,7 +42,8 @@ class _ExerciseListTile extends ConsumerWidget {
       return Column(
         children: [
           ElevatedButton(
-            onPressed: () => exercises.selectExercises(null),
+            onPressed: () =>
+                context.read(addExerciseLogProvider).selectExercises(null),
             child: Text("Go Back"),
           ),
           Expanded(

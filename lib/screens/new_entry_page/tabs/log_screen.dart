@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:workout_notes_app/data_models/exercise.dart';
 import 'package:workout_notes_app/data_models/exercise_log.dart';
 import 'package:workout_notes_app/provider/day_selector_provider.dart';
+import 'package:workout_notes_app/screens/home_page/service/entries_view_model.dart';
 import 'package:workout_notes_app/screens/new_entry_page/widgets/text_field_number_picker.dart';
 import 'package:workout_notes_app/services/database.dart';
 import 'package:workout_notes_app/services/providers.dart';
@@ -26,6 +27,7 @@ class _LogScreenState extends State<LogScreen> {
   ExerciseLog _serializeEntry({
     required String id,
     required String dateCreated,
+    required int setCount,
   }) {
     return ExerciseLog(
       id: id,
@@ -34,10 +36,22 @@ class _LogScreenState extends State<LogScreen> {
       exerciseType: widget.exercise.exerciseType,
       weight: _weight,
       reps: _reps,
-      setCount: 1, //TODO: Create set counter
+      setCount: setCount, //TODO: Create set counter
       dateCreated: dateCreated,
       exerciseRPE: 10, //TODO: create rpe selector
     );
+  }
+
+  int _setCounter(DateTime date) {
+    int _set = 1;
+    List<ExerciseLog> _exerciseLog = widget.exerciseLog
+        .where((element) =>
+            compairDatesToDay(DateTime.parse(element.dateCreated), date))
+        .toList();
+    if (_exerciseLog.isNotEmpty) {
+      return _set + widget.exerciseLog.last.setCount!;
+    }
+    return _set;
   }
 
   Future<void> _submitEntry(
@@ -46,14 +60,22 @@ class _LogScreenState extends State<LogScreen> {
     final entry = _serializeEntry(
       id: documentIdFromCurrentDate(),
       dateCreated: date.daySelected.toIso8601String(),
+      setCount: _setCounter(date.daySelected),
     );
     await database.createExerciseLog(entry);
   }
 
   @override
+  void initState() {
+    if (widget.exerciseLog.isNotEmpty) {
+      _weight = widget.exerciseLog.last.weight;
+      _reps = widget.exerciseLog.last.reps;
+    }
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final database = context.read(databaseProvider);
-    final date = context.read(selectedDateProvider);
     return ListView(
       children: <Widget>[
         TextFieldNumerPicker(
@@ -73,7 +95,11 @@ class _LogScreenState extends State<LogScreen> {
           changesByValue: 1,
         ),
         ElevatedButton(
-          onPressed: () => _submitEntry(database: database, date: date),
+          onPressed: () {
+            final database = context.read(databaseProvider);
+            final date = context.read(selectedDateProvider);
+            _submitEntry(database: database, date: date);
+          },
           child: Text("Submit"),
         ),
       ],
