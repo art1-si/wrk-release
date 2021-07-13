@@ -6,6 +6,7 @@ part of 'exercise_log.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
+// ignore: non_constant_identifier_names
 _$_ExerciseLog _$_$_ExerciseLogFromJson(Map<String, dynamic> json) {
   return _$_ExerciseLog(
     id: json['id'] as String,
@@ -21,6 +22,7 @@ _$_ExerciseLog _$_$_ExerciseLogFromJson(Map<String, dynamic> json) {
   );
 }
 
+// ignore: non_constant_identifier_names
 Map<String, dynamic> _$_$_ExerciseLogToJson(_$_ExerciseLog instance) =>
     <String, dynamic>{
       'id': instance.id,

@@ -51,7 +51,10 @@ class _ExerciseListTile extends ConsumerWidget {
               itemCount: exercises.selectedExercises!.length,
               itemBuilder: (context, index) {
                 return ListTile(
-                  title: Text(exercises.selectedExercises![index].exerciseName),
+                  title: Text(
+                    exercises.selectedExercises![index].exerciseName,
+                    style: Theme.of(context).textTheme.headline6,
+                  ),
                   onTap: () {
                     context
                         .read(addExerciseLogProvider)
@@ -75,7 +78,10 @@ class _ExerciseListTile extends ConsumerWidget {
       itemCount: data.length,
       itemBuilder: (context, index) {
         return ListTile(
-          title: Text(data[index].title),
+          title: Text(
+            data[index].title,
+            style: Theme.of(context).textTheme.headline6,
+          ),
           onTap: () {
             context
                 .read(addExerciseLogProvider)

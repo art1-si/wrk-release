@@ -50,16 +50,19 @@ class EntriesTable extends ConsumerWidget {
               },
               child: Column(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 8.0, horizontal: 16.0),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        model[i].title,
-                        style: TextStyle(
-                          fontSize: 20.0,
-                          letterSpacing: 1.25,
+                  Container(
+                    color: Theme.of(context).primaryColor,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 8.0, horizontal: 16.0),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          model[i].title,
+                          style: TextStyle(
+                            fontSize: 20.0,
+                            letterSpacing: 1.25,
+                          ),
                         ),
                       ),
                     ),
@@ -109,7 +112,7 @@ class _TableItem extends StatelessWidget {
 
   Widget _rowField({required double width, required String text}) {
     return SizedBox(
-      width: width,
+      width: width - 1,
       child: Center(
         child: Text(
           text,
@@ -128,23 +131,48 @@ class _TableItem extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
+        Container(
+          width: 1,
+          height: 24,
+          color: Theme.of(context).primaryColor,
+        ),
+        //set
         _rowField(
-          width: size.width / numberOfFields,
+          width: size.width / numberOfFields - 24,
           text: leftField,
         ),
-        _rowField(
-          width: size.width / numberOfFields,
-          text: middleField,
+        //reps
+        Container(
+          width: 1,
+          height: 24,
+          color: Theme.of(context).primaryColor,
         ),
         _rowField(
-          width: size.width / numberOfFields,
+          width: size.width / numberOfFields - 24,
           text: rightField,
         ),
+        //weight
+        Container(
+          width: 1,
+          height: 24,
+          color: Theme.of(context).primaryColor,
+        ),
+        _rowField(
+          width: size.width / numberOfFields + 72,
+          text: middleField,
+        ),
+
+        //RPE
         if (showRPEfield)
-          _rowField(
-            width: size.width / numberOfFields,
-            text: rpeField!,
+          Container(
+            width: 1,
+            height: 24,
+            color: Theme.of(context).primaryColor,
           ),
+        _rowField(
+          width: size.width / numberOfFields - 24,
+          text: rpeField!,
+        ),
       ],
     );
   }

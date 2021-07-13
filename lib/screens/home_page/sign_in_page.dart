@@ -21,9 +21,9 @@ class SignInPage extends ConsumerWidget {
     final signInModel = watch(signInModelProvider);
     return ProviderListener<SignInViewModel>(
       provider: signInModelProvider,
-      onChange: (context, model) async {
+      onChange: (context, model) {
         if (model.error != null) {
-          await Text(
+          Text(
             "Sign In failed",
           ); //TODO: make it pretty
 

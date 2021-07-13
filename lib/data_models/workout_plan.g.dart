@@ -6,6 +6,7 @@ part of 'workout_plan.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
+// ignore: non_constant_identifier_names
 _$_WorkoutPlan _$_$_WorkoutPlanFromJson(Map<String, dynamic> json) {
   return _$_WorkoutPlan(
     id: json['id'] as int,
@@ -23,6 +24,7 @@ _$_WorkoutPlan _$_$_WorkoutPlanFromJson(Map<String, dynamic> json) {
   );
 }
 
+// ignore: non_constant_identifier_names
 Map<String, dynamic> _$_$_WorkoutPlanToJson(_$_WorkoutPlan instance) =>
     <String, dynamic>{
       'id': instance.id,
