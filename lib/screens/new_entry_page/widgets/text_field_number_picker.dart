@@ -21,7 +21,7 @@ class TextFieldNumerPicker extends StatefulWidget {
 class _TextFieldNumerPickerState extends State<TextFieldNumerPicker> {
   TextEditingController? _controller;
   double? inputValue;
-
+//TODO: clean-up everything in here
   @override
   void initState() {
     inputValue = widget.initValue;
@@ -47,18 +47,33 @@ class _TextFieldNumerPickerState extends State<TextFieldNumerPicker> {
                     });
                   }
                 },
-                child: Container(
-                  child: Icon(
-                    Icons.keyboard_arrow_left,
-                    color: inputValue! > 0 ? Colors.white : Colors.white30,
-                    size: 40,
-                  ),
+                child: Row(
+                  children: [
+                    Container(
+                      child: Icon(
+                        Icons.keyboard_arrow_left,
+                        color: inputValue! > 0 ? Colors.white : Colors.white30,
+                        size: 40,
+                      ),
+                    ),
+                    Text(
+                      "${inputValue! - widget.changesByValue}",
+                      style: TextStyle(
+                        fontSize: 24.0,
+                        color: Colors.white38,
+                        letterSpacing: 2.5,
+                      ),
+                    ),
+                  ],
                 ),
               ),
               Expanded(
                 child: TextFormField(
                   style: TextStyle(
                     fontSize: 42.0,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 2.5,
                   ),
                   textAlign: TextAlign.center,
                   controller: _controller,
@@ -75,12 +90,24 @@ class _TextFieldNumerPickerState extends State<TextFieldNumerPicker> {
                     widget.onChange(inputValue!);
                   });
                 },
-                child: Container(
-                  child: Icon(
-                    Icons.keyboard_arrow_right,
-                    color: Colors.white,
-                    size: 40,
-                  ),
+                child: Row(
+                  children: [
+                    Text(
+                      "${inputValue! + widget.changesByValue}",
+                      style: TextStyle(
+                        fontSize: 24.0,
+                        color: Colors.white38,
+                        letterSpacing: 2.5,
+                      ),
+                    ),
+                    Container(
+                      child: Icon(
+                        Icons.keyboard_arrow_right,
+                        color: Colors.white,
+                        size: 40,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],

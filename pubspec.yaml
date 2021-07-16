@@ -33,7 +33,7 @@ dependencies:
   flutter_riverpod: ^0.14.0+3
   intl: ^0.17.0
   shared_preferences: ^2.0.6
-  numberpicker: ^1.2.0
+  numberpicker: ^2.1.1
   email_password_sign_in_ui:
     git:
       url: https://github.com/bizz84/codewithandrea_flutter_packages

@@ -5,7 +5,7 @@ import 'package:workout_notes_app/data_models/group_by_model.dart';
 import 'package:workout_notes_app/screens/exercises_selector/services/exercise_view_model.dart';
 import 'package:workout_notes_app/screens/new_entry_page/add_exercise_to_log.dart';
 import 'package:workout_notes_app/screens/new_entry_page/services/add_exercise_log_page_view_model.dart';
-import 'package:workout_notes_app/services/strings.dart';
+import 'package:workout_notes_app/constants/strings.dart';
 import 'package:workout_notes_app/widgets/center_progress_indicator.dart';
 
 class EntriesTable extends ConsumerWidget {
@@ -20,6 +20,7 @@ class EntriesTable extends ConsumerWidget {
     return _exercises.when(
       data: (data) {
         return ListView.separated(
+          padding: EdgeInsets.zero,
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           separatorBuilder: (_, __) => SizedBox(
@@ -68,6 +69,7 @@ class EntriesTable extends ConsumerWidget {
                     ),
                   ),
                   ListView.builder(
+                    padding: EdgeInsets.zero,
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
                     itemCount: model[i].data.length,

@@ -76,7 +76,6 @@ class DrawGraph extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(CustomPainter oldDelegate) {
-    return true;
-  }
+  bool shouldRepaint(DrawGraph oldDelegate) =>
+      oldDelegate.tappedEntryIndex != null;
 }

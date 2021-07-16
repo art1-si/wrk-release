@@ -10,51 +10,58 @@ class DaySelector extends ConsumerWidget {
     final date = watch(selectedDateProvider);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          GestureDetector(
-            onTap: () {
-              context.read(selectedDateProvider).decrement();
-            },
-            child: Container(
-              height: 24,
-              width: 50,
-              child: Center(
-                child: Icon(
-                  Icons.keyboard_arrow_left,
-                  color: Colors.white,
-                  size: 24,
+      child: Container(
+        decoration: BoxDecoration(
+          color: Theme.of(context).primaryColor,
+          borderRadius: BorderRadius.circular(10),
+        ),
+        height: 42,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            GestureDetector(
+              onTap: () {
+                context.read(selectedDateProvider).decrement();
+              },
+              child: Container(
+                height: 24,
+                width: 50,
+                child: Center(
+                  child: Icon(
+                    Icons.keyboard_arrow_left,
+                    color: Colors.white,
+                    size: 24,
+                  ),
                 ),
               ),
             ),
-          ),
-          GestureDetector(
-            onDoubleTap: () => date.resetDate(),
-            child: Text(
-              date.daySelectedToText(),
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-          GestureDetector(
-            onTap: () {
-              context.read(selectedDateProvider).increment();
-            },
-            child: Container(
-              height: 24,
-              width: 50,
-              child: Center(
-                child: Icon(
-                  Icons.keyboard_arrow_right,
-                  color: Colors.white,
-                  size: 24,
+            GestureDetector(
+              onDoubleTap: () => date.resetDate(),
+              child: Text(
+                date.daySelectedToText(),
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
                 ),
               ),
             ),
-          ),
-        ],
+            GestureDetector(
+              onTap: () {
+                context.read(selectedDateProvider).increment();
+              },
+              child: Container(
+                height: 24,
+                width: 50,
+                child: Center(
+                  child: Icon(
+                    Icons.keyboard_arrow_right,
+                    color: Colors.white,
+                    size: 24,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

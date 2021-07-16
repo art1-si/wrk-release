@@ -1,20 +1,60 @@
 import 'package:flutter/material.dart';
 import 'package:workout_notes_app/screens/exercises_selector/type_selector_page.dart';
+import 'package:workout_notes_app/screens/home_page/widget/back_drop_execise_selector/exercise_selector_back_drop_main.dart';
+import 'package:workout_notes_app/screens/home_page/widget/buttons.dart';
 import 'package:workout_notes_app/screens/home_page/widget/log_item_builder.dart';
-import 'package:workout_notes_app/services/strings.dart';
+import 'package:workout_notes_app/constants/strings.dart';
 import 'package:workout_notes_app/widgets/day_selector.dart';
 
-class MyHomePage extends StatelessWidget {
-  List<Widget> _header() {
+class MyHomePage extends StatefulWidget {
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  var _showExercise = false;
+  void _handleAnimation() {
+    setState(() {
+      _showExercise = !_showExercise;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    print("MyHomePage build");
+    return Stack(
+      children: [
+        _HomePageBody(
+          onExerciseButtonPress: _handleAnimation,
+        ),
+        ExerciseSelectorBackDrop(
+          showExerciseSelector: _showExercise,
+        ),
+      ],
+    );
+  }
+}
+
+class _HomePageBody extends StatelessWidget {
+  const _HomePageBody({Key? key, required this.onExerciseButtonPress})
+      : super(key: key);
+  final VoidCallback onExerciseButtonPress;
+
+  List<Widget> _header(BuildContext context) {
     return <Widget>[
       const Divider(
         height: 20,
         color: Colors.transparent,
       ),
+      ElevatedHomePageButton(
+        onPress: onExerciseButtonPress,
+        title: Strings.exercise,
+      ),
       const Divider(
         height: 40,
         color: Colors.transparent,
       ),
+      DaySelector(),
       const Divider(
         height: 12,
       ),
@@ -23,7 +63,6 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("MyHomePage build");
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       body: CustomScrollView(
@@ -40,19 +79,11 @@ class MyHomePage extends StatelessWidget {
           SliverList(
             delegate: SliverChildListDelegate(
               <Widget>[
-                TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => TypeSelectorPage(),
-                      ),
-                    );
-                  },
-                  child: Text(Strings.exercise),
-                ),
-                DaySelector(),
+                ..._header(context),
                 LogItemBuilder(),
+                Divider(
+                  height: 40,
+                ),
               ],
             ),
           ),
