@@ -35,6 +35,7 @@ class DrawGraph extends CustomPainter {
       ..strokeCap = StrokeCap.round
       ..style = PaintingStyle.fill
       ..strokeWidth = 2;
+
     Paint line2 = Paint()
       ..color = (tappedEntryIndex == null) ? lineColor : Colors.orange[300]!
       ..strokeCap = StrokeCap.round
@@ -45,7 +46,7 @@ class DrawGraph extends CustomPainter {
       ..color = (tappedEntryIndex == null) ? lineColor : Colors.orange[300]!
       ..strokeCap = StrokeCap.round
       ..style = PaintingStyle.fill
-      ..strokeWidth = 10;
+      ..strokeWidth = 12;
 
     entries.forEach((element) {
       double _dx = element.x * size.width;
@@ -53,6 +54,7 @@ class DrawGraph extends CustomPainter {
       double _nextDx = element.nextX * size.width;
       double _nextDy = element.nextY * size.height;
       //Draw main line
+
       canvas.drawLine(Offset(_dx, _dy), Offset(_nextDx, _nextDy), line2);
 
       //Draw background
@@ -66,16 +68,28 @@ class DrawGraph extends CustomPainter {
       );
     });
     if (tappedEntryIndex != null) {
+      var _dx = entries[tappedEntryIndex!].x * size.width;
+      var _dy = entries[tappedEntryIndex!].y * size.height;
+      var _nextDx = entries[tappedEntryIndex!].nextX * size.width;
+      var _nextDy = entries[tappedEntryIndex!].nextY * size.height;
+      var _distance = (_nextDx - _dx) / 2;
       canvas.drawLine(
-          Offset(entries[tappedEntryIndex!].x * size.width,
+          Offset((entries[tappedEntryIndex!].x * size.width),
               entries[tappedEntryIndex!].y * size.height),
           Offset(entries[tappedEntryIndex!].x * size.width,
               entries[tappedEntryIndex!].y * size.height),
           points);
+      canvas.drawPath(
+        Path()
+          ..moveTo(_dx - _distance, 0)
+          ..lineTo(_dx - _distance, size.height)
+          ..lineTo(_nextDx - _distance, size.height)
+          ..lineTo(_nextDx - _distance, 0),
+        shadowLine2,
+      );
     }
   }
 
   @override
-  bool shouldRepaint(DrawGraph oldDelegate) =>
-      oldDelegate.tappedEntryIndex != null;
+  bool shouldRepaint(DrawGraph oldDelegate) => tappedEntryIndex != null;
 }

@@ -17,6 +17,7 @@ class AddExerciseToLog extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, ScopedReader watch) {
+    print("addExerciseToLog builder");
     final exerciseProvider = watch(addExerciseLogProvider);
     final _exerciseLogStream = watch(exerciseLogStream);
     return DefaultTabController(
@@ -36,7 +37,7 @@ class AddExerciseToLog extends ConsumerWidget {
               GestureDetector(
                 onTap: () {
                   if (!exerciseProvider.indexIsOnZero) {
-                    exerciseProvider.previousExercise();
+                    context.read(addExerciseLogProvider).previousExercise();
                   }
                 },
                 child: Padding(
@@ -52,7 +53,7 @@ class AddExerciseToLog extends ConsumerWidget {
               GestureDetector(
                 onTap: () {
                   if (!exerciseProvider.indexReachedEnd) {
-                    exerciseProvider.nextExercise();
+                    context.read(addExerciseLogProvider).nextExercise();
                   }
                 },
                 child: Padding(

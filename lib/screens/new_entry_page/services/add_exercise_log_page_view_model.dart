@@ -19,7 +19,10 @@ class AddExerciseLogPageViewModel extends ChangeNotifier {
 
   List<Exercise>? get selectedExercises => _selectedExercises;
 
-  void setSelectedExerciseIndex(index) => _exerciseIndex = index;
+  void setSelectedExerciseIndex(index) {
+    print("set selected ExerciseIndex $index");
+    return _exerciseIndex = index;
+  }
 
   List<String> _getExercisesID<T>(
     List<GroupByModel<T>> log,
@@ -44,10 +47,13 @@ class AddExerciseLogPageViewModel extends ChangeNotifier {
   }
 
   void selectExercisesWithoutNotify(List<Exercise>? exercises) {
+    print("seleceting Exercises function without notifing");
+    _selectedExercises = null;
     _selectedExercises = exercises;
   }
 
   void selectExercises(List<Exercise>? exercises) {
+    print("seleceting Exercises function");
     _selectedExercises = exercises;
     notifyListeners();
   }

@@ -30,20 +30,26 @@ class _ExerciseSelectorBackDropState extends State<ExerciseSelectorBackDrop>
   void initState() {
     _animationController =
         AnimationController(vsync: this, duration: Duration(milliseconds: 750));
-    _animationController.forward();
     super.initState();
+    _animationController.forward();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _animationController.dispose();
   }
 
   void _handleAnimation() {
     print("is pressed $isShowingBackDrop");
-    if (isShowingBackDrop) {
+    if (!isShowingBackDrop) {
       print("heell");
       _offsetAnimation = Tween<Offset>(
         begin: const Offset(0, 1.0),
         end: Offset(0, 0.25),
       ).animate(CurvedAnimation(
         parent: _animationController,
-        curve: isShowingBackDrop ? Curves.ease : Curves.elasticOut,
+        curve: Curves.easeInOutBack,
       ));
       _animationController.reverse();
     } else {
@@ -52,14 +58,16 @@ class _ExerciseSelectorBackDropState extends State<ExerciseSelectorBackDrop>
         end: Offset(0, 0.25),
       ).animate(CurvedAnimation(
         parent: _animationController,
-        curve: isShowingBackDrop ? Curves.ease : Curves.elasticOut,
+        curve: Curves.elasticOut,
       ));
       _animationController.forward();
     }
   }
 
+//TODO: stop rebuilding to many times
   @override
   Widget build(BuildContext context) {
+    print("backdrop builder");
     _handleAnimation();
     return SlideTransition(
       position: _offsetAnimation,

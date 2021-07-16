@@ -10,13 +10,22 @@ class OnPressDialog extends ConsumerWidget {
   @override
   Widget build(BuildContext context, ScopedReader watch) {
     final details = watch(detailsProvider);
-    print("details: ${details.logDetails}");
+    print("details: ${details.offset}");
     if (details.logDetails != null) {
-      return _PopUpTable(
-        field1: "WEIGHT ${details.logDetails!.corespondingLog.weight}",
-        field2: "${details.logDetails!.corespondingLog.reps}",
-        field4: "Date ${details.logDetails!.corespondingLog.dateCreated}",
-        field3: "rpe",
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        child: Container(
+          decoration: BoxDecoration(
+            color: Theme.of(context).primaryColor,
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: _PopUpTable(
+            field1: "WEIGHT ${details.logDetails!.corespondingLog.weight}",
+            field2: "${details.logDetails!.corespondingLog.reps}",
+            field4: "Date ${details.logDetails!.corespondingLog.dateCreated}",
+            field3: "rpe",
+          ),
+        ),
       );
     }
     return Container();
@@ -39,7 +48,7 @@ class _PopUpTable extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
       child: Container(
         height: 70,
         child: Column(

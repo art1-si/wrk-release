@@ -10,37 +10,41 @@ class DetailsProvider extends ChangeNotifier {
   GraphModel? _log;
   Offset? _offset;
   int? _index;
+  List<GraphModel>? points;
+  double? width;
 
   GraphModel? get logDetails => _log;
   int? get index => _index;
+  Offset? get offset => _offset;
 
   void setOffset(Offset? offset) {
     _offset = offset;
-    notifyListeners();
+    _comperOffset();
   }
 
-  void setDetails(GraphModel? value) {
-    print("new detail value ${value!.corespondingLog.weight}");
+  void _setDetails(GraphModel? value) {
     print("log details before $logDetails");
     _log = value;
     print("log details after $logDetails");
+    notifyListeners();
   }
 
-  int? comperOffset(List<GraphModel> points, double width) {
+  void _comperOffset() {
     if (_offset != null) {
-      int _index = 0;
-      double distance = ((points.first.nextX - points.first.x));
-      double halfDistance = ((points.first.nextX - points.first.x) / 2) * width;
-      for (var point in points) {
-        if (_offset!.dx + halfDistance < (point.x + distance) * width &&
-            _offset!.dx + halfDistance >= point.x * width) {
-          setDetails(point);
+      double distance = ((points!.first.nextX - points!.first.x));
+      double halfDistance =
+          ((points!.first.nextX - points!.first.x) / 2) * width!;
+      for (var i = 0; i < points!.length; i++) {
+        var point = points![i];
+        if (_offset!.dx + halfDistance < (point.x + distance) * width! &&
+            _offset!.dx + halfDistance >= point.x * width!) {
+          _index = i;
+          _setDetails(point);
           print("index $_index");
-          return _index;
         }
-
-        _index++;
       }
+    } else {
+      _setDetails(null);
     }
   }
 }

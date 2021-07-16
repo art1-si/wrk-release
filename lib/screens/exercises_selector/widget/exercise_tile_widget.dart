@@ -12,6 +12,7 @@ class ExerciseTileWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, ScopedReader watch) {
+    print("ExerciseTileWidget build");
     final exercises = watch(exerciseStreamProvider);
     return exercises.when(
       data: (data) => _ExerciseListTile.create(context, data: data),
@@ -26,8 +27,7 @@ class ExerciseTileWidget extends ConsumerWidget {
 class _ExerciseListTile extends ConsumerWidget {
   static Widget create(BuildContext context,
       {required List<GroupByModel<Exercise>> data}) {
-    final _exercises = context.read(addExerciseLogProvider);
-    _exercises.selectExercisesWithoutNotify(null);
+    print("exerciseListTile.create is working");
     return _ExerciseListTile(data: data);
   }
 
@@ -41,13 +41,26 @@ class _ExerciseListTile extends ConsumerWidget {
     if (exercises.selectedExercises != null) {
       return Column(
         children: [
-          ElevatedButton(
-            onPressed: () =>
-                context.read(addExerciseLogProvider).selectExercises(null),
-            child: Text("Go Back"),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: GestureDetector(
+              onTap: () =>
+                  context.read(addExerciseLogProvider).selectExercises(null),
+              child: SizedBox(
+                height: 70,
+                width: 50,
+                child: Center(
+                  child: Icon(
+                    Icons.arrow_back,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
           ),
           Expanded(
             child: ListView.builder(
+              padding: EdgeInsets.zero,
               itemCount: exercises.selectedExercises!.length,
               itemBuilder: (context, index) {
                 return ListTile(
@@ -75,6 +88,9 @@ class _ExerciseListTile extends ConsumerWidget {
     }
 
     return ListView.builder(
+      padding: EdgeInsets.symmetric(
+        vertical: 8,
+      ),
       itemCount: data.length,
       itemBuilder: (context, index) {
         return ListTile(

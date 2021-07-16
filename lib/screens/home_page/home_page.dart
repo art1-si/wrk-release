@@ -24,9 +24,23 @@ class _MyHomePageState extends State<MyHomePage> {
     print("MyHomePage build");
     return Stack(
       children: [
-        _HomePageBody(
-          onExerciseButtonPress: _handleAnimation,
+        GestureDetector(
+          onTap: () {
+            if (_showExercise) _handleAnimation();
+          },
+          child: _HomePageBody(
+            onExerciseButtonPress: _handleAnimation,
+          ),
         ),
+        /*     AnimatedOpacity(
+          opacity: _showExercise ? 1 : 0.0,
+          duration: Duration(milliseconds: 750),
+          child: Container(
+            height: double.infinity,
+            width: double.infinity,
+            color: Colors.black26,
+          ),
+        ), */
         ExerciseSelectorBackDrop(
           showExerciseSelector: _showExercise,
         ),
@@ -36,8 +50,10 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 
 class _HomePageBody extends StatelessWidget {
-  const _HomePageBody({Key? key, required this.onExerciseButtonPress})
-      : super(key: key);
+  const _HomePageBody({
+    Key? key,
+    required this.onExerciseButtonPress,
+  }) : super(key: key);
   final VoidCallback onExerciseButtonPress;
 
   List<Widget> _header(BuildContext context) {

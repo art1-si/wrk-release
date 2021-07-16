@@ -28,8 +28,8 @@ class MyGraphWidget extends ConsumerWidget {
         OnPressDialog(),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 8),
-          child: Container(
-            height: 200,
+          child: AspectRatio(
+            aspectRatio: 1.2,
             child: Padding(
               padding: const EdgeInsets.only(
                 bottom: 16,
