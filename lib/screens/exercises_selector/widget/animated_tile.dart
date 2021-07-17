@@ -29,7 +29,7 @@ class _AnimatedTileState extends State<AnimatedTile>
         AnimationController(vsync: this, duration: Duration(milliseconds: 550));
 
     _offsetAnimation = Tween<Offset>(
-      begin: const Offset(0.1, 0),
+      begin: const Offset(-1, 0),
       end: Offset.zero,
     ).animate(CurvedAnimation(
         parent: _animationController, curve: Curves.easeInOutBack));
