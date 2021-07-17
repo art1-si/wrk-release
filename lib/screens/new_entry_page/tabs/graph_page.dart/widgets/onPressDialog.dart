@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
+import 'package:workout_notes_app/widgets/day_selector.dart';
+
 import 'package:workout_notes_app/screens/new_entry_page/tabs/graph_page.dart/services/details_provider.dart';
 
 class OnPressDialog extends ConsumerWidget {
@@ -12,6 +15,9 @@ class OnPressDialog extends ConsumerWidget {
     final details = watch(detailsProvider);
     print("details: ${details.offset}");
     if (details.logDetails != null) {
+      final _date =
+          DateTime.tryParse(details.logDetails!.corespondingLog.dateCreated);
+      final _formatedDate = DateFormat("MMMMEEEEd").format(_date!);
       return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0),
         child: Container(
@@ -22,7 +28,7 @@ class OnPressDialog extends ConsumerWidget {
           child: _PopUpTable(
             field1: "WEIGHT ${details.logDetails!.corespondingLog.weight}",
             field2: "${details.logDetails!.corespondingLog.reps}",
-            field4: "Date ${details.logDetails!.corespondingLog.dateCreated}",
+            field4: "Date $_formatedDate",
             field3: "rpe",
           ),
         ),

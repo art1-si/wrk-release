@@ -1,26 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:workout_notes_app/screens/home_page/service/entries_view_model.dart';
+import 'package:workout_notes_app/screens/new_entry_page/tabs/graph_page.dart/services/graph_model_provider.dart';
 import 'dart:ui' as ui;
 
 import 'package:workout_notes_app/services/logics.dart';
 
-class LineDividers extends StatelessWidget {
-  final int entryLength;
-  final double minWeightValue;
-  final double maxWeightValue;
-  final Color dividerColor;
-
+class LineDividers extends ConsumerWidget {
   const LineDividers({
     Key? key,
-    required this.minWeightValue,
-    required this.maxWeightValue,
-    required this.dividerColor,
-    required this.entryLength,
+    required this.data,
   }) : super(key: key);
+
+  final List<GraphModel> data;
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ScopedReader watch) {
+    final _entriesProvider = watch(entriesViewModel);
+    final _distance = data.first.nextX - data.first.x;
     return CustomPaint(
-      painter:
-          _DrawLines(minWeightValue, maxWeightValue, dividerColor, entryLength),
+      painter: _DrawLines(
+        dividerColor: Theme.of(context).dividerColor,
+        distance: _distance,
+        highestValue: _entriesProvider.maxValue,
+        lowestValue: _entriesProvider.minValue,
+      ),
       size: Size(
         MediaQuery.of(context).size.width,
         MediaQuery.of(context).size.height,
@@ -30,13 +34,17 @@ class LineDividers extends StatelessWidget {
 }
 
 class _DrawLines extends CustomPainter {
-  final int entryLength;
-  final double? minWeightValue;
-  final double maxWeightValue;
+  _DrawLines({
+    required this.lowestValue,
+    required this.highestValue,
+    required this.dividerColor,
+    required this.distance,
+  });
+  final double distance;
+  final double? lowestValue;
+  final double highestValue;
   final Color dividerColor;
 
-  _DrawLines(this.minWeightValue, this.maxWeightValue, this.dividerColor,
-      this.entryLength);
   @override
   void paint(Canvas canvas, Size size) {
     createdWeightParagraph(Canvas canvas, paragraphXoffset, text) {
@@ -62,12 +70,12 @@ class _DrawLines extends CustomPainter {
       ..strokeCap = StrokeCap.round
       ..style = PaintingStyle.fill
       ..strokeWidth = 0.5;
-    if (minWeightValue != null && minWeightValue != maxWeightValue) {
-      var weightValue = minWeightValue;
+    if (lowestValue != null && lowestValue != highestValue) {
+      var weightValue = lowestValue;
       for (var i = 0; i < 11; i++) {
         double weightGraphValue = roundDouble(weightValue!, 2);
-        double relativeYposition = (weightGraphValue - minWeightValue!) /
-            (maxWeightValue - minWeightValue!);
+        double relativeYposition =
+            (weightGraphValue - lowestValue!) / (highestValue - lowestValue!);
         double yOffset = size.height - relativeYposition * size.height;
 
         canvas.drawLine(
@@ -75,20 +83,25 @@ class _DrawLines extends CustomPainter {
 
         createdWeightParagraph(canvas, yOffset - 12, weightGraphValue);
 
-        weightValue += (maxWeightValue - minWeightValue!) / 10;
+        weightValue += (highestValue - lowestValue!) / 10;
       }
     } else {
-      createdWeightParagraph(canvas, size.height / 2, maxWeightValue);
+      createdWeightParagraph(canvas, size.height / 2, highestValue);
 
       canvas.drawLine(Offset(0, size.height / 2),
           Offset(size.width, size.height / 2), dividerLine);
     }
-    var gridGap = size.width / 5;
-    var gap = gridGap;
-    for (var i = 0; i < 5; i++) {
+    var gridGap = size.width / 12;
+    var _distanceToSize = (distance) * size.width;
+    double _corespondingGap = _distanceToSize;
+    while (_corespondingGap < gridGap) {
+      _corespondingGap = _corespondingGap + _distanceToSize;
+    }
+    var gap = 0.07 * size.width; //*may couse bugs in graph layout part 2
+    for (var i = 0; i < 12; i++) {
       canvas.drawLine(
           Offset(gap, -10), Offset(gap, size.height + 10), dividerLine);
-      gap = gap + gridGap;
+      gap = gap + _corespondingGap;
     }
   }
 

@@ -6,7 +6,7 @@ final selectedDateProvider = ChangeNotifierProvider<DaySelectorModel>(
   (ref) => DaySelectorModel(),
 );
 
-extension on DateTime {
+extension PrettyDate on DateTime {
   String prettyToString() {
     final formatter = DateFormat("MMMMEEEEd");
     return formatter.format(this);

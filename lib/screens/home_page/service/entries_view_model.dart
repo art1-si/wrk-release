@@ -9,7 +9,7 @@ import 'package:workout_notes_app/services/database.dart';
 import 'package:workout_notes_app/services/providers.dart';
 
 final exerciseLogStream = StreamProvider.autoDispose<List<ExerciseLog>>((ref) {
-  final database = ref.watch(databaseProvider);
+  /* final database = ref.watch(databaseProvider);
   final date = ref.watch(selectedDateProvider).daySelected;
   final seletedExercise = ref.watch(addExerciseLogProvider).selectedExercise.id;
   final vm = EntriesViewModel(
@@ -17,9 +17,10 @@ final exerciseLogStream = StreamProvider.autoDispose<List<ExerciseLog>>((ref) {
     toDate: date,
     byExerciseID: seletedExercise,
   );
-  return vm.getEntriesByExercise;
+  return vm.getEntriesByExercise; */
+  return ref.watch(entriesViewModel).getEntriesByExercise;
 });
-final graphEntriesStream = StreamProvider.autoDispose((ref) {
+final entriesViewModel = Provider.autoDispose<EntriesViewModel>((ref) {
   final database = ref.watch(databaseProvider);
   final date = ref.watch(selectedDateProvider).daySelected;
   final seletedExercise = ref.watch(addExerciseLogProvider).selectedExercise.id;
@@ -28,7 +29,20 @@ final graphEntriesStream = StreamProvider.autoDispose((ref) {
     toDate: date,
     byExerciseID: seletedExercise,
   );
-  return vm.graphEntries;
+  return vm;
+});
+
+final graphEntriesStream = StreamProvider.autoDispose<List<GraphModel>>((ref) {
+  /* final database = ref.watch(databaseProvider);
+  final date = ref.watch(selectedDateProvider).daySelected;
+  final seletedExercise = ref.watch(addExerciseLogProvider).selectedExercise.id;
+  final vm = EntriesViewModel(
+    database: database,
+    toDate: date,
+    byExerciseID: seletedExercise,
+  );
+  return vm.graphEntries; */
+  return ref.watch(entriesViewModel).graphEntries;
 });
 
 bool compairDatesToDay(DateTime date1, DateTime date2) {
@@ -85,7 +99,7 @@ class EntriesViewModel {
     var _results = <GraphModel>[];
     double width = 1.0;
     bool isLast = false;
-    var distance = 0.07;
+    var distance = 0.07; //*may couse bugs in graph layout part 1
     var nextDistance = (width - 0.1) / (exerciseLog.length - 1);
     int nextValueIndex = 1;
     exerciseLog.forEach((log) {

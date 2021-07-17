@@ -7,13 +7,13 @@ class ThemesData {
     dialogBackgroundColor: Color(0xff19212A),
     fontFamily: "SourceSansPro",
     brightness: Brightness.light,
-    backgroundColor: Color(0xff1E283C),
-    primaryColor: Color(0xff253149),
+    backgroundColor: Color(0xff1B2333),
+    primaryColor: Color(0xff242F45),
     primaryColorDark: Color(0xff1E274C),
     primaryColorLight: Color(0xff303234),
     dividerColor: Colors.white10,
     cardColor: Color(0xff343A40),
-    accentColor: Color(0xff1BA2BC),
+    accentColor: Color(0xff387FFF),
     canvasColor: Color(0xff272B30),
     textTheme: TextTheme(
         headline1: TextStyle(

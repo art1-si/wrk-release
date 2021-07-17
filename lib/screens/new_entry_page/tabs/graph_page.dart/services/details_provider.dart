@@ -11,9 +11,9 @@ class DetailsProvider extends ChangeNotifier {
   Offset? _offset;
   int? _index;
   List<GraphModel>? points;
-  double? width;
+  //double? width;
 
-  GraphModel? get logDetails => _log;
+  GraphModel? get logDetails => _log ?? points!.last;
   int? get index => _index;
   Offset? get offset => _offset;
 
@@ -31,13 +31,14 @@ class DetailsProvider extends ChangeNotifier {
 
   void _comperOffset() {
     if (_offset != null) {
+      print("comper offset offset: $_offset");
       double distance = ((points!.first.nextX - points!.first.x));
       double halfDistance =
-          ((points!.first.nextX - points!.first.x) / 2) * width!;
+          ((points!.first.nextX - points!.first.x) / 2) /* * width! */;
       for (var i = 0; i < points!.length; i++) {
         var point = points![i];
-        if (_offset!.dx + halfDistance < (point.x + distance) * width! &&
-            _offset!.dx + halfDistance >= point.x * width!) {
+        if (_offset!.dx + halfDistance < (point.x + distance) /* * width! */ &&
+            _offset!.dx + halfDistance >= point.x /* * width! */) {
           _index = i;
           _setDetails(point);
           print("index $_index");
@@ -45,6 +46,7 @@ class DetailsProvider extends ChangeNotifier {
       }
     } else {
       _setDetails(null);
+      _index = null;
     }
   }
 }

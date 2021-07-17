@@ -19,13 +19,13 @@ class DrawGraph extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     Color gradinetColorStarter = (tappedEntryIndex == null)
         ? lineColor.withOpacity(0.1)
-        : Colors.orange[300]!.withOpacity(0.1);
+        : Color(0xffFFB81F).withOpacity(0.1);
     Color endGradinetColor = (tappedEntryIndex == null)
-        ? Colors.blue.withOpacity(0.005)
-        : Colors.blue.withOpacity(0.005);
+        ? Color(0xffFF52A8).withOpacity(0.07)
+        : Color(0xffFF52A8).withOpacity(0.07);
     final gradient = LinearGradient(
       colors: [gradinetColorStarter, endGradinetColor],
-      stops: [0.4, 0.99],
+      stops: [0.2, 0.99],
       begin: Alignment.topCenter,
       end: Alignment.bottomCenter,
     );
@@ -37,13 +37,13 @@ class DrawGraph extends CustomPainter {
       ..strokeWidth = 2;
 
     Paint line2 = Paint()
-      ..color = (tappedEntryIndex == null) ? lineColor : Colors.orange[300]!
+      ..color = (tappedEntryIndex == null) ? lineColor : Color(0xffFFB81F)
       ..strokeCap = StrokeCap.round
       ..style = PaintingStyle.fill
       ..strokeWidth = 1;
 
     Paint points = Paint()
-      ..color = (tappedEntryIndex == null) ? lineColor : Colors.orange[300]!
+      ..color = (tappedEntryIndex == null) ? lineColor : Color(0xffFFB81F)
       ..strokeCap = StrokeCap.round
       ..style = PaintingStyle.fill
       ..strokeWidth = 12;
