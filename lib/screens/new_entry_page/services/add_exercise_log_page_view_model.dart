@@ -3,7 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:workout_notes_app/data_models/exercise.dart';
 import 'package:workout_notes_app/data_models/group_by_model.dart';
 
-final addExerciseLogProvider = ChangeNotifierProvider(
+final addExerciseLogProvider =
+    ChangeNotifierProvider.autoDispose<AddExerciseLogPageViewModel>(
   (ref) => AddExerciseLogPageViewModel(),
 );
 

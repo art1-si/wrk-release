@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:workout_notes_app/data_models/exercise.dart';
 import 'package:workout_notes_app/data_models/group_by_model.dart';
 import 'package:workout_notes_app/screens/exercises_selector/services/exercise_view_model.dart';
+import 'package:workout_notes_app/screens/exercises_selector/widget/animated_tile.dart';
 import 'package:workout_notes_app/screens/new_entry_page/add_exercise_to_log.dart';
 import 'package:workout_notes_app/screens/new_entry_page/services/add_exercise_log_page_view_model.dart';
 import 'package:workout_notes_app/widgets/center_progress_indicator.dart';
@@ -63,11 +64,9 @@ class _ExerciseListTile extends ConsumerWidget {
               padding: EdgeInsets.zero,
               itemCount: exercises.selectedExercises!.length,
               itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(
-                    exercises.selectedExercises![index].exerciseName,
-                    style: Theme.of(context).textTheme.headline6,
-                  ),
+                return AnimatedTile(
+                  index: index,
+                  title: exercises.selectedExercises![index].exerciseName,
                   onTap: () {
                     context
                         .read(addExerciseLogProvider)
@@ -93,11 +92,9 @@ class _ExerciseListTile extends ConsumerWidget {
       ),
       itemCount: data.length,
       itemBuilder: (context, index) {
-        return ListTile(
-          title: Text(
-            data[index].title,
-            style: Theme.of(context).textTheme.headline6,
-          ),
+        return AnimatedTile(
+          index: index,
+          title: data[index].title,
           onTap: () {
             context
                 .read(addExerciseLogProvider)
