@@ -99,7 +99,7 @@ class EntriesViewModel {
     var _results = <GraphModel>[];
     double width = 1.0;
     bool isLast = false;
-    var distance = 0.07; //*may couse bugs in graph layout part 1
+    var distance = 0.07; //!may couse bugs in graph layout part 1
     var nextDistance = (width - 0.1) / (exerciseLog.length - 1);
     int nextValueIndex = 1;
     exerciseLog.forEach((log) {
