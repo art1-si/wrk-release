@@ -8,18 +8,24 @@ final selectedDateProvider = ChangeNotifierProvider<DaySelectorModel>(
 
 extension PrettyDate on DateTime {
   String prettyToString() {
+    final _now = DateTime.now();
     final formatter = DateFormat("MMMMEEEEd");
-    return formatter.format(this);
+    final _formatterWithYear = DateFormat("yMMMMEEEEd");
+    if (_now.year == this.year) {
+      return formatter.format(this);
+    } else {
+      return _formatterWithYear.format(this);
+    }
   }
 }
 
-//TODO: make syntax cleaner
 class DaySelectorModel extends ChangeNotifier {
   static DateTime _now = DateTime.now();
 
   static int n = 0;
+
   DateTime _dateSelected = _now.add(Duration(days: n));
-  void increment() async {
+  void increment() {
     n++;
     _dateSelected = _now.add(Duration(days: n));
     _dateSelected.add(Duration(days: n));

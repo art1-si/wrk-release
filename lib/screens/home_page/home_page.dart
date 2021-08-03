@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:workout_notes_app/screens/exercises_selector/type_selector_page.dart';
 import 'package:workout_notes_app/screens/home_page/widget/back_drop_execise_selector/exercise_selector_back_drop_main.dart';
 import 'package:workout_notes_app/screens/home_page/widget/buttons.dart';
 import 'package:workout_notes_app/screens/home_page/widget/log_item_builder.dart';
@@ -24,24 +23,13 @@ class _MyHomePageState extends State<MyHomePage> {
     print("MyHomePage build");
     return Stack(
       children: [
-        GestureDetector(
+        _HomePageBody(
+          onExerciseButtonPress: _handleAnimation,
+        ),
+        ExerciseSelectorBackDrop(
           onTap: () {
             if (_showExercise) _handleAnimation();
           },
-          child: _HomePageBody(
-            onExerciseButtonPress: _handleAnimation,
-          ),
-        ),
-        /*     AnimatedOpacity(
-          opacity: _showExercise ? 1 : 0.0,
-          duration: Duration(milliseconds: 750),
-          child: Container(
-            height: double.infinity,
-            width: double.infinity,
-            color: Colors.black26,
-          ),
-        ), */
-        ExerciseSelectorBackDrop(
           showExerciseSelector: _showExercise,
         ),
       ],
@@ -99,6 +87,7 @@ class _HomePageBody extends StatelessWidget {
                 LogItemBuilder(),
                 Divider(
                   height: 40,
+                  color: Colors.transparent,
                 ),
               ],
             ),

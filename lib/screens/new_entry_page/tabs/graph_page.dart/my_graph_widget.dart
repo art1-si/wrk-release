@@ -62,15 +62,8 @@ class _BodyContent extends StatelessWidget {
                 right: 0.0,
                 top: 8,
               ),
-              child: Stack(
-                children: [
-                  LineDividers(
-                    data: data,
-                  ),
-                  MyDrawGraph(
-                    exerciseLog: data,
-                  ),
-                ],
+              child: MyDrawGraph(
+                exerciseLog: data,
               ),
             ),
           ),

@@ -3,24 +3,41 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:workout_notes_app/screens/new_entry_page/tabs/graph_page.dart/services/graph_model_provider.dart';
 
+class LinerGraph extends StatelessWidget {
+  const LinerGraph({Key? key, required this.exerciseLog}) : super(key: key);
+
+  final List<GraphModel> exerciseLog;
+
+  @override
+  Widget build(BuildContext context) {
+    return CustomPaint(
+        size: MediaQuery.of(context).size,
+        painter: DrawGraph(
+          tapped: true,
+          entries: exerciseLog,
+          lineColor: Theme.of(context).accentColor,
+        ));
+  }
+}
+
 class DrawGraph extends CustomPainter {
   const DrawGraph({
     Key? key,
     required this.entries,
     required this.lineColor,
-    required this.tappedEntryIndex,
+    required this.tapped,
   });
 
   final List<GraphModel> entries;
-  final int? tappedEntryIndex;
+  final bool tapped;
   final Color lineColor;
 
   @override
   void paint(Canvas canvas, Size size) {
-    Color gradinetColorStarter = (tappedEntryIndex == null)
+    Color gradinetColorStarter = (!tapped)
         ? lineColor.withOpacity(0.1)
         : Color(0xffFFB81F).withOpacity(0.1);
-    Color endGradinetColor = (tappedEntryIndex == null)
+    Color endGradinetColor = (!tapped)
         ? Color(0xffFF52A8).withOpacity(0.07)
         : Color(0xffFF52A8).withOpacity(0.07);
     final gradient = LinearGradient(
@@ -37,16 +54,10 @@ class DrawGraph extends CustomPainter {
       ..strokeWidth = 2;
 
     Paint line2 = Paint()
-      ..color = (tappedEntryIndex == null) ? lineColor : Color(0xffFFB81F)
+      ..color = (!tapped) ? lineColor : Color(0xffFFB81F)
       ..strokeCap = StrokeCap.round
       ..style = PaintingStyle.fill
       ..strokeWidth = 1;
-
-    Paint points = Paint()
-      ..color = (tappedEntryIndex == null) ? lineColor : Color(0xffFFB81F)
-      ..strokeCap = StrokeCap.round
-      ..style = PaintingStyle.fill
-      ..strokeWidth = 12;
 
     entries.forEach((element) {
       double _dx = element.x * size.width;
@@ -67,29 +78,8 @@ class DrawGraph extends CustomPainter {
         shadowLine2,
       );
     });
-    if (tappedEntryIndex != null) {
-      var _dx = entries[tappedEntryIndex!].x * size.width;
-      var _dy = entries[tappedEntryIndex!].y * size.height;
-      var _nextDx = entries[tappedEntryIndex!].nextX * size.width;
-      var _nextDy = entries[tappedEntryIndex!].nextY * size.height;
-      var _distance = (_nextDx - _dx) / 2;
-      canvas.drawLine(
-          Offset((entries[tappedEntryIndex!].x * size.width),
-              entries[tappedEntryIndex!].y * size.height),
-          Offset(entries[tappedEntryIndex!].x * size.width,
-              entries[tappedEntryIndex!].y * size.height),
-          points);
-      canvas.drawPath(
-        Path()
-          ..moveTo(_dx - _distance, 0)
-          ..lineTo(_dx - _distance, size.height)
-          ..lineTo(_nextDx - _distance, size.height)
-          ..lineTo(_nextDx - _distance, 0),
-        shadowLine2,
-      );
-    }
   }
 
   @override
-  bool shouldRepaint(DrawGraph oldDelegate) => tappedEntryIndex != null;
+  bool shouldRepaint(DrawGraph oldDelegate) => tapped;
 }

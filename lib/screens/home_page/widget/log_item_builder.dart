@@ -6,6 +6,7 @@ import 'package:workout_notes_app/provider/day_selector_provider.dart';
 import 'package:workout_notes_app/screens/home_page/service/entries_view_model.dart';
 import 'package:workout_notes_app/screens/home_page/widget/entries_table.dart';
 import 'package:workout_notes_app/services/providers.dart';
+import 'package:workout_notes_app/widgets/center_progress_indicator.dart';
 
 final entriesTableModelStreamProvider =
     StreamProvider.autoDispose<List<GroupByModel<ExerciseLog>>>((ref) {
@@ -27,7 +28,7 @@ class LogItemBuilder extends ConsumerWidget {
         data: (items) => EntriesTable(
               model: items,
             ),
-        loading: () => CircularProgressIndicator(),
+        loading: () => CenterProgressIndicator(),
         error: (e, __) {
           print(e);
           return Text("Something went wrong");
