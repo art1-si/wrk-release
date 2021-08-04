@@ -16,6 +16,7 @@ class LineDividers extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, ScopedReader watch) {
+    print("line divider");
     final _entriesProvider = watch(entriesViewModel);
     final _distance = data.first.nextX - data.first.x;
     return CustomPaint(

@@ -4,16 +4,22 @@ import 'package:flutter/material.dart';
 import 'package:workout_notes_app/screens/new_entry_page/tabs/graph_page.dart/services/graph_model_provider.dart';
 
 class LinerGraph extends StatelessWidget {
-  const LinerGraph({Key? key, required this.exerciseLog}) : super(key: key);
+  const LinerGraph({
+    Key? key,
+    required this.exerciseLog,
+    required this.isPressed,
+  }) : super(key: key);
 
   final List<GraphModel> exerciseLog;
+  final bool isPressed;
 
   @override
   Widget build(BuildContext context) {
+    print("graph ");
     return CustomPaint(
         size: MediaQuery.of(context).size,
         painter: DrawGraph(
-          tapped: true,
+          tapped: isPressed,
           entries: exerciseLog,
           lineColor: Theme.of(context).accentColor,
         ));

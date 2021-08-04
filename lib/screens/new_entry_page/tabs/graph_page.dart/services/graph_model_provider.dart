@@ -19,7 +19,6 @@ class GraphProvider extends ChangeNotifier {
   Offset? get pressedPosition => _pressedPosition;
 
   void setPressedPosition(Offset? value) {
-    print("new offset: $value");
     _pressedPosition = value;
     notifyListeners();
   }

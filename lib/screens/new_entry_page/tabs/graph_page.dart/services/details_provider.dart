@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:workout_notes_app/screens/new_entry_page/tabs/graph_page.dart/services/graph_model_provider.dart';
@@ -23,25 +24,20 @@ class DetailsProvider extends ChangeNotifier {
   }
 
   void _setDetails(GraphModel? value) {
-    print("log details before $logDetails");
     _log = value;
-    print("log details after $logDetails");
     notifyListeners();
   }
 
   void _comperOffset() {
     if (_offset != null) {
-      print("comper offset offset: $_offset");
-      double distance = ((points!.first.nextX - points!.first.x));
-      double halfDistance =
-          ((points!.first.nextX - points!.first.x) / 2) /* * width! */;
+      double distance = points!.first.nextX - points!.first.x;
+      double halfDistance = (points!.first.nextX - points!.first.x) / 2;
       for (var i = 0; i < points!.length; i++) {
         var point = points![i];
-        if (_offset!.dx + halfDistance < (point.x + distance) /* * width! */ &&
-            _offset!.dx + halfDistance >= point.x /* * width! */) {
+        if (_offset!.dx + halfDistance < (point.x + distance) &&
+            _offset!.dx + halfDistance >= point.x) {
           _index = i;
           _setDetails(point);
-          print("index $_index");
         }
       }
     } else {
