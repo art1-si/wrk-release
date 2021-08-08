@@ -20,21 +20,31 @@ class _AnimatedTileState extends State<AnimatedTile>
     with SingleTickerProviderStateMixin {
   late final AnimationController _animationController;
   late final _offsetAnimation;
+  late final _offsetShadowAnimation;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _animationController =
         AnimationController(vsync: this, duration: Duration(milliseconds: 550));
 
     _offsetAnimation = Tween<Offset>(
-      begin: const Offset(-1, 0),
+      begin: const Offset(0, 2),
       end: Offset.zero,
     ).animate(CurvedAnimation(
-        parent: _animationController, curve: Curves.easeInOutBack));
+        parent: _animationController, curve: Curves.easeInOutCubic));
 
-    var _duration = widget.index == 0 ? 0 : widget.index * 20;
+    _offsetShadowAnimation = Tween<Offset>(
+      begin: const Offset(0, 3),
+      end: Offset.zero,
+    ).animate(CurvedAnimation(
+        parent: _animationController, curve: Curves.easeInOutCubic));
+
+    var _duration = widget.index == 0
+        ? 0
+        : (widget.index.isEven
+            ? (widget.index + 8) * 20
+            : (widget.index + 8) * 40);
 
     Future.delayed(Duration(milliseconds: _duration), () async {
       await _animationController.forward();
@@ -43,24 +53,48 @@ class _AnimatedTileState extends State<AnimatedTile>
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     _animationController.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return SlideTransition(
-      position: _offsetAnimation,
-      child: ListTile(
-        title: Text(
-          widget.title,
-          style: Theme.of(context).textTheme.headline6,
+    final _screenWidth = MediaQuery.of(context).size.width;
+    return Stack(
+      children: [
+        SlideTransition(
+          position: _offsetShadowAnimation,
+          child: Container(
+            height: 50,
+            width: double.infinity,
+            color: Colors.black12,
+          ),
         ),
-        onTap: () {
-          if (_animationController.isCompleted) widget.onTap();
-        },
-      ),
+        SlideTransition(
+          position: _offsetAnimation,
+          child: Container(
+            decoration: BoxDecoration(
+              border: Border(
+                bottom: BorderSide(color: Theme.of(context).dividerColor),
+              ),
+              color: Theme.of(context).primaryColor,
+            ),
+            child: Column(
+              children: [
+                ListTile(
+                  title: Text(
+                    widget.title,
+                    style: Theme.of(context).textTheme.headline6,
+                  ),
+                  onTap: () {
+                    if (_animationController.isCompleted) widget.onTap();
+                  },
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

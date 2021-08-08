@@ -25,7 +25,7 @@ class _ExerciseSelectorBackDropState extends State<ExerciseSelectorBackDrop>
     end: _endOffset,
   ).animate(CurvedAnimation(
     parent: _animationController,
-    curve: isShowingBackDrop ? Curves.easeInCirc : Curves.elasticOut,
+    curve: Curves.easeInOutCubic,
   ));
 
   Offset get _endOffset => Offset(0, 0.22);
@@ -35,7 +35,7 @@ class _ExerciseSelectorBackDropState extends State<ExerciseSelectorBackDrop>
     end: 0.2,
   ).animate(CurvedAnimation(
     parent: _animationController,
-    curve: Curves.easeInOut,
+    curve: Curves.easeInCubic,
   ));
 
   bool get isShowingBackDrop => widget.showExerciseSelector;
@@ -43,7 +43,7 @@ class _ExerciseSelectorBackDropState extends State<ExerciseSelectorBackDrop>
   @override
   void initState() {
     _animationController =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 750));
+        AnimationController(vsync: this, duration: Duration(milliseconds: 250));
     super.initState();
     _animationController.forward();
   }
@@ -57,23 +57,8 @@ class _ExerciseSelectorBackDropState extends State<ExerciseSelectorBackDrop>
   void _handleAnimation() {
     print("is pressed $isShowingBackDrop");
     if (!isShowingBackDrop) {
-      print("heell");
-      _offsetAnimation = Tween<Offset>(
-        begin: const Offset(0, 1.0),
-        end: _endOffset,
-      ).animate(CurvedAnimation(
-        parent: _animationController,
-        curve: Curves.easeInOutBack,
-      ));
       _animationController.reverse();
     } else {
-      _offsetAnimation = Tween<Offset>(
-        begin: const Offset(0, 1.0),
-        end: _endOffset,
-      ).animate(CurvedAnimation(
-        parent: _animationController,
-        curve: Curves.elasticOut,
-      ));
       _animationController.forward();
     }
   }
