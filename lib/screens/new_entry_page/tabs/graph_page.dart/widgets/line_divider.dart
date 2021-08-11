@@ -19,16 +19,18 @@ class LineDividers extends ConsumerWidget {
     print("line divider");
     final _entriesProvider = watch(entriesViewModel);
     final _distance = data.first.nextX - data.first.x;
-    return CustomPaint(
-      painter: _DrawLines(
-        dividerColor: Theme.of(context).dividerColor,
-        distance: _distance,
-        highestValue: _entriesProvider.maxValue,
-        lowestValue: _entriesProvider.minValue,
-      ),
-      size: Size(
-        MediaQuery.of(context).size.width,
-        MediaQuery.of(context).size.height,
+    return RepaintBoundary(
+      child: CustomPaint(
+        painter: _DrawLines(
+          dividerColor: Theme.of(context).dividerColor,
+          distance: _distance,
+          highestValue: _entriesProvider.maxValue,
+          lowestValue: _entriesProvider.minValue,
+        ),
+        size: Size(
+          MediaQuery.of(context).size.width,
+          MediaQuery.of(context).size.height,
+        ),
       ),
     );
   }
@@ -78,7 +80,7 @@ class _DrawLines extends CustomPainter {
         double relativeYposition =
             (weightGraphValue - lowestValue!) / (highestValue - lowestValue!);
         double yOffset = size.height - relativeYposition * size.height;
-
+        print("===griddraw======");
         canvas.drawLine(
             Offset(0, yOffset), Offset(size.width, yOffset), dividerLine);
 

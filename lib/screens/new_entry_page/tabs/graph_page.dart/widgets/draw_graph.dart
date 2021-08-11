@@ -15,14 +15,16 @@ class LinerGraph extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("graph ");
-    return CustomPaint(
-        size: MediaQuery.of(context).size,
-        painter: DrawGraph(
-          tapped: isPressed,
-          entries: exerciseLog,
-          lineColor: Theme.of(context).accentColor,
-        ));
+    print("==========!!graph!!========= ");
+    return RepaintBoundary(
+      child: CustomPaint(
+          size: MediaQuery.of(context).size,
+          painter: DrawGraph(
+            tapped: isPressed,
+            entries: exerciseLog,
+            lineColor: Theme.of(context).accentColor,
+          )),
+    );
   }
 }
 
@@ -66,6 +68,7 @@ class DrawGraph extends CustomPainter {
       ..strokeWidth = 1;
 
     entries.forEach((element) {
+      print("is painting graph");
       double _dx = element.x * size.width;
       double _dy = element.y * size.height;
       double _nextDx = element.nextX * size.width;
@@ -87,5 +90,5 @@ class DrawGraph extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(DrawGraph oldDelegate) => tapped;
+  bool shouldRepaint(DrawGraph oldDelegate) => oldDelegate.tapped != tapped;
 }

@@ -69,5 +69,6 @@ class DrawPoint extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(DrawPoint oldDelegate) => true;
+  bool shouldRepaint(DrawPoint oldDelegate) =>
+      oldDelegate.pointPosition != pointPosition;
 }

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 class AnimatedTile extends StatefulWidget {
@@ -21,6 +23,14 @@ class _AnimatedTileState extends State<AnimatedTile>
   late final AnimationController _animationController;
   late final _offsetAnimation;
   late final _offsetShadowAnimation;
+  late var _duration = widget.index == 0
+      ? 0
+      : (widget.index.isEven
+          ? (widget.index + 8) * 20
+          : (widget.index + 8) * 40);
+  late var _timer = Timer(Duration(milliseconds: _duration), () async {
+    await _animationController.forward();
+  });
 
   @override
   void initState() {
@@ -40,21 +50,14 @@ class _AnimatedTileState extends State<AnimatedTile>
     ).animate(CurvedAnimation(
         parent: _animationController, curve: Curves.easeInOutCubic));
 
-    var _duration = widget.index == 0
-        ? 0
-        : (widget.index.isEven
-            ? (widget.index + 8) * 20
-            : (widget.index + 8) * 40);
-
-    Future.delayed(Duration(milliseconds: _duration), () async {
-      await _animationController.forward();
-    });
+    _timer;
   }
 
   @override
   void dispose() {
-    super.dispose();
     _animationController.dispose();
+    _timer.cancel();
+    super.dispose();
   }
 
   @override

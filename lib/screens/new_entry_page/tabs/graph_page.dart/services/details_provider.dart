@@ -37,7 +37,9 @@ class DetailsProvider extends ChangeNotifier {
         if (_offset!.dx + halfDistance < (point.x + distance) &&
             _offset!.dx + halfDistance >= point.x) {
           _index = i;
-          _setDetails(point);
+          if (_log != point) {
+            _setDetails(point);
+          }
         }
       }
     } else {
