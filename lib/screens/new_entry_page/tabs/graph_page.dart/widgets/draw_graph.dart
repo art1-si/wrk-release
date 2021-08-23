@@ -15,7 +15,7 @@ class LinerGraph extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("==========!!graph!!========= ");
+    print("==========graph========= ");
     return RepaintBoundary(
       child: CustomPaint(
           size: MediaQuery.of(context).size,

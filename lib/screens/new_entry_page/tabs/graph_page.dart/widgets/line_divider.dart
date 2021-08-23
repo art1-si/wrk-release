@@ -81,6 +81,7 @@ class _DrawLines extends CustomPainter {
             (weightGraphValue - lowestValue!) / (highestValue - lowestValue!);
         double yOffset = size.height - relativeYposition * size.height;
         print("===griddraw======");
+
         canvas.drawLine(
             Offset(0, yOffset), Offset(size.width, yOffset), dividerLine);
 

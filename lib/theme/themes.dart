@@ -11,7 +11,7 @@ class ThemesData {
     primaryColor: Color(0xff242F45),
     primaryColorDark: Color(0xff1E274C),
     primaryColorLight: Color(0xff303234),
-    dividerColor: Colors.white10,
+    dividerColor: Colors.white.withOpacity(0.04),
     cardColor: Color(0xff343A40),
     accentColor: Color(0xff387FFF),
     canvasColor: Color(0xff272B30),
