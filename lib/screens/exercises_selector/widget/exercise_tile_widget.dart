@@ -61,6 +61,7 @@ class _ExerciseListTile extends ConsumerWidget {
           ),
           Expanded(
             child: ListView.builder(
+              physics: NeverScrollableScrollPhysics(),
               padding: EdgeInsets.zero,
               itemCount: exercises.selectedExercises!.length,
               itemBuilder: (context, index) {
@@ -87,6 +88,7 @@ class _ExerciseListTile extends ConsumerWidget {
     }
 
     return ListView.builder(
+      physics: NeverScrollableScrollPhysics(),
       padding: EdgeInsets.symmetric(
         vertical: 8,
       ),

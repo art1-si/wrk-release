@@ -45,7 +45,7 @@ class _ExerciseSelectorBackDropState extends State<ExerciseSelectorBackDrop>
     _animationController =
         AnimationController(vsync: this, duration: Duration(milliseconds: 250));
     super.initState();
-    _animationController.forward();
+    _handleAnimation();
   }
 
   @override
@@ -54,9 +54,26 @@ class _ExerciseSelectorBackDropState extends State<ExerciseSelectorBackDrop>
     _animationController.dispose();
   }
 
+  void _handleDragDownStart(DragStartDetails details) {
+    print(details.globalPosition);
+  }
+
+  void _handleDragDownUpdate(DragUpdateDetails details, double crossAxle) {
+    _animationController.value -= details.primaryDelta! / crossAxle;
+    print(details.primaryDelta!);
+  }
+
+  void _handleDragDownEnd(DragEndDetails details) {
+    if (_animationController.value > 0.5) {
+      _animationController.value = 1;
+    } else {
+      _animationController.value = 0.0;
+    }
+  }
+
   void _handleAnimation() {
     print("is pressed $isShowingBackDrop");
-    if (!isShowingBackDrop) {
+    if (isShowingBackDrop) {
       _animationController.reverse();
     } else {
       _animationController.forward();
@@ -67,7 +84,6 @@ class _ExerciseSelectorBackDropState extends State<ExerciseSelectorBackDrop>
   @override
   Widget build(BuildContext context) {
     print("backdrop builder");
-    _handleAnimation();
     return Stack(
       children: [
         if (widget.showExerciseSelector || _animationController.isCompleted)
@@ -82,21 +98,31 @@ class _ExerciseSelectorBackDropState extends State<ExerciseSelectorBackDrop>
               ),
             ),
           ),
-        SlideTransition(
-          position: _offsetAnimation,
-          child: Container(
-            decoration: BoxDecoration(
-              color: Theme.of(context).primaryColor,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(20),
-                topRight: Radius.circular(20),
+        LayoutBuilder(
+          builder: (_, constraints) {
+            return GestureDetector(
+              onVerticalDragStart: (details) => _handleDragDownStart(details),
+              onVerticalDragUpdate: (details) =>
+                  _handleDragDownUpdate(details, constraints.maxHeight),
+              onVerticalDragEnd: (details) => _handleDragDownEnd(details),
+              child: SlideTransition(
+                position: _offsetAnimation,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).primaryColor,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20),
+                    ),
+                  ),
+                  child: Scaffold(
+                    backgroundColor: Colors.transparent,
+                    body: ExerciseTileWidget(),
+                  ),
+                ),
               ),
-            ),
-            child: Scaffold(
-              backgroundColor: Colors.transparent,
-              body: ExerciseTileWidget(),
-            ),
-          ),
+            );
+          },
         ),
       ],
     );
