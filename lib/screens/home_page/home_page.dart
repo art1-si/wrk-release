@@ -11,6 +11,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final _dropDownAnimationKey = GlobalKey<ExerciseSelectorBackDropState>();
+
   var _showExercise = false;
   void _handleAnimation() {
     setState(() {
@@ -24,11 +26,15 @@ class _MyHomePageState extends State<MyHomePage> {
     return Stack(
       children: [
         _HomePageBody(
-          onExerciseButtonPress: _handleAnimation,
+          onExerciseButtonPress: () {
+            print("=====Button Pressed=======");
+            _dropDownAnimationKey.currentState?.handleAnimation();
+          },
         ),
         ExerciseSelectorBackDrop(
+          key: _dropDownAnimationKey,
           onTap: () {
-            if (_showExercise) _handleAnimation();
+            _dropDownAnimationKey.currentState?.handleAnimation();
           },
           showExerciseSelector: _showExercise,
         ),

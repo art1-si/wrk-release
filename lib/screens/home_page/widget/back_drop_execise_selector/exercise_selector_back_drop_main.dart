@@ -13,10 +13,10 @@ class ExerciseSelectorBackDrop extends StatefulWidget {
 
   @override
   State<ExerciseSelectorBackDrop> createState() =>
-      _ExerciseSelectorBackDropState();
+      ExerciseSelectorBackDropState();
 }
 
-class _ExerciseSelectorBackDropState extends State<ExerciseSelectorBackDrop>
+class ExerciseSelectorBackDropState extends State<ExerciseSelectorBackDrop>
     with SingleTickerProviderStateMixin {
   late final AnimationController _animationController;
 
@@ -45,7 +45,7 @@ class _ExerciseSelectorBackDropState extends State<ExerciseSelectorBackDrop>
     _animationController =
         AnimationController(vsync: this, duration: Duration(milliseconds: 250));
     super.initState();
-    _handleAnimation();
+    handleAnimation();
   }
 
   @override
@@ -55,25 +55,24 @@ class _ExerciseSelectorBackDropState extends State<ExerciseSelectorBackDrop>
   }
 
   void _handleDragDownStart(DragStartDetails details) {
-    print(details.globalPosition);
+    //TODO:
   }
 
   void _handleDragDownUpdate(DragUpdateDetails details, double crossAxle) {
     _animationController.value -= details.primaryDelta! / crossAxle;
-    print(details.primaryDelta!);
   }
 
   void _handleDragDownEnd(DragEndDetails details) {
     if (_animationController.value > 0.5) {
-      _animationController.value = 1;
+      _animationController..forward();
     } else {
-      _animationController.value = 0.0;
+      _animationController.reverse();
     }
   }
 
-  void _handleAnimation() {
+  void handleAnimation() {
     print("is pressed $isShowingBackDrop");
-    if (isShowingBackDrop) {
+    if (_animationController.value == 1.0) {
       _animationController.reverse();
     } else {
       _animationController.forward();
@@ -86,7 +85,9 @@ class _ExerciseSelectorBackDropState extends State<ExerciseSelectorBackDrop>
     print("backdrop builder");
     return Stack(
       children: [
-        if (widget.showExerciseSelector || _animationController.isCompleted)
+        if (widget.showExerciseSelector ||
+            _animationController.isCompleted ||
+            false)
           GestureDetector(
             onTap: widget.onTap,
             child: FadeTransition(
