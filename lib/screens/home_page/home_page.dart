@@ -36,7 +36,6 @@ class _MyHomePageState extends State<MyHomePage> {
           onTap: () {
             _dropDownAnimationKey.currentState?.handleAnimation();
           },
-          showExerciseSelector: _showExercise,
         ),
       ],
     );

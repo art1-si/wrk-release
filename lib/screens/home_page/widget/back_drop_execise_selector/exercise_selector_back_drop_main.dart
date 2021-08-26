@@ -4,11 +4,9 @@ import 'package:workout_notes_app/screens/exercises_selector/widget/exercise_til
 class ExerciseSelectorBackDrop extends StatefulWidget {
   const ExerciseSelectorBackDrop({
     Key? key,
-    required this.showExerciseSelector,
     required this.onTap,
   }) : super(key: key);
 
-  final bool showExerciseSelector;
   final VoidCallback onTap;
 
   @override
@@ -32,20 +30,18 @@ class ExerciseSelectorBackDropState extends State<ExerciseSelectorBackDrop>
 
   late Animation<double> _fadeAnimation = Tween<double>(
     begin: 0.0,
-    end: 0.2,
+    end: 0.5,
   ).animate(CurvedAnimation(
     parent: _animationController,
     curve: Curves.easeInCubic,
   ));
 
-  bool get isShowingBackDrop => widget.showExerciseSelector;
-
   @override
   void initState() {
     _animationController =
         AnimationController(vsync: this, duration: Duration(milliseconds: 250));
+
     super.initState();
-    handleAnimation();
   }
 
   @override
@@ -71,11 +67,11 @@ class ExerciseSelectorBackDropState extends State<ExerciseSelectorBackDrop>
   }
 
   void handleAnimation() {
-    print("is pressed $isShowingBackDrop");
     if (_animationController.value == 1.0) {
       _animationController.reverse();
     } else {
       _animationController.forward();
+      ;
     }
   }
 
@@ -83,49 +79,54 @@ class ExerciseSelectorBackDropState extends State<ExerciseSelectorBackDrop>
   @override
   Widget build(BuildContext context) {
     print("backdrop builder");
-    return Stack(
-      children: [
-        if (widget.showExerciseSelector ||
-            _animationController.isCompleted ||
-            false)
-          GestureDetector(
-            onTap: widget.onTap,
-            child: FadeTransition(
-              opacity: _fadeAnimation,
-              child: Container(
-                width: double.infinity,
-                height: double.infinity,
-                color: Colors.black,
-              ),
-            ),
-          ),
-        LayoutBuilder(
-          builder: (_, constraints) {
-            return GestureDetector(
-              onVerticalDragStart: (details) => _handleDragDownStart(details),
-              onVerticalDragUpdate: (details) =>
-                  _handleDragDownUpdate(details, constraints.maxHeight),
-              onVerticalDragEnd: (details) => _handleDragDownEnd(details),
-              child: SlideTransition(
-                position: _offsetAnimation,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).primaryColor,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(20),
-                      topRight: Radius.circular(20),
+    print(_animationController.value);
+    return AnimatedBuilder(
+        animation: _fadeAnimation,
+        builder: (context, child) {
+          return Stack(
+            children: [
+              (_fadeAnimation.value > 0.1)
+                  ? GestureDetector(
+                      onTap: widget.onTap,
+                      child: FadeTransition(
+                        opacity: _fadeAnimation,
+                        child: Container(
+                          width: double.infinity,
+                          height: double.infinity,
+                          color: Colors.black,
+                        ),
+                      ),
+                    )
+                  : Container(),
+              LayoutBuilder(
+                builder: (_, constraints) {
+                  return GestureDetector(
+                    onVerticalDragStart: (details) =>
+                        _handleDragDownStart(details),
+                    onVerticalDragUpdate: (details) =>
+                        _handleDragDownUpdate(details, constraints.maxHeight),
+                    onVerticalDragEnd: (details) => _handleDragDownEnd(details),
+                    child: SlideTransition(
+                      position: _offsetAnimation,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).primaryColor,
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(20),
+                            topRight: Radius.circular(20),
+                          ),
+                        ),
+                        child: Scaffold(
+                          backgroundColor: Colors.transparent,
+                          body: ExerciseTileWidget(),
+                        ),
+                      ),
                     ),
-                  ),
-                  child: Scaffold(
-                    backgroundColor: Colors.transparent,
-                    body: ExerciseTileWidget(),
-                  ),
-                ),
+                  );
+                },
               ),
-            );
-          },
-        ),
-      ],
-    );
+            ],
+          );
+        });
   }
 }
