@@ -57,9 +57,6 @@ class _AnimatedTileState extends State<AnimatedTile>
     return FadeTransition(
       opacity: _offsetAnimation,
       child: Container(
-        decoration: BoxDecoration(
-          color: Theme.of(context).primaryColor,
-        ),
         child: Column(
           children: [
             ListTile(

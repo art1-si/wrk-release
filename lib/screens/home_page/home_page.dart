@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:workout_notes_app/screens/exercises_selector/widget/exercise_tile_widget.dart';
 import 'package:workout_notes_app/screens/home_page/widget/back_drop_execise_selector/exercise_selector_back_drop_main.dart';
 import 'package:workout_notes_app/screens/home_page/widget/buttons.dart';
 import 'package:workout_notes_app/screens/home_page/widget/log_item_builder.dart';
@@ -31,8 +32,8 @@ class _MyHomePageState extends State<MyHomePage> {
             _dropDownAnimationKey.currentState?.handleAnimation();
           },
         ),
-        ExerciseSelectorBackDrop(
-          key: _dropDownAnimationKey,
+        ExerciseTileWidget(
+          keyToPass: _dropDownAnimationKey,
           onTap: () {
             _dropDownAnimationKey.currentState?.handleAnimation();
           },

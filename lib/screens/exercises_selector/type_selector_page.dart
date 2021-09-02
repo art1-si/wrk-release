@@ -17,7 +17,6 @@ class TypeSelectorPage extends StatelessWidget {
           style: Theme.of(context).textTheme.headline4,
         ),
       ),
-      body: ExerciseTileWidget(),
     );
   }
 }
