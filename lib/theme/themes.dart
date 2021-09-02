@@ -4,17 +4,12 @@ enum Themes { defult }
 
 class ThemesData {
   final ThemeData defualt = ThemeData(
-    dialogBackgroundColor: Color(0xff19212A),
     fontFamily: "SourceSansPro",
     brightness: Brightness.light,
-    backgroundColor: Color(0xff0E141B),
-    primaryColor: Color(0xff18232B),
-    primaryColorDark: Color(0xff1E274C),
-    primaryColorLight: Color(0xff303234),
+    backgroundColor: Color(0xff0E121A),
+    primaryColor: Color(0xff151B26),
     dividerColor: Colors.white.withOpacity(0.04),
-    cardColor: Color(0xff343A40),
-    accentColor: Color(0xff0DE9D9),
-    canvasColor: Color(0xff272B30),
+    accentColor: Color(0xff6685FF),
     textTheme: TextTheme(
         headline1: TextStyle(
           color: Colors.white,

@@ -17,7 +17,7 @@ class ElevatedHomePageButton extends StatelessWidget {
           height: 42,
           width: 125,
           decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.secondary.withOpacity(0.5),
+            color: Theme.of(context).colorScheme.secondary,
             borderRadius: BorderRadius.circular(10),
           ),
           child: Center(
