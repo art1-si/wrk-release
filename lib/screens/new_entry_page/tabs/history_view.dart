@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:intl/intl.dart';
 import 'package:workout_notes_app/data_models/exercise_log.dart';
+import 'package:workout_notes_app/theme/app_theme.dart';
 
 class HistoryView extends StatelessWidget {
   final List<ExerciseLog> exerciseLog;
@@ -54,7 +55,7 @@ class _DateTitle extends StatelessWidget {
       child: Container(
         height: 50,
         decoration: BoxDecoration(
-          color: Theme.of(context).primaryColor,
+          color: AppTheme.of(context).primary,
           borderRadius: BorderRadius.circular(2),
         ),
         child: Align(

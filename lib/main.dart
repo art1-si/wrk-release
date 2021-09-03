@@ -5,6 +5,7 @@ import 'package:workout_notes_app/app.dart';
 import 'package:flutter/rendering.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:workout_notes_app/services/shared_preferences_service.dart';
+import 'package:workout_notes_app/theme/app_theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,7 +19,10 @@ void main() async {
           SharedPreferencesService(sharedPreferences),
         ),
       ],
-      child: MyApp(),
+      child: AppTheme(
+        data: Themes.theme,
+        child: MyApp(),
+      ),
     ),
   );
 }

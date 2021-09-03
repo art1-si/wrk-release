@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:workout_notes_app/screens/new_entry_page/tabs/graph_page.dart/services/graph_model_provider.dart';
+import 'package:workout_notes_app/theme/app_theme.dart';
 
 class GraphPoint extends StatelessWidget {
   const GraphPoint({Key? key, required this.entry}) : super(key: key);
@@ -15,6 +16,10 @@ class GraphPoint extends StatelessWidget {
       size: MediaQuery.of(context).size,
       painter: DrawPoint(
         pointPosition: entry,
+        color: AppTheme.of(context).accentSecendery,
+        topGradientColor: AppTheme.of(context).accentSecendery.withOpacity(0.7),
+        bottomGradientColor:
+            AppTheme.of(context).accentNegative.withOpacity(0.7),
       ),
     );
   }
@@ -24,16 +29,20 @@ class DrawPoint extends CustomPainter {
   const DrawPoint({
     Key? key,
     required this.pointPosition,
+    required this.color,
+    required this.topGradientColor,
+    required this.bottomGradientColor,
   });
 
   final GraphModel pointPosition;
+  final Color color;
+  final Color topGradientColor;
+  final Color bottomGradientColor;
 
   @override
   void paint(Canvas canvas, Size size) {
-    Color gradinetColorStarter = Color(0xffFFB81F).withOpacity(0.1);
-    Color endGradinetColor = Color(0xffFF52A8).withOpacity(0.07);
     final gradient = LinearGradient(
-      colors: [gradinetColorStarter, endGradinetColor],
+      colors: [topGradientColor, bottomGradientColor],
       stops: [0.2, 0.99],
       begin: Alignment.topCenter,
       end: Alignment.bottomCenter,
@@ -46,7 +55,7 @@ class DrawPoint extends CustomPainter {
       ..strokeWidth = 2;
 
     Paint points = Paint()
-      ..color = Color(0xffFFB81F)
+      ..color = color
       ..strokeCap = StrokeCap.round
       ..style = PaintingStyle.fill
       ..strokeWidth = 12;

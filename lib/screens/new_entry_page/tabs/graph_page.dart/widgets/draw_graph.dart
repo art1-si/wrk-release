@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:workout_notes_app/screens/new_entry_page/tabs/graph_page.dart/services/graph_model_provider.dart';
+import 'package:workout_notes_app/theme/app_theme.dart';
 
 class LinerGraph extends StatelessWidget {
   const LinerGraph({
@@ -15,15 +16,22 @@ class LinerGraph extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = AppTheme.of(context);
     print("==========graph========= ");
     return RepaintBoundary(
       child: CustomPaint(
-          size: MediaQuery.of(context).size,
-          painter: DrawGraph(
-            tapped: isPressed,
-            entries: exerciseLog,
-            lineColor: Theme.of(context).accentColor,
-          )),
+        size: MediaQuery.of(context).size,
+        painter: DrawGraph(
+          tapped: isPressed,
+          entries: exerciseLog,
+          lineColor: theme.accentPrimary,
+          tappedLineColor: theme.accentSecendery,
+          topGradientColor: theme.accentPrimary.withOpacity(0.1),
+          bottomGradientColor: theme.accentNegative.withOpacity(0.07),
+          tappedBottomGradientColor: theme.accentNegative.withOpacity(0.07),
+          tappedTopGradientColor: theme.accentSecendery.withOpacity(0.1),
+        ),
+      ),
     );
   }
 }
@@ -31,26 +39,34 @@ class LinerGraph extends StatelessWidget {
 class DrawGraph extends CustomPainter {
   const DrawGraph({
     Key? key,
+    required this.topGradientColor,
+    required this.bottomGradientColor,
+    required this.tappedTopGradientColor,
+    required this.tappedBottomGradientColor,
     required this.entries,
     required this.lineColor,
+    required this.tappedLineColor,
     required this.tapped,
   });
 
   final List<GraphModel> entries;
   final bool tapped;
   final Color lineColor;
+  final Color tappedLineColor;
+  final Color topGradientColor;
+  final Color bottomGradientColor;
+  final Color tappedTopGradientColor;
+  final Color tappedBottomGradientColor;
 
   @override
   void paint(Canvas canvas, Size size) {
-    Color gradinetColorStarter = (!tapped)
-        ? lineColor.withOpacity(0.1)
-        : Color(0xffFFB81F).withOpacity(0.1);
-    Color endGradinetColor = (!tapped)
-        ? Color(0xffFF52A8).withOpacity(0.07)
-        : Color(0xffFF52A8).withOpacity(0.07);
+    Color gradinetColorStarter =
+        (!tapped) ? topGradientColor : tappedTopGradientColor;
+    Color endGradinetColor =
+        (!tapped) ? bottomGradientColor : tappedBottomGradientColor;
     final gradient = LinearGradient(
       colors: [gradinetColorStarter, endGradinetColor],
-      stops: [0.2, 0.99],
+      stops: [0.6, 0.99],
       begin: Alignment.topCenter,
       end: Alignment.bottomCenter,
     );
@@ -62,7 +78,7 @@ class DrawGraph extends CustomPainter {
       ..strokeWidth = 2;
 
     Paint line2 = Paint()
-      ..color = (!tapped) ? lineColor : Color(0xffFFB81F)
+      ..color = (!tapped) ? lineColor : tappedLineColor
       ..strokeCap = StrokeCap.round
       ..style = PaintingStyle.fill
       ..strokeWidth = 1;

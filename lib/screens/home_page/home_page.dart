@@ -4,6 +4,7 @@ import 'package:workout_notes_app/screens/home_page/widget/back_drop_execise_sel
 import 'package:workout_notes_app/screens/home_page/widget/buttons.dart';
 import 'package:workout_notes_app/screens/home_page/widget/log_item_builder.dart';
 import 'package:workout_notes_app/constants/strings.dart';
+import 'package:workout_notes_app/theme/app_theme.dart';
 import 'package:workout_notes_app/widgets/day_selector.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -74,7 +75,7 @@ class _HomePageBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).backgroundColor,
+      backgroundColor: AppTheme.of(context).background,
       body: CustomScrollView(
         slivers: <Widget>[
           SliverAppBar(
@@ -84,7 +85,7 @@ class _HomePageBody extends StatelessWidget {
             ),
             elevation: 0,
             expandedHeight: 0,
-            backgroundColor: Theme.of(context).backgroundColor,
+            backgroundColor: AppTheme.of(context).background,
           ),
           SliverList(
             delegate: SliverChildListDelegate(

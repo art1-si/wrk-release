@@ -5,6 +5,7 @@ import 'package:workout_notes_app/screens/new_entry_page/tabs/graph_page.dart/se
 import 'dart:ui' as ui;
 
 import 'package:workout_notes_app/services/logics.dart';
+import 'package:workout_notes_app/theme/app_theme.dart';
 
 class LineDividers extends ConsumerWidget {
   const LineDividers({
@@ -22,7 +23,7 @@ class LineDividers extends ConsumerWidget {
     return RepaintBoundary(
       child: CustomPaint(
         painter: _DrawLines(
-          dividerColor: Theme.of(context).dividerColor,
+          dividerColor: AppTheme.of(context).divider,
           distance: _distance,
           highestValue: _entriesProvider.maxValue,
           lowestValue: _entriesProvider.minValue,

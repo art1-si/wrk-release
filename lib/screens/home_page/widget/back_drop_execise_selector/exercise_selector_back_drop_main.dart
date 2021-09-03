@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:workout_notes_app/theme/app_theme.dart';
 
 class ExerciseSelectorBackDrop extends StatefulWidget {
   const ExerciseSelectorBackDrop({
@@ -118,7 +119,7 @@ class ExerciseSelectorBackDropState extends State<ExerciseSelectorBackDrop>
                 child: Container(
                   height: constraints.maxHeight * 0.78,
                   decoration: BoxDecoration(
-                    color: Theme.of(context).backgroundColor,
+                    color: AppTheme.of(context).background,
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(10),
                       topRight: Radius.circular(10),

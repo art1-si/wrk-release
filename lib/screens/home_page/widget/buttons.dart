@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:workout_notes_app/theme/app_theme.dart';
 
 class ElevatedHomePageButton extends StatelessWidget {
   const ElevatedHomePageButton(
@@ -17,13 +18,16 @@ class ElevatedHomePageButton extends StatelessWidget {
           height: 42,
           width: 125,
           decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.secondary,
+            color: AppTheme.of(context).primary,
             borderRadius: BorderRadius.circular(10),
           ),
           child: Center(
             child: Text(
               title,
-              style: Theme.of(context).textTheme.button,
+              style: Theme.of(context)
+                  .textTheme
+                  .button!
+                  .copyWith(color: AppTheme.of(context).accentPrimary),
             ),
           ),
         ),

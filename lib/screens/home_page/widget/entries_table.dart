@@ -6,6 +6,7 @@ import 'package:workout_notes_app/screens/exercises_selector/services/exercise_v
 import 'package:workout_notes_app/screens/new_entry_page/add_exercise_to_log.dart';
 import 'package:workout_notes_app/screens/new_entry_page/services/add_exercise_log_page_view_model.dart';
 import 'package:workout_notes_app/constants/strings.dart';
+import 'package:workout_notes_app/theme/app_theme.dart';
 import 'package:workout_notes_app/widgets/center_progress_indicator.dart';
 
 class EntriesTable extends ConsumerWidget {
@@ -52,7 +53,7 @@ class EntriesTable extends ConsumerWidget {
               child: Column(
                 children: [
                   Container(
-                    color: Theme.of(context).primaryColor,
+                    color: AppTheme.of(context).primary,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
                           vertical: 8.0, horizontal: 16.0),
@@ -136,7 +137,7 @@ class _TableItem extends StatelessWidget {
         Container(
           width: 1,
           height: 24,
-          color: Theme.of(context).primaryColor,
+          color: AppTheme.of(context).primary,
         ),
         //set
         _rowField(
@@ -147,7 +148,7 @@ class _TableItem extends StatelessWidget {
         Container(
           width: 1,
           height: 24,
-          color: Theme.of(context).primaryColor,
+          color: AppTheme.of(context).primary,
         ),
         _rowField(
           width: size.width / numberOfFields - 24,
@@ -157,7 +158,7 @@ class _TableItem extends StatelessWidget {
         Container(
           width: 1,
           height: 24,
-          color: Theme.of(context).primaryColor,
+          color: AppTheme.of(context).primary,
         ),
         _rowField(
           width: size.width / numberOfFields + 72,
@@ -169,7 +170,7 @@ class _TableItem extends StatelessWidget {
           Container(
             width: 1,
             height: 24,
-            color: Theme.of(context).primaryColor,
+            color: AppTheme.of(context).primary,
           ),
         _rowField(
           width: size.width / numberOfFields - 24,

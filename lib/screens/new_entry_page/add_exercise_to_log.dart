@@ -8,6 +8,7 @@ import 'package:workout_notes_app/screens/new_entry_page/tabs/log_screen.dart';
 import 'package:workout_notes_app/screens/new_entry_page/services/add_exercise_log_page_view_model.dart';
 import 'package:workout_notes_app/screens/new_entry_page/tabs/graph_page.dart/my_graph_widget.dart';
 import 'package:workout_notes_app/screens/new_entry_page/tabs/rep_max_view.dart';
+import 'package:workout_notes_app/theme/app_theme.dart';
 import 'package:workout_notes_app/widgets/center_progress_indicator.dart';
 
 class AddExerciseToLog extends ConsumerWidget {
@@ -31,7 +32,7 @@ class AddExerciseToLog extends ConsumerWidget {
           }
         },
         child: Scaffold(
-          backgroundColor: Theme.of(context).backgroundColor,
+          backgroundColor: AppTheme.of(context).background,
           appBar: AppBar(
             actions: [
               GestureDetector(
@@ -67,7 +68,7 @@ class AddExerciseToLog extends ConsumerWidget {
                 ),
               ),
             ],
-            backgroundColor: Theme.of(context).backgroundColor,
+            backgroundColor: AppTheme.of(context).background,
             elevation: 0,
             centerTitle: true,
             title: Text(

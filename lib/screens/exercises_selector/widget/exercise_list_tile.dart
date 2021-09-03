@@ -5,6 +5,7 @@ import 'package:workout_notes_app/data_models/group_by_model.dart';
 import 'package:workout_notes_app/screens/exercises_selector/widget/animated_tile.dart';
 import 'package:workout_notes_app/screens/new_entry_page/add_exercise_to_log.dart';
 import 'package:workout_notes_app/screens/new_entry_page/services/add_exercise_log_page_view_model.dart';
+import 'package:workout_notes_app/theme/app_theme.dart';
 
 class ExerciseListTile extends ConsumerWidget {
   static Widget create(BuildContext context,
@@ -30,7 +31,7 @@ class ExerciseListTile extends ConsumerWidget {
               child: Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  color: Theme.of(context).dividerColor,
+                  color: AppTheme.of(context).divider,
                 ),
                 height: 5,
                 width: 80,
@@ -94,7 +95,7 @@ class ExerciseListTile extends ConsumerWidget {
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                color: Theme.of(context).dividerColor,
+                color: AppTheme.of(context).divider,
               ),
               height: 5,
               width: 80,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:workout_notes_app/provider/day_selector_provider.dart';
+import 'package:workout_notes_app/theme/app_theme.dart';
 
 class DaySelector extends ConsumerWidget {
   const DaySelector({Key? key}) : super(key: key);
@@ -12,7 +13,7 @@ class DaySelector extends ConsumerWidget {
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
       child: Container(
         decoration: BoxDecoration(
-          color: Theme.of(context).primaryColor,
+          color: AppTheme.of(context).primary,
           borderRadius: BorderRadius.circular(10),
         ),
         height: 42,
