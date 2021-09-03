@@ -2,12 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:workout_notes_app/theme/app_theme.dart';
 
 class ElevatedHomePageButton extends StatelessWidget {
-  const ElevatedHomePageButton(
-      {Key? key, required this.title, required this.onPress})
-      : super(key: key);
+  const ElevatedHomePageButton({
+    Key? key,
+    required this.title,
+    required this.onPress,
+    required this.backgroundColor,
+    required this.titleColor,
+  }) : super(key: key);
 
   final String title;
   final VoidCallback onPress;
+  final Color backgroundColor;
+  final Color titleColor;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +24,7 @@ class ElevatedHomePageButton extends StatelessWidget {
           height: 42,
           width: 125,
           decoration: BoxDecoration(
-            color: AppTheme.of(context).primary,
+            color: backgroundColor,
             borderRadius: BorderRadius.circular(10),
           ),
           child: Center(
@@ -27,7 +33,7 @@ class ElevatedHomePageButton extends StatelessWidget {
               style: Theme.of(context)
                   .textTheme
                   .button!
-                  .copyWith(color: AppTheme.of(context).accentPrimary),
+                  .copyWith(color: titleColor),
             ),
           ),
         ),

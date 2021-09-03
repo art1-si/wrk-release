@@ -46,10 +46,10 @@ class Themes {
   static const AppThemeData theme = AppThemeData(
     background: Color(0xff12151A),
     primary: Color(0xff1A1F26),
-    accentPrimary: Color(0xff33A1FD),
-    accentNegative: Color(0xffE84855),
-    accentSecendery: Color(0xffF2AF29),
-    accentPositive: Color(0xff44FFD1),
+    accentPrimary: Color(0xff4794FF),
+    accentNegative: Color(0xffF03A47),
+    accentSecendery: Color(0xff4f4ead),
+    accentPositive: Color(0xff9de248),
     divider: Colors.white12,
   );
 }

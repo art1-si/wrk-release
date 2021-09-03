@@ -3,10 +3,12 @@ import 'package:workout_notes_app/data_models/exercise.dart';
 import 'package:workout_notes_app/data_models/exercise_log.dart';
 import 'package:workout_notes_app/provider/day_selector_provider.dart';
 import 'package:workout_notes_app/screens/home_page/service/entries_view_model.dart';
+import 'package:workout_notes_app/screens/home_page/widget/buttons.dart';
 import 'package:workout_notes_app/screens/new_entry_page/widgets/text_field_number_picker.dart';
 import 'package:workout_notes_app/services/database.dart';
 import 'package:workout_notes_app/services/providers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:workout_notes_app/theme/app_theme.dart';
 
 class LogScreen extends StatefulWidget {
   LogScreen({
@@ -94,13 +96,31 @@ class _LogScreenState extends State<LogScreen> {
           onChange: (value) => _reps = value.toInt(),
           changesByValue: 1,
         ),
-        ElevatedButton(
-          onPressed: () {
-            final database = context.read(databaseProvider);
-            final date = context.read(selectedDateProvider);
-            _submitEntry(database: database, date: date);
-          },
-          child: Text("Submit"),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              ElevatedHomePageButton(
+                onPress: () {
+                  final database = context.read(databaseProvider);
+                  final date = context.read(selectedDateProvider);
+                  _submitEntry(database: database, date: date);
+                },
+                title: "Submit",
+                backgroundColor: AppTheme.of(context).primary,
+                titleColor: AppTheme.of(context).accentPrimary.withOpacity(0.7),
+              ),
+              ElevatedHomePageButton(
+                onPress: () {},
+                title: "Reset",
+                backgroundColor:
+                    AppTheme.of(context).accentPositive.withOpacity(0.05),
+                titleColor:
+                    AppTheme.of(context).accentPositive.withOpacity(0.7),
+              ),
+            ],
+          ),
         ),
       ],
     );
