@@ -15,13 +15,6 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final _dropDownAnimationKey = GlobalKey<ExerciseSelectorBackDropState>();
 
-  var _showExercise = false;
-  void _handleAnimation() {
-    setState(() {
-      _showExercise = !_showExercise;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     print("MyHomePage build");

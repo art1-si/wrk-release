@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:workout_notes_app/theme/app_theme.dart';
 
 class ElevatedHomePageButton extends StatelessWidget {
   const ElevatedHomePageButton({

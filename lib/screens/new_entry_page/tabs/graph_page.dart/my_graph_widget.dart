@@ -4,7 +4,6 @@ import 'package:workout_notes_app/data_models/exercise_log.dart';
 import 'package:workout_notes_app/screens/home_page/service/entries_view_model.dart';
 import 'package:workout_notes_app/screens/new_entry_page/tabs/graph_page.dart/services/details_provider.dart';
 import 'package:workout_notes_app/screens/new_entry_page/tabs/graph_page.dart/services/graph_model_provider.dart';
-import 'package:workout_notes_app/screens/new_entry_page/tabs/graph_page.dart/widgets/line_divider.dart';
 import 'package:workout_notes_app/screens/new_entry_page/tabs/graph_page.dart/widgets/graph.dart';
 import 'package:workout_notes_app/screens/new_entry_page/tabs/graph_page.dart/widgets/onPressDialog.dart';
 import 'package:workout_notes_app/widgets/center_progress_indicator.dart';

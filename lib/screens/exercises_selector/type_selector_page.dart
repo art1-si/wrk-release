@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:workout_notes_app/screens/exercises_selector/widget/exercise_tile_widget.dart';
 
 class TypeSelectorPage extends StatelessWidget {
   const TypeSelectorPage({
