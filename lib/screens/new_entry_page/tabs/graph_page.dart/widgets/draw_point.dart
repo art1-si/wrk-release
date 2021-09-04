@@ -16,10 +16,10 @@ class GraphPoint extends StatelessWidget {
       size: MediaQuery.of(context).size,
       painter: DrawPoint(
         pointPosition: entry,
-        color: AppTheme.of(context).accentSecendery,
-        topGradientColor: AppTheme.of(context).accentSecendery.withOpacity(0.7),
+        color: AppTheme.of(context).accentPositive,
+        topGradientColor: AppTheme.of(context).accentPositive.withOpacity(0.5),
         bottomGradientColor:
-            AppTheme.of(context).accentNegative.withOpacity(0.7),
+            AppTheme.of(context).accentNegative.withOpacity(0.5),
       ),
     );
   }
@@ -52,7 +52,7 @@ class DrawPoint extends CustomPainter {
           gradient.createShader(Rect.fromLTRB(0, 0, size.width, size.height))
       ..strokeCap = StrokeCap.round
       ..style = PaintingStyle.fill
-      ..strokeWidth = 2;
+      ..strokeWidth = 1;
 
     Paint points = Paint()
       ..color = color
@@ -63,18 +63,20 @@ class DrawPoint extends CustomPainter {
     var _dx = pointPosition.x * size.width;
     var _nextDx = pointPosition.nextX * size.width;
     var _distance = (_nextDx - _dx) / 2;
-    canvas.drawLine(
-        Offset((pointPosition.x * size.width), pointPosition.y * size.height),
-        Offset(pointPosition.x * size.width, pointPosition.y * size.height),
-        points);
-    canvas.drawPath(
+    /* canvas.drawPath(
       Path()
         ..moveTo(_dx - _distance, 0)
         ..lineTo(_dx - _distance, size.height)
         ..lineTo(_nextDx - _distance, size.height)
         ..lineTo(_nextDx - _distance, 0),
       shadowLine2,
-    );
+    ); */
+    canvas.drawLine(Offset((pointPosition.x * size.width), 0),
+        Offset(pointPosition.x * size.width, size.height), shadowLine2);
+    canvas.drawLine(
+        Offset((pointPosition.x * size.width), pointPosition.y * size.height),
+        Offset(pointPosition.x * size.width, pointPosition.y * size.height),
+        points);
   }
 
   @override

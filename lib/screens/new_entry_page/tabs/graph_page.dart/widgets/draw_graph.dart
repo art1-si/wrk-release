@@ -24,12 +24,12 @@ class LinerGraph extends StatelessWidget {
         painter: DrawGraph(
           tapped: isPressed,
           entries: exerciseLog,
-          lineColor: theme.accentPrimary,
-          tappedLineColor: theme.accentSecendery,
-          topGradientColor: theme.accentPrimary.withOpacity(0.1),
+          lineColor: theme.accentSecendery,
+          tappedLineColor: theme.accentPositive,
+          topGradientColor: theme.accentSecendery.withOpacity(0.1),
           bottomGradientColor: theme.accentNegative.withOpacity(0.07),
           tappedBottomGradientColor: theme.accentNegative.withOpacity(0.07),
-          tappedTopGradientColor: theme.accentSecendery.withOpacity(0.1),
+          tappedTopGradientColor: theme.accentPositive.withOpacity(0.1),
         ),
       ),
     );

@@ -108,8 +108,9 @@ class _LogScreenState extends State<LogScreen> {
                   _submitEntry(database: database, date: date);
                 },
                 title: "Submit",
-                backgroundColor: AppTheme.of(context).primary,
-                titleColor: AppTheme.of(context).accentPrimary.withOpacity(0.7),
+                backgroundColor:
+                    AppTheme.of(context).accentPrimary.withOpacity(0.05),
+                titleColor: AppTheme.of(context).accentPrimary,
               ),
               ElevatedHomePageButton(
                 onPress: () {},
