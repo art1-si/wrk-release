@@ -48,7 +48,7 @@ class _LogScreenState extends State<LogScreen> {
     int _set = 1;
     List<ExerciseLog> _exerciseLog = widget.exerciseLog
         .where((element) =>
-            compairDatesToDay(DateTime.parse(element.dateCreated), date))
+            compareDatesToDay(DateTime.parse(element.dateCreated), date))
         .toList();
     if (_exerciseLog.isNotEmpty) {
       return _set + widget.exerciseLog.last.setCount!;

@@ -68,9 +68,9 @@ class ExerciseSelectorBackDropState extends State<ExerciseSelectorBackDrop>
 
   void _handleDragDownEnd(DragEndDetails details) {
     print("end");
-    if (_animationController.value < 0.2) {
-      _animationController..forward();
-    } else if (_animationController.value < 1) {
+    if (_animationController.value > 0.7) {
+      _animationController.forward();
+    } else if (_animationController.value < 0.7) {
       _animationController.reverse();
     }
   }

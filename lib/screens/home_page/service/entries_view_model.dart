@@ -5,8 +5,11 @@ import 'package:workout_notes_app/data_models/group_by_model.dart';
 import 'package:workout_notes_app/provider/day_selector_provider.dart';
 import 'package:workout_notes_app/screens/new_entry_page/services/add_exercise_log_page_view_model.dart';
 import 'package:workout_notes_app/screens/new_entry_page/tabs/graph_page.dart/services/graph_model_provider.dart';
+import 'package:workout_notes_app/services/1rm_formula.dart';
 import 'package:workout_notes_app/services/database.dart';
 import 'package:workout_notes_app/services/providers.dart';
+
+enum GraphProperties { perWeight, oneRepMax, simpleVolumePerSet }
 
 final exerciseLogStream = StreamProvider.autoDispose<List<ExerciseLog>>((ref) {
   /* final database = ref.watch(databaseProvider);
@@ -33,19 +36,10 @@ final entriesViewModel = Provider.autoDispose<EntriesViewModel>((ref) {
 });
 
 final graphEntriesStream = StreamProvider.autoDispose<List<GraphModel>>((ref) {
-  /* final database = ref.watch(databaseProvider);
-  final date = ref.watch(selectedDateProvider).daySelected;
-  final seletedExercise = ref.watch(addExerciseLogProvider).selectedExercise.id;
-  final vm = EntriesViewModel(
-    database: database,
-    toDate: date,
-    byExerciseID: seletedExercise,
-  );
-  return vm.graphEntries; */
   return ref.watch(entriesViewModel).graphEntries;
 });
 
-bool compairDatesToDay(DateTime date1, DateTime date2) {
+bool compareDatesToDay(DateTime date1, DateTime date2) {
   return date1.year == date2.year &&
       date1.month == date2.month &&
       date1.day == date2.day;
@@ -61,21 +55,39 @@ class EntriesViewModel {
 
   double _minValue = double.infinity;
   double _maxValue = 0;
+  GraphProperties _properties = GraphProperties.simpleVolumePerSet;
 
   double get maxValue => _maxValue;
   double get minValue => _minValue;
 
+  double _getGraphValueToPropertie(ExerciseLog log) {
+    late final _element;
+    switch (_properties) {
+      case GraphProperties.perWeight:
+        _element = log.weight;
+        break;
+      case GraphProperties.oneRepMax:
+        _element = epleyCalOneRepMax(log.weight, log.reps);
+        break;
+      case GraphProperties.simpleVolumePerSet:
+        _element = log.weight * log.reps;
+        break;
+    }
+    return _element;
+  }
+
   void setMinAndMaxValue(List<ExerciseLog> exerciseLog) {
     if (exerciseLog.length > 1) {
       exerciseLog.forEach((element) {
-        if (element.weight > _maxValue) {
-          _maxValue = element.weight;
+        final _value = _getGraphValueToPropertie(element);
+        if (_value > _maxValue) {
+          _maxValue = _value;
         }
-        if (element.weight < _minValue) {
-          _minValue = element.weight;
+        if (_value < _minValue) {
+          _minValue = _value;
         }
       });
-    } else if (exerciseLog.isNotEmpty) {
+    } else if (exerciseLog.isNotEmpty && exerciseLog.length < 2) {
       _maxValue = exerciseLog.first.weight * 2;
 
       _minValue = 0;
@@ -87,9 +99,7 @@ class EntriesViewModel {
   }) {
     double height = 1.0;
 
-    double weightGraphValue = value;
-    double relativeYposition =
-        (weightGraphValue - minValue) / (maxValue - minValue);
+    double relativeYposition = (value - minValue) / (maxValue - minValue);
     double yOffset = height - relativeYposition * height;
 
     return yOffset;
@@ -103,10 +113,12 @@ class EntriesViewModel {
     var nextDistance = (width - 0.1) / (exerciseLog.length - 1);
     int nextValueIndex = 1;
     exerciseLog.forEach((log) {
+      final _valueToProperty = _getGraphValueToPropertie(log);
       double nextValue = exerciseLog.length > nextValueIndex
-          ? exerciseLog[nextValueIndex].weight
-          : log.weight;
-      var _yPosition = getRelativeYposition(value: log.weight);
+          ? _getGraphValueToPropertie(exerciseLog[nextValueIndex])
+          : _valueToProperty;
+
+      var _yPosition = getRelativeYposition(value: _valueToProperty);
       var _nextYPosition = getRelativeYposition(value: nextValue);
       _results.add(
         GraphModel(
@@ -137,9 +149,9 @@ class EntriesViewModel {
       .map(
         (entries) => entries.where((entry) {
           if (byExerciseID == null) {
-            return compairDatesToDay(DateTime.parse(entry.dateCreated), toDate);
+            return compareDatesToDay(DateTime.parse(entry.dateCreated), toDate);
           } else {
-            return compairDatesToDay(
+            return compareDatesToDay(
                     DateTime.parse(entry.dateCreated), toDate) &&
                 entry.exerciseID == byExerciseID;
           }

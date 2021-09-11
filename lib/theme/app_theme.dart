@@ -45,7 +45,7 @@ class AppTheme extends InheritedWidget {
 class Themes {
   static const AppThemeData theme = AppThemeData(
     background: Color(0xff12151A),
-    primary: Color(0xff1A1F26),
+    primary: Color(0xff191D24),
     accentPrimary: Color(0xff6886e6),
     accentNegative: Color(0xffF03A47),
     accentSecendery: Color(0xff556ccd),
