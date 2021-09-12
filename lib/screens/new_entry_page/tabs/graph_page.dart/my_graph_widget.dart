@@ -6,6 +6,7 @@ import 'package:workout_notes_app/screens/new_entry_page/tabs/graph_page.dart/se
 import 'package:workout_notes_app/screens/new_entry_page/tabs/graph_page.dart/services/graph_model_provider.dart';
 import 'package:workout_notes_app/screens/new_entry_page/tabs/graph_page.dart/widgets/graph.dart';
 import 'package:workout_notes_app/screens/new_entry_page/tabs/graph_page.dart/widgets/onPressDialog.dart';
+import 'package:workout_notes_app/screens/new_entry_page/tabs/graph_page.dart/widgets/proerties_drop_down_menu.dart';
 import 'package:workout_notes_app/widgets/center_progress_indicator.dart';
 
 class MyGraphWidget extends ConsumerWidget {
@@ -50,6 +51,7 @@ class _BodyContent extends StatelessWidget {
     return Column(
       children: [
         OnPressDialog(),
+        PropertiesDropDown(),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 8),
           child: AspectRatio(

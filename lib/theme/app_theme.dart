@@ -47,9 +47,9 @@ class Themes {
     background: Color(0xff12151A),
     primary: Color(0xff191D24),
     accentPrimary: Color(0xff6886e6),
-    accentNegative: Color(0xffF03A47),
+    accentNegative: Color(0xffFF4B58),
     accentSecendery: Color(0xff556ccd),
-    accentPositive: Color(0xffffa038),
+    accentPositive: Color(0xffFFA43A),
     divider: Colors.white12,
   );
 }

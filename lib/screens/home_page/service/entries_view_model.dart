@@ -11,18 +11,7 @@ import 'package:workout_notes_app/services/providers.dart';
 
 enum GraphProperties { perWeight, oneRepMax, simpleVolumePerSet }
 
-final exerciseLogStream = StreamProvider.autoDispose<List<ExerciseLog>>((ref) {
-  /* final database = ref.watch(databaseProvider);
-  final date = ref.watch(selectedDateProvider).daySelected;
-  final seletedExercise = ref.watch(addExerciseLogProvider).selectedExercise.id;
-  final vm = EntriesViewModel(
-    database: database,
-    toDate: date,
-    byExerciseID: seletedExercise,
-  );
-  return vm.getEntriesByExercise; */
-  return ref.watch(entriesViewModel).getEntriesByExercise;
-});
+//?Main EntriesViewProvider
 final entriesViewModel = Provider.autoDispose<EntriesViewModel>((ref) {
   final database = ref.watch(databaseProvider);
   final date = ref.watch(selectedDateProvider).daySelected;
@@ -35,15 +24,25 @@ final entriesViewModel = Provider.autoDispose<EntriesViewModel>((ref) {
   return vm;
 });
 
-final graphEntriesStream = StreamProvider.autoDispose<List<GraphModel>>((ref) {
-  return ref.watch(entriesViewModel).graphEntries;
+//*Return Exercise Log by specific exercise
+final exerciseLogStream = StreamProvider.autoDispose<List<ExerciseLog>>((ref) {
+  return ref.watch(entriesViewModel).getEntriesByExercise;
 });
 
+//*Returns parameters for graph widget
+final graphEntriesStream = StreamProvider.autoDispose<List<GraphModel>>((ref) {
+  final log = ref.watch(entriesViewModel).getEntriesByExercise;
+  log.last;
+  final graphProvider = ref.watch(entriesViewModel).graphEntries;
+  return graphProvider;
+});
+
+//!Shoud not be here
 bool compareDatesToDay(DateTime date1, DateTime date2) {
   return date1.year == date2.year &&
       date1.month == date2.month &&
       date1.day == date2.day;
-}
+} //TODO: get this to new file
 
 class EntriesViewModel {
   EntriesViewModel(
@@ -59,6 +58,11 @@ class EntriesViewModel {
 
   double get maxValue => _maxValue;
   double get minValue => _minValue;
+  GraphProperties get graphProperties => _properties;
+
+  setGraphProperties(GraphProperties newValue) {
+    return _properties = newValue;
+  }
 
   double _getGraphValueToPropertie(ExerciseLog log) {
     late final _element;
