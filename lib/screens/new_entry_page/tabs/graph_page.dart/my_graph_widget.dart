@@ -43,17 +43,16 @@ class _BodyContent extends ConsumerWidget {
     return Column(
       children: [
         OnPressDialog(),
-        PropertiesDropDown(),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 8),
           child: AspectRatio(
-            aspectRatio: 1.2,
+            aspectRatio: 1.0,
             child: Padding(
               padding: const EdgeInsets.only(
                 bottom: 16,
                 left: 4,
                 right: 0.0,
-                top: 8,
+                top: 16,
               ),
               child: MyDrawGraph(
                 chartData: chartData!,
@@ -61,6 +60,7 @@ class _BodyContent extends ConsumerWidget {
             ),
           ),
         ),
+        PropertiesDropDown(),
       ],
     );
   }
