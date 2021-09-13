@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:workout_notes_app/screens/home_page/service/entries_view_model.dart';
+import 'package:workout_notes_app/screens/new_entry_page/tabs/graph_page.dart/services/chart_provider.dart';
+import 'package:workout_notes_app/screens/new_entry_page/tabs/graph_page.dart/services/graph_selector_provider.dart';
 
 class PropertiesDropDown extends ConsumerWidget {
   const PropertiesDropDown({
@@ -9,10 +10,13 @@ class PropertiesDropDown extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, ScopedReader watch) {
-    final evmProvider = watch(entriesViewModel);
+    final _selector = watch(graphSelector);
 
     return DropdownButton<GraphProperties>(
-      onChanged: (GraphProperties? newValue) {}, //!: is this correct?
+      value: _selector.graphProperties,
+      onChanged: (GraphProperties? newValue) {
+        context.read(graphSelector).setGraphProperties(newValue!);
+      }, //!: is this correct?
       items: GraphProperties.values.map((GraphProperties properties) {
         return DropdownMenuItem<GraphProperties>(
           value: properties,

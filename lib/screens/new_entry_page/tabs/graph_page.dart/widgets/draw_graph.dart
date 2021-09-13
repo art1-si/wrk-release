@@ -1,7 +1,6 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import 'package:workout_notes_app/screens/new_entry_page/tabs/graph_page.dart/services/graph_model_provider.dart';
+import 'package:workout_notes_app/screens/new_entry_page/tabs/graph_page.dart/services/graph_model.dart';
 import 'package:workout_notes_app/theme/app_theme.dart';
 
 class LinerGraph extends StatelessWidget {
@@ -106,5 +105,6 @@ class DrawGraph extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(DrawGraph oldDelegate) => oldDelegate.tapped != tapped;
+  bool shouldRepaint(DrawGraph oldDelegate) =>
+      oldDelegate.tapped != tapped || oldDelegate.entries != entries;
 }
