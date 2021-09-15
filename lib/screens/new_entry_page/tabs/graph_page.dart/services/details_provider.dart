@@ -1,16 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:workout_notes_app/screens/new_entry_page/tabs/graph_page.dart/services/graph_model.dart';
+import 'package:workout_notes_app/screens/new_entry_page/tabs/graph_page.dart/services/graph_selector_provider.dart';
+import 'package:workout_notes_app/services/1rm_formula.dart';
 
 final detailsProvider = ChangeNotifierProvider.autoDispose(
-  (ref) => DetailsProvider(),
+  (ref) {
+    final _property = ref.watch(graphSelector).graphProperties;
+    return DetailsProvider(_property);
+  },
 );
 
 class DetailsProvider extends ChangeNotifier {
+  DetailsProvider(this.properties);
+
+  final GraphProperties properties;
   GraphModel? _log;
   Offset? _offset;
   int? _index;
   List<GraphModel>? points;
+
   //double? width;
 
   GraphModel? get logDetails => _log ?? points!.last;
@@ -25,6 +34,23 @@ class DetailsProvider extends ChangeNotifier {
   void _setDetails(GraphModel? value) {
     _log = value;
     notifyListeners();
+  }
+
+  double? pointedValue() {
+    double? _value;
+    switch (properties) {
+      case GraphProperties.perWeight:
+        break;
+      case GraphProperties.oneRepMax:
+        _value = epleyCalOneRepMax(logDetails!.corespondingLog.weight,
+            logDetails!.corespondingLog.reps);
+        break;
+      case GraphProperties.simpleVolumePerSet:
+        _value = logDetails!.corespondingLog.weight *
+            logDetails!.corespondingLog.reps;
+        break;
+    }
+    return _value;
   }
 
   void _comperOffset() {

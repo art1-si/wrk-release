@@ -56,19 +56,22 @@ class EntriesViewModel {
   final DateTime toDate;
   final String? byExerciseID;
 
-  Stream<List<ExerciseLog>> get allEntriesStreamToDate => database
-      .exerciseLogStream()
-      .map(
-        (entries) => entries.where((entry) {
-          if (byExerciseID == null) {
-            return compareDatesToDay(DateTime.parse(entry.dateCreated), toDate);
-          } else {
-            return compareDatesToDay(
-                    DateTime.parse(entry.dateCreated), toDate) &&
-                entry.exerciseID == byExerciseID;
-          }
-        }).toList(),
-      );
+  Stream<List<ExerciseLog>> get allEntriesStreamToDate =>
+      database.exerciseLogStream().map(
+            (entries) => entries
+                .where((entry) {
+                  if (byExerciseID == null) {
+                    return compareDatesToDay(
+                        DateTime.parse(entry.dateCreated), toDate);
+                  } else {
+                    return compareDatesToDay(
+                            DateTime.parse(entry.dateCreated), toDate) &&
+                        entry.exerciseID == byExerciseID;
+                  }
+                })
+                .sortedBy((element) => element.dateCreated)
+                .toList(),
+          );
 
   Stream<List<ExerciseLog>> get getEntriesByExercise =>
       database.exerciseLogStream().map(
@@ -80,7 +83,7 @@ class EntriesViewModel {
                   return entry.exerciseID == byExerciseID;
                 }
               },
-            ).sortedBy((element) => element.id),
+            ).sortedBy((element) => element.dateCreated),
           );
 
   Stream<List<GroupByModel<ExerciseLog>>> get entriesTableModelStream {
@@ -89,6 +92,27 @@ class EntriesViewModel {
       data: allEntriesStreamToDate,
       groupByValue: (log) => log.exerciseID,
       titleBuilder: (log) => log.exerciseName,
+      dataID: (log) => log.exerciseID,
+    );
+  }
+
+  String _formatDateCreatedToZeroHHMM(String date) {
+    final _date = DateTime.tryParse(date);
+    final _formatted = DateTime(
+      _date!.year,
+      _date.month,
+      _date.day,
+    );
+    return _formatted.toIso8601String();
+  }
+
+  Stream<List<GroupByModel<ExerciseLog>>> get entriesHistoryByExerciseStream {
+    print("entriesTableModelStream");
+    return database.groupByValue(
+      data: getEntriesByExercise,
+      groupByValue: (log) => _formatDateCreatedToZeroHHMM(log.dateCreated),
+      titleBuilder: (log) =>
+          DateTime.tryParse(log.dateCreated)!.prettyToString(),
       dataID: (log) => log.exerciseID,
     );
   }

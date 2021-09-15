@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:workout_notes_app/screens/new_entry_page/tabs/graph_page.dart/services/chart_provider.dart';
 import 'package:workout_notes_app/screens/new_entry_page/tabs/graph_page.dart/services/graph_selector_provider.dart';
 import 'package:workout_notes_app/theme/app_theme.dart';
 
@@ -16,7 +15,7 @@ class PropertiesDropDown extends ConsumerWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
-        height: 50,
+        height: 40,
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
           color: AppTheme.of(context).primary,
@@ -26,7 +25,7 @@ class PropertiesDropDown extends ConsumerWidget {
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
           child: DropdownButton<GraphProperties>(
             icon: Icon(Icons.keyboard_arrow_down),
-            iconSize: 28,
+            iconSize: 24,
             elevation: 0,
             alignment: AlignmentDirectional.topCenter,
             underline: Container(),
@@ -40,7 +39,7 @@ class PropertiesDropDown extends ConsumerWidget {
               return DropdownMenuItem<GraphProperties>(
                 value: properties,
                 child: Text(
-                  properties.toString(),
+                  _selector.propertiesToString(properties),
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
               );

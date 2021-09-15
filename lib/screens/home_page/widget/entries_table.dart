@@ -20,75 +20,89 @@ class EntriesTable extends ConsumerWidget {
     final _exercises = watch(exerciseStream);
     return _exercises.when(
       data: (data) {
-        return ListView.separated(
-          padding: EdgeInsets.zero,
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          separatorBuilder: (_, __) => SizedBox(
-            height: 8,
-          ),
-          itemCount: model.length,
-          itemBuilder: (context, i) {
-            return GestureDetector(
-              onTap: () {
-                context
-                    .read(addExerciseLogProvider)
-                    .selectExercisesWithoutNotify(data);
-                context
-                    .read(addExerciseLogProvider)
-                    .setExercisesToCorrespondingItems(model);
-                context
-                    .read(addExerciseLogProvider)
-                    .setSelectedExerciseIndex(i);
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      /*  */
-                      return AddExerciseToLog();
+        return Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(
+            child: ListView.separated(
+              padding: EdgeInsets.zero,
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              separatorBuilder: (_, __) => const SizedBox(
+                height: 12,
+              ),
+              itemCount: model.length,
+              itemBuilder: (context, i) {
+                return Container(
+                  decoration: BoxDecoration(
+                    color: AppTheme.of(context).primary,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: GestureDetector(
+                    onTap: () {
+                      context
+                          .read(addExerciseLogProvider)
+                          .selectExercisesWithoutNotify(data);
+                      context
+                          .read(addExerciseLogProvider)
+                          .setExercisesToCorrespondingItems(model);
+                      context
+                          .read(addExerciseLogProvider)
+                          .setSelectedExerciseIndex(i);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            /*  */
+                            return AddExerciseToLog();
+                          },
+                        ),
+                      );
                     },
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 8.0, horizontal: 16.0),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              model[i].title,
+                              style: TextStyle(
+                                fontSize: 18.0,
+                                letterSpacing: 1.25,
+                              ),
+                            ),
+                          ),
+                        ),
+                        ListView.separated(
+                          padding: EdgeInsets.zero,
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: model[i].data.length,
+                          itemBuilder: (context, index) {
+                            final data = model[i].data[index];
+                            return _TableItem(
+                              showRPEfield: true,
+                              middleField: "${Strings.weight}: ${data.weight}",
+                              leftField:
+                                  "${Strings.setString}: ${data.setCount}",
+                              rightField: "${Strings.reps}: ${data.reps}",
+                              rpeField: "${Strings.rpe}: ${data.exerciseRPE}",
+                            );
+                          },
+                          separatorBuilder: (BuildContext context, int index) =>
+                              Divider(
+                            height: 0,
+                            color: AppTheme.of(context).divider,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 );
               },
-              child: Column(
-                children: [
-                  Container(
-                    color: AppTheme.of(context).primary,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 8.0, horizontal: 16.0),
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          model[i].title,
-                          style: TextStyle(
-                            fontSize: 20.0,
-                            letterSpacing: 1.25,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  ListView.builder(
-                    padding: EdgeInsets.zero,
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: model[i].data.length,
-                    itemBuilder: (context, index) {
-                      final data = model[i].data[index];
-                      return _TableItem(
-                        showRPEfield: true,
-                        middleField: "${Strings.weight}: ${data.weight}",
-                        leftField: "${Strings.setString}: ${data.setCount}",
-                        rightField: "${Strings.reps}: ${data.reps}",
-                        rpeField: "${Strings.rpe}: ${data.exerciseRPE}",
-                      );
-                    },
-                  ),
-                ],
-              ),
-            );
-          },
+            ),
+          ),
         );
       },
       error: (error, __) => Text("SOMETHING WENT WRONG \n$error"),
@@ -115,12 +129,14 @@ class _TableItem extends StatelessWidget {
 
   Widget _rowField({required double width, required String text}) {
     return SizedBox(
+      height: 30,
       width: width - 1,
       child: Center(
         child: Text(
           text,
           style: TextStyle(
-            fontSize: 16.0,
+            fontSize: 14.0,
+            letterSpacing: 0.2,
           ),
         ),
       ),
@@ -141,7 +157,7 @@ class _TableItem extends StatelessWidget {
         ),
         //set
         _rowField(
-          width: size.width / numberOfFields - 24,
+          width: size.width / numberOfFields - 28,
           text: leftField,
         ),
         //reps
@@ -151,20 +167,21 @@ class _TableItem extends StatelessWidget {
           color: AppTheme.of(context).primary,
         ),
         _rowField(
-          width: size.width / numberOfFields - 24,
-          text: rightField,
+          width: size.width / numberOfFields + 64,
+          text: middleField,
         ),
+
         //weight
         Container(
           width: 1,
           height: 24,
           color: AppTheme.of(context).primary,
         ),
-        _rowField(
-          width: size.width / numberOfFields + 72,
-          text: middleField,
-        ),
 
+        _rowField(
+          width: size.width / numberOfFields - 28,
+          text: rightField,
+        ),
         //RPE
         if (showRPEfield)
           Container(
@@ -173,7 +190,7 @@ class _TableItem extends StatelessWidget {
             color: AppTheme.of(context).primary,
           ),
         _rowField(
-          width: size.width / numberOfFields - 24,
+          width: size.width / numberOfFields - 28,
           text: rpeField!,
         ),
       ],

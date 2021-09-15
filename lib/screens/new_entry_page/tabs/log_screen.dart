@@ -39,7 +39,8 @@ class _LogScreenState extends State<LogScreen> {
       weight: _weight,
       reps: _reps,
       setCount: setCount, //TODO: Create set counter
-      dateCreated: dateCreated,
+      dateCreated:
+          context.read(selectedDateProvider).daySelected.toIso8601String(),
       exerciseRPE: 10, //TODO: create rpe selector
     );
   }
@@ -51,6 +52,9 @@ class _LogScreenState extends State<LogScreen> {
             compareDatesToDay(DateTime.parse(element.dateCreated), date))
         .toList();
     if (_exerciseLog.isNotEmpty) {
+      print(widget.exerciseLog.last.setCount!);
+      print(widget.exerciseLog.last.dateCreated);
+      print(_set);
       return _set + widget.exerciseLog.last.setCount!;
     }
     return _set;

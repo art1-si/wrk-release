@@ -24,7 +24,7 @@ class ChartViewModel {
   final GraphProperties properties;
 
   List<GraphModel>? _graphPoints;
-  double _minValue = double.infinity;
+  double _minValue = 0;
   double _maxValue = 0;
 
   double get maxValue => _maxValue;
@@ -87,6 +87,7 @@ class ChartViewModel {
 
     double relativeYposition = (value - minValue) / (maxValue - minValue);
     double yOffset = height - relativeYposition * height;
+    print("yOffset is $relativeYposition");
     return yOffset;
   }
 
@@ -97,9 +98,9 @@ class ChartViewModel {
         if (_value > _maxValue) {
           _maxValue = _value;
         }
-        if (_value < _minValue) {
+        /* if (_value < _minValue) {
           _minValue = _value;
-        }
+        } */
       });
     } else if (exerciseLog.isNotEmpty && exerciseLog.length < 2) {
       _maxValue = exerciseLog.first.weight * 2;
