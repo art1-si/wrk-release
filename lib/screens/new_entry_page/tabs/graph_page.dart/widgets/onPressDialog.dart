@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 import 'package:workout_notes_app/theme/app_theme.dart';
 import 'package:workout_notes_app/provider/day_selector_provider.dart';
 

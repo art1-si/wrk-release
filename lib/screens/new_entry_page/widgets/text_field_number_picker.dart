@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:workout_notes_app/screens/new_entry_page/widgets/base_tf_num_picker.dart';
 
 class TextFieldNumerPicker extends StatefulWidget {
   const TextFieldNumerPicker({
@@ -10,9 +11,9 @@ class TextFieldNumerPicker extends StatefulWidget {
   }) : super(key: key);
 
   final String title;
-  final double initValue;
-  final ValueChanged<double> onChange;
-  final double changesByValue;
+  final int initValue;
+  final ValueChanged<int> onChange;
+  final int changesByValue;
 
   @override
   _TextFieldNumerPickerState createState() => _TextFieldNumerPickerState();
@@ -20,7 +21,7 @@ class TextFieldNumerPicker extends StatefulWidget {
 
 class _TextFieldNumerPickerState extends State<TextFieldNumerPicker> {
   TextEditingController? _controller;
-  double? inputValue;
+  int? inputValue;
 //TODO: clean-up everything in here
   @override
   void initState() {
@@ -31,7 +32,47 @@ class _TextFieldNumerPickerState extends State<TextFieldNumerPicker> {
   @override
   Widget build(BuildContext context) {
     _controller = TextEditingController(text: inputValue.toString());
-    return Padding(
+    return BaseTFNumPicker(
+      width: inputValue.toString().length.toDouble() * 42,
+      title: widget.title,
+      child: TextFormField(
+        keyboardType: TextInputType.number,
+        decoration: InputDecoration(
+          border: InputBorder.none,
+        ),
+        style: TextStyle(
+          fontSize: 42.0,
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+          letterSpacing: 2.5,
+        ),
+        textAlign: TextAlign.center,
+        controller: _controller,
+        onChanged: (value) {
+          inputValue = value.isEmpty ? 0 : int.tryParse(value);
+          widget.onChange(inputValue!);
+        },
+      ),
+      onPressedLeftArow: () {
+        if (inputValue! > 0) {
+          setState(() {
+            inputValue = inputValue! - widget.changesByValue;
+            widget.onChange(inputValue!);
+          });
+        }
+      },
+      onPressedRightArow: () {
+        setState(() {
+          inputValue = inputValue! + widget.changesByValue;
+          widget.onChange(inputValue!);
+        });
+      },
+      leftSubText: "${inputValue! - widget.changesByValue}",
+      rightSubText: "${inputValue! + widget.changesByValue}",
+      reachedZero: inputValue! > 0,
+    );
+
+    /* Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
       child: Column(
         children: [
@@ -114,6 +155,6 @@ class _TextFieldNumerPickerState extends State<TextFieldNumerPicker> {
           ),
         ],
       ),
-    );
+    ); */
   }
 }

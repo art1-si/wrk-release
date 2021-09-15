@@ -60,9 +60,9 @@ class DrawPoint extends CustomPainter {
       ..style = PaintingStyle.fill
       ..strokeWidth = 12;
 
-    var _dx = pointPosition.x * size.width;
-    var _nextDx = pointPosition.nextX * size.width;
-    var _distance = (_nextDx - _dx) / 2;
+    //var _dx = pointPosition.x * size.width;
+    // var _nextDx = pointPosition.nextX * size.width;
+    //var _distance = (_nextDx - _dx) / 2;
     /* canvas.drawPath(
       Path()
         ..moveTo(_dx - _distance, 0)

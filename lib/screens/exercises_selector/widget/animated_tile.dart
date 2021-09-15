@@ -53,7 +53,6 @@ class _AnimatedTileState extends State<AnimatedTile>
 
   @override
   Widget build(BuildContext context) {
-    final _screenWidth = MediaQuery.of(context).size.width;
     return FadeTransition(
       opacity: _offsetAnimation,
       child: Container(

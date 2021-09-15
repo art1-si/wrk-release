@@ -4,6 +4,7 @@ import 'package:workout_notes_app/data_models/exercise_log.dart';
 import 'package:workout_notes_app/provider/day_selector_provider.dart';
 import 'package:workout_notes_app/screens/home_page/service/entries_view_model.dart';
 import 'package:workout_notes_app/screens/home_page/widget/buttons.dart';
+import 'package:workout_notes_app/screens/new_entry_page/widgets/decimal_text_field_number_picker.dart';
 import 'package:workout_notes_app/screens/new_entry_page/widgets/text_field_number_picker.dart';
 import 'package:workout_notes_app/services/database.dart';
 import 'package:workout_notes_app/services/providers.dart';
@@ -84,7 +85,7 @@ class _LogScreenState extends State<LogScreen> {
   Widget build(BuildContext context) {
     return ListView(
       children: <Widget>[
-        TextFieldNumerPicker(
+        DecimalTextFieldNumPicker(
           title: "WEIGHT",
           initValue: widget.exerciseLog.isNotEmpty
               ? widget.exerciseLog.last.weight
@@ -95,7 +96,7 @@ class _LogScreenState extends State<LogScreen> {
         TextFieldNumerPicker(
           title: "Reps",
           initValue: widget.exerciseLog.isNotEmpty
-              ? widget.exerciseLog.last.reps.toDouble()
+              ? widget.exerciseLog.last.reps
               : 0, //TODO: make it to accept ints
           onChange: (value) => _reps = value.toInt(),
           changesByValue: 1,
