@@ -22,7 +22,6 @@ class _MyHomePageState extends State<MyHomePage> {
       children: [
         _HomePageBody(
           onExerciseButtonPress: () {
-            print("=====Button Pressed=======");
             _dropDownAnimationKey.currentState?.handleAnimation();
           },
         ),
@@ -53,7 +52,9 @@ class _HomePageBody extends StatelessWidget {
       ElevatedHomePageButton(
         onPress: onExerciseButtonPress,
         title: Strings.exercise,
-        backgroundColor: AppTheme.of(context).accentPrimary.withOpacity(0.05),
+        backgroundColor: AppTheme.of(context)
+            .accentPrimary
+            .withOpacity(0.05), //TODO put this to button Widget
         titleColor: AppTheme.of(context).accentPrimary.withOpacity(0.7),
       ),
       const Divider(
@@ -69,32 +70,35 @@ class _HomePageBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppTheme.of(context).background,
-      body: CustomScrollView(
-        slivers: <Widget>[
-          SliverAppBar(
-            title: Text(
-              "Workout Notes",
-              style: Theme.of(context).textTheme.headline1,
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: AppTheme.of(context).background,
+        body: CustomScrollView(
+          physics: BouncingScrollPhysics(),
+          slivers: <Widget>[
+            SliverAppBar(
+              title: Text(
+                "Workout Notes",
+                style: Theme.of(context).textTheme.headline1,
+              ),
+              elevation: 0,
+              expandedHeight: 70,
+              backgroundColor: AppTheme.of(context).background,
             ),
-            elevation: 0,
-            expandedHeight: 0,
-            backgroundColor: AppTheme.of(context).background,
-          ),
-          SliverList(
-            delegate: SliverChildListDelegate(
-              <Widget>[
-                ..._header(context),
-                LogItemBuilder(),
-                Divider(
-                  height: 40,
-                  color: Colors.transparent,
-                ),
-              ],
+            SliverList(
+              delegate: SliverChildListDelegate(
+                <Widget>[
+                  ..._header(context),
+                  LogItemBuilder(),
+                  Divider(
+                    height: 40,
+                    color: Colors.transparent,
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

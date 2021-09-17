@@ -31,62 +31,64 @@ class AddExerciseToLog extends ConsumerWidget {
             currentFocus.unfocus();
           }
         },
-        child: Scaffold(
-          backgroundColor: AppTheme.of(context).background,
-          appBar: AppBar(
-            actions: [
-              GestureDetector(
-                onTap: () {
-                  if (!exerciseProvider.indexIsOnZero) {
-                    context.read(addExerciseLogProvider).previousExercise();
-                  }
-                },
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: Icon(
-                    Icons.keyboard_arrow_left,
-                    color: (exerciseProvider.indexIsOnZero)
-                        ? Colors.white30
-                        : Colors.white,
-                  ),
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  if (!exerciseProvider.indexReachedEnd) {
-                    context.read(addExerciseLogProvider).nextExercise();
-                  }
-                },
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: Icon(
-                    Icons.keyboard_arrow_right,
-                    color: (exerciseProvider.indexReachedEnd)
-                        ? Colors.white30
-                        : Colors.white,
-                  ),
-                ),
-              ),
-            ],
+        child: SafeArea(
+          child: Scaffold(
             backgroundColor: AppTheme.of(context).background,
-            elevation: 0,
-            centerTitle: true,
-            title: Text(
-              exerciseProvider.selectedExercise.exerciseName,
-              //style: Theme.of(context).textTheme.headline4,
+            appBar: AppBar(
+              actions: [
+                GestureDetector(
+                  onTap: () {
+                    if (!exerciseProvider.indexIsOnZero) {
+                      context.read(addExerciseLogProvider).previousExercise();
+                    }
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: Icon(
+                      Icons.keyboard_arrow_left,
+                      color: (exerciseProvider.indexIsOnZero)
+                          ? Colors.white30
+                          : Colors.white,
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    if (!exerciseProvider.indexReachedEnd) {
+                      context.read(addExerciseLogProvider).nextExercise();
+                    }
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: Icon(
+                      Icons.keyboard_arrow_right,
+                      color: (exerciseProvider.indexReachedEnd)
+                          ? Colors.white30
+                          : Colors.white,
+                    ),
+                  ),
+                ),
+              ],
+              backgroundColor: AppTheme.of(context).background,
+              elevation: 0,
+              centerTitle: true,
+              title: Text(
+                exerciseProvider.selectedExercise.exerciseName,
+                //style: Theme.of(context).textTheme.headline4,
+              ),
+              bottom: _bottom(),
             ),
-            bottom: _bottom(),
-          ),
-          body: _exerciseLogStream.when(
-            data: (exerciseLog) {
-              return _body(
-                exerciseLog: exerciseLog,
-                exercise: exerciseProvider.selectedExercise,
-              );
-            },
-            loading: () => CenterProgressIndicator(),
-            error: (error, __) => Center(
-              child: Text("Something went wrong\nerror"),
+            body: _exerciseLogStream.when(
+              data: (exerciseLog) {
+                return _body(
+                  exerciseLog: exerciseLog,
+                  exercise: exerciseProvider.selectedExercise,
+                );
+              },
+              loading: () => CenterProgressIndicator(),
+              error: (error, __) => Center(
+                child: Text("Something went wrong\nerror"),
+              ),
             ),
           ),
         ),

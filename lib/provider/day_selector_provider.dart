@@ -20,53 +20,42 @@ extension PrettyDate on DateTime {
 }
 
 class DaySelectorModel extends ChangeNotifier {
-  static DateTime _now = DateTime.now();
+  int n = 0;
 
-  static int n = 0;
-
-  DateTime _dateSelected = _now.add(Duration(days: n));
   void increment() {
+    print(DateTime.now());
     n++;
-    _dateSelected = _now.add(Duration(days: n));
-    _dateSelected.add(Duration(days: n));
     notifyListeners();
   }
 
   void decrement() {
     n--;
-    _dateSelected = _now.add(Duration(days: n));
-    _dateSelected.add(Duration(days: n));
     notifyListeners();
   }
 
-  DateTime get daySelected => _dateSelected;
-  DateTime get today => _now;
-  DateTime get yesterday => _now.subtract(
+  DateTime get daySelected => DateTime.now().add(Duration(days: n));
+  DateTime get today => DateTime.now();
+  DateTime get yesterday => DateTime.now().subtract(
         Duration(days: 1),
       );
-  DateTime get tomorrow => _now.add(
+  DateTime get tomorrow => DateTime.now().add(
         Duration(days: 1),
       );
   void resetDate() {
     n = 0;
-    _dateSelected = _now.add(
-      Duration(days: 0),
-    );
-    _dateSelected.add(
-      Duration(days: 0),
-    );
     notifyListeners();
   }
 
   String daySelectedToText() {
-    if (_dateSelected == _now) {
+    if (n == 0) {
       return "TODAY";
-    } else if (_dateSelected == tomorrow) {
+    } else if (n == 1) {
+      //TODO
       return "TOMORROW";
-    } else if (_dateSelected == yesterday) {
+    } else if (n == -1) {
       return "YESTERDAY";
     } else {
-      return _dateSelected.prettyToString();
+      return daySelected.prettyToString();
     }
   }
 }

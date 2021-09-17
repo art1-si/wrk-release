@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:workout_notes_app/screens/new_entry_page/tabs/graph_page.dart/services/graph_model_provider.dart';
+import 'package:workout_notes_app/screens/new_entry_page/tabs/graph_page.dart/services/graph_model.dart';
 import 'package:workout_notes_app/theme/app_theme.dart';
 
 class GraphPoint extends StatelessWidget {
@@ -60,9 +60,9 @@ class DrawPoint extends CustomPainter {
       ..style = PaintingStyle.fill
       ..strokeWidth = 12;
 
-    var _dx = pointPosition.x * size.width;
-    var _nextDx = pointPosition.nextX * size.width;
-    var _distance = (_nextDx - _dx) / 2;
+    //var _dx = pointPosition.x * size.width;
+    // var _nextDx = pointPosition.nextX * size.width;
+    //var _distance = (_nextDx - _dx) / 2;
     /* canvas.drawPath(
       Path()
         ..moveTo(_dx - _distance, 0)

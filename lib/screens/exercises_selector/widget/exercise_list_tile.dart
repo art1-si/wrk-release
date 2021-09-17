@@ -24,36 +24,10 @@ class ExerciseListTile extends ConsumerWidget {
     if (exercises.selectedExercises != null) {
       return Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Align(
-              alignment: Alignment.center,
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: AppTheme.of(context).divider,
-                ),
-                height: 5,
-                width: 80,
-              ),
-            ),
-          ),
-          Align(
-            alignment: Alignment.centerLeft,
-            child: GestureDetector(
-              onTap: () =>
-                  context.read(addExerciseLogProvider).selectExercises(null),
-              child: SizedBox(
-                height: 70,
-                width: 50,
-                child: Center(
-                  child: Icon(
-                    Icons.arrow_back,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            ),
+          const _Divider(),
+          _BackArowButton(
+            onPressed: () =>
+                context.read(addExerciseLogProvider).selectExercises(null),
           ),
           Expanded(
             child: ListView.builder(
@@ -88,20 +62,7 @@ class ExerciseListTile extends ConsumerWidget {
 
     return Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Align(
-            alignment: Alignment.center,
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: AppTheme.of(context).divider,
-              ),
-              height: 5,
-              width: 80,
-            ),
-          ),
-        ),
+        const _Divider(),
         Expanded(
           child: ListView.builder(
             shrinkWrap: true,
@@ -124,6 +85,56 @@ class ExerciseListTile extends ConsumerWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class _BackArowButton extends StatelessWidget {
+  const _BackArowButton({
+    Key? key,
+    required this.onPressed,
+  }) : super(key: key);
+  final VoidCallback onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: GestureDetector(
+        onTap: onPressed,
+        child: SizedBox(
+          height: 70,
+          width: 50,
+          child: Center(
+            child: Icon(
+              Icons.arrow_back,
+              color: Colors.white,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _Divider extends StatelessWidget {
+  const _Divider({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Align(
+        alignment: Alignment.center,
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            color: AppTheme.of(context).divider,
+          ),
+          height: 5,
+          width: 80,
+        ),
+      ),
     );
   }
 }
