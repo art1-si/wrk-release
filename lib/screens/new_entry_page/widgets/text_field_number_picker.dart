@@ -36,6 +36,12 @@ class _TextFieldNumerPickerState extends State<TextFieldNumerPicker> {
       width: inputValue.toString().length.toDouble() * 42,
       title: widget.title,
       child: TextFormField(
+        validator: (String? value) {
+          if (value == null || value.isEmpty) {
+            return "Please enter value";
+          }
+          return null;
+        },
         keyboardType: TextInputType.number,
         decoration: InputDecoration(
           border: InputBorder.none,

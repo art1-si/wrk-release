@@ -25,6 +25,8 @@ class LogScreen extends StatefulWidget {
 }
 
 class _LogScreenState extends State<LogScreen> {
+  final _formKey = GlobalKey<FormState>();
+
   double _weight = 0;
   int _reps = 0;
   ExerciseLog _serializeEntry({
@@ -83,52 +85,58 @@ class _LogScreenState extends State<LogScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: <Widget>[
-        DecimalTextFieldNumPicker(
-          title: "WEIGHT",
-          initValue: widget.exerciseLog.isNotEmpty
-              ? widget.exerciseLog.last.weight
-              : 0,
-          onChange: (value) => _weight = value,
-          changesByValue: 2.5,
-        ),
-        TextFieldNumerPicker(
-          title: "Reps",
-          initValue: widget.exerciseLog.isNotEmpty
-              ? widget.exerciseLog.last.reps
-              : 0, //TODO: make it to accept ints
-          onChange: (value) => _reps = value.toInt(),
-          changesByValue: 1,
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              ElevatedHomePageButton(
-                onPress: () {
-                  final database = context.read(databaseProvider);
-                  final date = context.read(selectedDateProvider);
-                  _submitEntry(database: database, date: date);
-                },
-                title: "Submit",
-                backgroundColor:
-                    AppTheme.of(context).accentPrimary.withOpacity(0.05),
-                titleColor: AppTheme.of(context).accentPrimary,
-              ),
-              ElevatedHomePageButton(
-                onPress: () {},
-                title: "Reset",
-                backgroundColor:
-                    AppTheme.of(context).accentPositive.withOpacity(0.05),
-                titleColor:
-                    AppTheme.of(context).accentPositive.withOpacity(0.7),
-              ),
-            ],
+    return Form(
+      key: _formKey,
+      child: ListView(
+        children: <Widget>[
+          DecimalTextFieldNumPicker(
+            title: "WEIGHT",
+            initValue: widget.exerciseLog.isNotEmpty
+                ? widget.exerciseLog.last.weight
+                : 0,
+            onChange: (value) => _weight = value,
+            changesByValue: 2.5,
           ),
-        ),
-      ],
+          TextFieldNumerPicker(
+            title: "Reps",
+            initValue: widget.exerciseLog.isNotEmpty
+                ? widget.exerciseLog.last.reps
+                : 0, //TODO: make it to accept ints
+            onChange: (value) => _reps = value.toInt(),
+            changesByValue: 1,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedHomePageButton(
+                  onPress: () {
+                    if (_formKey.currentState!.validate()) {
+                      final database = context.read(databaseProvider);
+                      final date = context.read(selectedDateProvider);
+                      _submitEntry(database: database, date: date);
+                    }
+                    print("empty");
+                  },
+                  title: "Submit",
+                  backgroundColor:
+                      AppTheme.of(context).accentPrimary.withOpacity(0.05),
+                  titleColor: AppTheme.of(context).accentPrimary,
+                ),
+                ElevatedHomePageButton(
+                  onPress: () {},
+                  title: "Reset",
+                  backgroundColor:
+                      AppTheme.of(context).accentPositive.withOpacity(0.05),
+                  titleColor:
+                      AppTheme.of(context).accentPositive.withOpacity(0.7),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

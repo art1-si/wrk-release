@@ -35,10 +35,19 @@ class _DecimalTextFieldNumPickerState extends State<DecimalTextFieldNumPicker> {
   Widget build(BuildContext context) {
     //TODO: make signle textfield
     _controller = TextEditingController(text: inputValue.toString());
+    double _tfWidth = inputValue!.toInt().toString().length.toDouble() < 3
+        ? 3 * 45
+        : inputValue!.toInt().toString().length.toDouble() * 45;
     return BaseTFNumPicker(
-      width: inputValue!.toInt().toString().length.toDouble() * 45,
+      width: _tfWidth,
       title: widget.title,
       child: TextFormField(
+        validator: (String? value) {
+          if (value == null || value.isEmpty) {
+            return "Please enter value";
+          }
+          return null;
+        },
         keyboardType: TextInputType.number,
         decoration: InputDecoration(
           border: InputBorder.none,
