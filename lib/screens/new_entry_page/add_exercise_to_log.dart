@@ -4,7 +4,7 @@ import 'package:workout_notes_app/data_models/exercise.dart';
 import 'package:workout_notes_app/data_models/exercise_log.dart';
 import 'package:workout_notes_app/screens/home_page/service/entries_view_model.dart';
 import 'package:workout_notes_app/screens/new_entry_page/tabs/history_view.dart';
-import 'package:workout_notes_app/screens/new_entry_page/tabs/log_screen.dart';
+import 'package:workout_notes_app/screens/new_entry_page/tabs/create_entry/log_screen.dart';
 import 'package:workout_notes_app/screens/new_entry_page/services/add_exercise_log_page_view_model.dart';
 import 'package:workout_notes_app/screens/new_entry_page/tabs/graph_page.dart/my_graph_widget.dart';
 import 'package:workout_notes_app/screens/new_entry_page/tabs/rep_max_view.dart';
@@ -81,6 +81,7 @@ class AddExerciseToLog extends ConsumerWidget {
             body: _exerciseLogStream.when(
               data: (exerciseLog) {
                 return _body(
+                  context: context,
                   exerciseLog: exerciseLog,
                   exercise: exerciseProvider.selectedExercise,
                 );
@@ -100,7 +101,7 @@ class AddExerciseToLog extends ConsumerWidget {
     return TabBar(
         indicatorWeight: 0.1,
         indicatorColor: Colors.transparent,
-        labelStyle: TextStyle(fontSize: 13),
+        labelStyle: TextStyle(fontSize: 14),
         labelColor: Colors.white,
         unselectedLabelStyle: TextStyle(fontSize: 12),
         tabs: <Widget>[
@@ -114,11 +115,14 @@ class AddExerciseToLog extends ConsumerWidget {
   Widget _body({
     required List<ExerciseLog> exerciseLog,
     required Exercise exercise,
+    required BuildContext context,
   }) {
     return Column(
       children: [
         Divider(
+          height: 20,
           thickness: 1,
+          color: AppTheme.of(context).divider,
         ),
         Expanded(
           child: TabBarView(

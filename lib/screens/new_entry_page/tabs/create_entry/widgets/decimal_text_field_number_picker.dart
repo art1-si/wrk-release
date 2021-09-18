@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:workout_notes_app/screens/new_entry_page/widgets/base_tf_num_picker.dart';
+import 'package:workout_notes_app/screens/new_entry_page/tabs/create_entry/widgets/base_tf_num_picker.dart';
 
 class DecimalTextFieldNumPicker extends StatefulWidget {
   const DecimalTextFieldNumPicker({
