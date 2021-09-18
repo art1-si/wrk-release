@@ -31,8 +31,8 @@ class _TextFieldNumerPickerState extends State<TextFieldNumerPicker> {
 
   @override
   Widget build(BuildContext context) {
-    inputValue = widget.initValue; //TODO: not good
     _controller = TextEditingController(text: inputValue.toString());
+
     return BaseTFNumPicker(
       width: inputValue.toString().length.toDouble() * 42,
       title: widget.title,

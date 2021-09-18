@@ -87,7 +87,7 @@ class _EntryRow extends StatelessWidget {
           children: [
             Center(
               child: AnimatedContainer(
-                duration: Duration(milliseconds: 350),
+                duration: Duration(milliseconds: 250),
                 curve: Curves.easeInOutCubic,
                 height: selected ? 30 : 10,
                 width: selected ? MediaQuery.of(context).size.width : 10,

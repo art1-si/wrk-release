@@ -22,23 +22,16 @@ class DecimalTextFieldNumPicker extends StatefulWidget {
 
 class _DecimalTextFieldNumPickerState extends State<DecimalTextFieldNumPicker> {
   TextEditingController? _controller;
-  double? inputValue;
-
-//TODO: clean-up everything in here
-  @override
-  void initState() {
-    inputValue = widget.initValue;
-    super.initState();
-  }
+  // late double? inputValue = widget.initValue;
 
   @override
   Widget build(BuildContext context) {
-    inputValue = widget.initValue; //TODO: not good
     //TODO: make signle textfield
-    _controller = TextEditingController(text: inputValue.toString());
-    double _tfWidth = inputValue!.toInt().toString().length.toDouble() < 3
+    _controller = TextEditingController(text: widget.initValue.toString());
+
+    double _tfWidth = widget.initValue.toInt().toString().length.toDouble() < 3
         ? 3 * 45
-        : inputValue!.toInt().toString().length.toDouble() * 45;
+        : widget.initValue.toInt().toString().length.toDouble() * 45;
     return BaseTFNumPicker(
       width: _tfWidth,
       title: widget.title,
@@ -62,27 +55,20 @@ class _DecimalTextFieldNumPickerState extends State<DecimalTextFieldNumPicker> {
         textAlign: TextAlign.center,
         controller: _controller,
         onChanged: (value) {
-          inputValue = value.isEmpty ? 0.0 : double.parse(value);
-          widget.onChange(inputValue!);
+          widget.onChange(value.isEmpty ? 0.0 : double.parse(value));
         },
       ),
       onPressedLeftArow: () {
-        if (inputValue! > 0) {
-          setState(() {
-            inputValue = inputValue! - widget.changesByValue;
-            widget.onChange(inputValue!);
-          });
+        if (widget.initValue > 0) {
+          widget.onChange(widget.initValue - widget.changesByValue);
         }
       },
       onPressedRightArow: () {
-        setState(() {
-          inputValue = inputValue! + widget.changesByValue;
-          widget.onChange(inputValue!);
-        });
+        widget.onChange(widget.initValue + widget.changesByValue);
       },
-      leftSubText: "${inputValue! - widget.changesByValue}",
-      rightSubText: "${inputValue! + widget.changesByValue}",
-      reachedZero: inputValue! > 0,
+      leftSubText: "${widget.initValue - widget.changesByValue}",
+      rightSubText: "${widget.initValue + widget.changesByValue}",
+      reachedZero: widget.initValue > 0,
     );
   }
 }

@@ -65,6 +65,16 @@ class _LogScreenState extends State<LogScreen> {
     return _set;
   }
 
+  Future<void> _upadateEntry({
+    required FirestoreDatabase database,
+  }) async {
+    final entry = _selectedLog!.copyWith(
+      weight: _weight,
+      reps: _reps,
+    );
+    await database.upadateExerciseLog(entry);
+  }
+
   Future<void> _submitEntry(
       {required FirestoreDatabase database,
       required DaySelectorModel date}) async {
@@ -85,14 +95,23 @@ class _LogScreenState extends State<LogScreen> {
     super.initState();
   }
 
+  void _resetValues() {
+    setState(() {
+      _weight = 0.0;
+      _reps = 0;
+    });
+  }
+
   void _handleEditMode(ExerciseLog? log) {
     print("callback works, pressed log is $log");
     setState(() {
       if (log != null) {
+        _selectedLog = log;
         _weight = log.weight;
         _reps = log.reps;
         _editMode = true;
       } else {
+        _selectedLog = null;
         _weight = widget.exerciseLog.last.weight;
         _reps = widget.exerciseLog.last.reps;
         _editMode = false;
@@ -100,6 +119,7 @@ class _LogScreenState extends State<LogScreen> {
     });
   }
 
+  ExerciseLog? _selectedLog;
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -108,20 +128,41 @@ class _LogScreenState extends State<LogScreen> {
         children: <Widget>[
           CreateNewEntry(
             weightInitValue: widget.exerciseLog.isNotEmpty ? _weight : 0,
-            onRepsValueChanged: (int value) => _reps = value,
-            onWeightValueChanged: (double value) => _weight = value,
+            onRepsValueChanged: (int value) => setState(() {
+              _reps = value;
+            }), //TODO find way so its doesnt rebuild everything
+            onWeightValueChanged: (double value) => setState(() {
+              _weight = value;
+            }),
             repsInitValue: widget.exerciseLog.isNotEmpty ? _reps : 0,
             bottomButtons: RowWithBottomButtons(
               editModeOn: _editMode,
               submitButtonPressed: () {
                 if (_formKey.currentState!.validate()) {
-                  final database = context.read(databaseProvider);
-                  final date = context.read(selectedDateProvider);
-                  _submitEntry(database: database, date: date);
+                  if (_editMode) {
+                    final database = context.read(databaseProvider);
+                    _upadateEntry(
+                      database: database,
+                    );
+                    _handleEditMode(null);
+                  } else {
+                    final database = context.read(databaseProvider);
+                    final date = context.read(selectedDateProvider);
+                    _submitEntry(database: database, date: date);
+                  }
                 }
                 print("empty");
               },
-              resetOrDeleteButtonPressed: () {}, //TODO:
+              resetOrDeleteButtonPressed: () {
+                if (_editMode) {
+                  context
+                      .read(databaseProvider)
+                      .deleteExerciseLog(_selectedLog!);
+                  _handleEditMode(null); //TODO works but make it pretty
+                } else {
+                  _resetValues();
+                }
+              }, //TODO:
             ),
           ),
           Divider(
