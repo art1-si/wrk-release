@@ -3,12 +3,9 @@ import 'package:workout_notes_app/data_models/exercise.dart';
 import 'package:workout_notes_app/data_models/exercise_log.dart';
 import 'package:workout_notes_app/provider/day_selector_provider.dart';
 import 'package:workout_notes_app/screens/home_page/service/entries_view_model.dart';
-import 'package:workout_notes_app/screens/home_page/widget/buttons.dart';
 import 'package:workout_notes_app/screens/new_entry_page/tabs/create_entry/create_new_entry.dart';
 import 'package:workout_notes_app/screens/new_entry_page/tabs/create_entry/current_entries.dart';
 import 'package:workout_notes_app/screens/new_entry_page/tabs/create_entry/widgets/bottom_buttons.dart';
-import 'package:workout_notes_app/screens/new_entry_page/tabs/create_entry/widgets/decimal_text_field_number_picker.dart';
-import 'package:workout_notes_app/screens/new_entry_page/tabs/create_entry/widgets/text_field_number_picker.dart';
 import 'package:workout_notes_app/services/database.dart';
 import 'package:workout_notes_app/services/providers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -114,7 +111,7 @@ class _LogScreenState extends State<LogScreen> {
                 }
                 print("empty");
               },
-              resetOrDeleteButtonPressed: () {},
+              resetOrDeleteButtonPressed: () {}, //TODO:
             ),
           ),
           Divider(

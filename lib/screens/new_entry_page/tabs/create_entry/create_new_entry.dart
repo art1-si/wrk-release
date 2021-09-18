@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:workout_notes_app/screens/home_page/widget/buttons.dart';
 import 'package:workout_notes_app/screens/new_entry_page/tabs/create_entry/widgets/decimal_text_field_number_picker.dart';
 import 'package:workout_notes_app/screens/new_entry_page/tabs/create_entry/widgets/text_field_number_picker.dart';
-import 'package:workout_notes_app/theme/app_theme.dart';
 
 class CreateNewEntry extends StatelessWidget {
   const CreateNewEntry({
