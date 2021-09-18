@@ -31,6 +31,7 @@ class _TextFieldNumerPickerState extends State<TextFieldNumerPicker> {
 
   @override
   Widget build(BuildContext context) {
+    inputValue = widget.initValue; //TODO: not good
     _controller = TextEditingController(text: inputValue.toString());
     return BaseTFNumPicker(
       width: inputValue.toString().length.toDouble() * 42,
@@ -62,6 +63,7 @@ class _TextFieldNumerPickerState extends State<TextFieldNumerPicker> {
       onPressedLeftArow: () {
         if (inputValue! > 0) {
           setState(() {
+            //TODO: 0.5 is greater then 0 so its true by can give negative value
             inputValue = inputValue! - widget.changesByValue;
             widget.onChange(inputValue!);
           });

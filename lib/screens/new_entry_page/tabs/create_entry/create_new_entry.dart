@@ -20,6 +20,7 @@ class CreateNewEntry extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("createNewEntry Widget rebuild");
     return Column(
       children: <Widget>[
         DecimalTextFieldNumPicker(

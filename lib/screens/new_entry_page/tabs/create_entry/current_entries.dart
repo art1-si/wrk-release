@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:workout_notes_app/data_models/exercise_log.dart';
 import 'package:workout_notes_app/theme/app_theme.dart';
 
-typedef void VoidLogCallback(ExerciseLog);
+typedef void VoidLogCallback(ExerciseLog? log);
 
-class CurrentEntries extends StatelessWidget {
+class CurrentEntries extends StatefulWidget {
   const CurrentEntries({
     Key? key,
     required this.currentEntries,
@@ -14,6 +14,12 @@ class CurrentEntries extends StatelessWidget {
   final List<ExerciseLog> currentEntries;
   final VoidLogCallback onLongPressed;
 
+  @override
+  State<CurrentEntries> createState() => _CurrentEntriesState();
+}
+
+class _CurrentEntriesState extends State<CurrentEntries> {
+  ExerciseLog? _selectedLog;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -28,11 +34,22 @@ class CurrentEntries extends StatelessWidget {
         ListView.separated(
           shrinkWrap: true,
           physics: NeverScrollableScrollPhysics(),
-          itemCount: currentEntries.length,
+          itemCount: widget.currentEntries.length,
           itemBuilder: (BuildContext context, index) {
             return _EntryRow(
-              onLongPressed: () => onLongPressed(currentEntries[index]),
-              entry: currentEntries[index],
+              onLongPressed: () {
+                setState(() {
+                  if (_selectedLog != widget.currentEntries[index]) {
+                    _selectedLog = widget.currentEntries[index];
+                    widget.onLongPressed(_selectedLog);
+                  } else {
+                    _selectedLog = null;
+                    widget.onLongPressed(_selectedLog);
+                  }
+                });
+              },
+              entry: widget.currentEntries[index],
+              selected: widget.currentEntries[index] == _selectedLog,
             );
           },
           separatorBuilder: (_, __) => Divider(
@@ -47,51 +64,65 @@ class CurrentEntries extends StatelessWidget {
   }
 }
 
-class _EntryRow extends StatefulWidget {
+class _EntryRow extends StatelessWidget {
   const _EntryRow({
     Key? key,
     this.entry,
     this.onLongPressed,
+    this.selected = false,
   }) : super(key: key);
 
   final ExerciseLog? entry;
   final VoidCallback? onLongPressed;
 
-  @override
-  State<_EntryRow> createState() => _EntryRowState();
-}
+  final bool selected;
 
-class _EntryRowState extends State<_EntryRow> {
-  bool _selected = false;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onLongPress: () {
-        widget.onLongPressed!();
-        setState(() {
-          _selected = _selected ? false : true;
-        });
-      },
-      child: Container(
-        height: 20,
-        decoration: BoxDecoration(
-          color: _selected ? AppTheme.of(context).primary : null,
-          borderRadius: BorderRadius.circular(20),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      onTap: onLongPressed,
+      child: SizedBox(
+        height: 30,
+        child: Stack(
           children: [
-            _Field(
-              text: widget.entry?.setCount.toString() ?? "SET",
+            Center(
+              child: AnimatedContainer(
+                duration: Duration(milliseconds: 350),
+                curve: Curves.easeInOutCubic,
+                height: selected ? 30 : 10,
+                width: selected ? MediaQuery.of(context).size.width : 10,
+                decoration: BoxDecoration(
+                  color: selected
+                      ? AppTheme.of(context).accentSecendery.withOpacity(0.1)
+                      : null,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+              ),
             ),
-            _Field(
-              text: widget.entry?.weight.toString() ?? "WEIGHT",
-            ),
-            _Field(
-              text: widget.entry?.reps.toString() ?? "REPS",
-            ),
-            _Field(
-              text: widget.entry?.exerciseRPE.toString() ?? "RPE",
+            AnimatedDefaultTextStyle(
+              style: TextStyle(
+                color: selected ? Colors.white : Colors.white54,
+                fontSize: selected ? 18 : 14,
+                fontWeight: selected ? FontWeight.bold : FontWeight.w400,
+              ),
+              duration: Duration(milliseconds: 250),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  _Field(
+                    text: entry?.setCount.toString() ?? "SET",
+                  ),
+                  _Field(
+                    text: entry?.weight.toString() ?? "WEIGHT",
+                  ),
+                  _Field(
+                    text: entry?.reps.toString() ?? "REPS",
+                  ),
+                  _Field(
+                    text: entry?.exerciseRPE.toString() ?? "RPE",
+                  ),
+                ],
+              ),
             ),
           ],
         ),

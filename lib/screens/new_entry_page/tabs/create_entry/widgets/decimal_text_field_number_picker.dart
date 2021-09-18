@@ -33,6 +33,7 @@ class _DecimalTextFieldNumPickerState extends State<DecimalTextFieldNumPicker> {
 
   @override
   Widget build(BuildContext context) {
+    inputValue = widget.initValue; //TODO: not good
     //TODO: make signle textfield
     _controller = TextEditingController(text: inputValue.toString());
     double _tfWidth = inputValue!.toInt().toString().length.toDouble() < 3

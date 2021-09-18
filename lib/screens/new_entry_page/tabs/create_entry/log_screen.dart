@@ -27,6 +27,8 @@ class LogScreen extends StatefulWidget {
 class _LogScreenState extends State<LogScreen> {
   final _formKey = GlobalKey<FormState>();
 
+  bool _editMode = false;
+
   double _weight = 0;
   int _reps = 0;
   ExerciseLog _serializeEntry({
@@ -41,7 +43,7 @@ class _LogScreenState extends State<LogScreen> {
       exerciseType: widget.exercise.exerciseType,
       weight: _weight,
       reps: _reps,
-      setCount: setCount, //TODO: Create set counter
+      setCount: setCount,
       dateCreated:
           context.read(selectedDateProvider).daySelected.toIso8601String(),
       exerciseRPE: 10, //TODO: create rpe selector
@@ -83,8 +85,19 @@ class _LogScreenState extends State<LogScreen> {
     super.initState();
   }
 
-  void _handleEditMode(ExerciseLog log) {
+  void _handleEditMode(ExerciseLog? log) {
     print("callback works, pressed log is $log");
+    setState(() {
+      if (log != null) {
+        _weight = log.weight;
+        _reps = log.reps;
+        _editMode = true;
+      } else {
+        _weight = widget.exerciseLog.last.weight;
+        _reps = widget.exerciseLog.last.reps;
+        _editMode = false;
+      }
+    });
   }
 
   @override
@@ -94,15 +107,12 @@ class _LogScreenState extends State<LogScreen> {
       child: ListView(
         children: <Widget>[
           CreateNewEntry(
-            weightInitValue: widget.exerciseLog.isNotEmpty
-                ? widget.exerciseLog.last.weight
-                : 0,
+            weightInitValue: widget.exerciseLog.isNotEmpty ? _weight : 0,
             onRepsValueChanged: (int value) => _reps = value,
             onWeightValueChanged: (double value) => _weight = value,
-            repsInitValue: widget.exerciseLog.isNotEmpty
-                ? widget.exerciseLog.last.reps
-                : 0,
+            repsInitValue: widget.exerciseLog.isNotEmpty ? _reps : 0,
             bottomButtons: RowWithBottomButtons(
+              editModeOn: _editMode,
               submitButtonPressed: () {
                 if (_formKey.currentState!.validate()) {
                   final database = context.read(databaseProvider);
@@ -126,7 +136,7 @@ class _LogScreenState extends State<LogScreen> {
                       DateTime.tryParse(element.dateCreated)!,
                       context.read(selectedDateProvider).daySelected,
                     ))
-                .toList(),
+                .toList(), //TODO:
           ),
         ],
       ),
