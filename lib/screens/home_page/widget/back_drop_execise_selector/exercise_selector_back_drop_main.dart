@@ -23,21 +23,21 @@ class ExerciseSelectorBackDropState extends State<ExerciseSelectorBackDrop>
   late final AnimationController _animationController;
 
   late Animation<Offset> _offsetAnimation = Tween<Offset>(
-    begin: const Offset(0, 1 / 0.75),
+    begin: const Offset(0, 2),
     end: _endOffset,
   ).animate(CurvedAnimation(
     parent: _animationController,
-    curve: Curves.easeInOutCubic,
+    curve: Curves.linear,
   ));
 
-  Offset get _endOffset => Offset(0, 0.22 / 0.75);
+  Offset get _endOffset => Offset(0, 0.23 * 1.2);
 
   late Animation<double> _fadeAnimation = Tween<double>(
     begin: 0.0,
-    end: 0.5,
+    end: 0.7,
   ).animate(CurvedAnimation(
     parent: _animationController,
-    curve: Curves.easeInCubic,
+    curve: Curves.linear,
   ));
 
   @override
@@ -45,7 +45,7 @@ class ExerciseSelectorBackDropState extends State<ExerciseSelectorBackDrop>
     print("====itemCount---${widget.itemCount}======");
     _animationController = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 250),
+      duration: Duration(milliseconds: 150),
     );
 
     super.initState();
@@ -68,14 +68,15 @@ class ExerciseSelectorBackDropState extends State<ExerciseSelectorBackDrop>
 
   void _handleDragDownEnd(DragEndDetails details) {
     print("end");
-    if (_animationController.value > 0.7) {
+    if (_animationController.value > 0.9) {
       _animationController.forward();
-    } else if (_animationController.value < 0.7) {
+    } else if (_animationController.value < 0.9) {
       _animationController.reverse();
     }
   }
 
   void handleAnimation() {
+    print("handles animation");
     if (_animationController.value == 1.0) {
       _animationController.reverse();
     } else {
@@ -95,44 +96,46 @@ class ExerciseSelectorBackDropState extends State<ExerciseSelectorBackDrop>
             builder: (context, child) {
               return (_fadeAnimation.value > 0.01)
                   ? GestureDetector(
-                      onTap: widget.onTap,
+                      onTap: () {
+                        print("shadow tapped");
+                        widget.onTap();
+                      },
                       child: FadeTransition(
                         opacity: _fadeAnimation,
                         child: Container(
                           width: double.infinity,
                           height: double.infinity,
-                          color: Colors.black,
+                          color: Color(0xff090A0D),
                         ),
                       ),
                     )
                   : Container();
             }),
-        LayoutBuilder(
-          builder: (_, constraints) {
+        SlideTransition(
+          position: _offsetAnimation,
+          child: LayoutBuilder(builder: (_, constraints) {
             return GestureDetector(
+              onTap: () => print("backdrop tapped"),
               onVerticalDragStart: (details) => _handleDragDownStart(details),
               onVerticalDragUpdate: (details) =>
-                  _handleDragDownUpdate(details, constraints.maxHeight),
+                  _handleDragDownUpdate(details, constraints.maxHeight * 1.2),
               onVerticalDragEnd: (details) => _handleDragDownEnd(details),
-              child: SlideTransition(
-                position: _offsetAnimation,
-                child: Container(
-                  height: constraints.maxHeight * 0.78,
-                  decoration: BoxDecoration(
-                    color: AppTheme.of(context).background,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(10),
-                      topRight: Radius.circular(10),
-                    ),
+              child: Container(
+                height: constraints.maxHeight * 0.8,
+                decoration: BoxDecoration(
+                  color: AppTheme.of(context).background,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    topRight: Radius.circular(10),
                   ),
-                  child: Scaffold(
-                    backgroundColor: Colors.transparent,
-                    body: widget.child,
-                  ),
+                ),
+                child: Scaffold(
+                  backgroundColor: Colors.transparent,
+                  body: widget.child,
                 ),
               ),
             );
-          },
+          }),
         ),
       ],
     );

@@ -163,7 +163,7 @@ class _ItemContent extends StatelessWidget {
                   return _TableItem(
                     showRPEfield: true,
                     middleField: "${data.weight}",
-                    leftField: "${data.setCount}",
+                    leftField: "${index + 1}",
                     rightField: "${data.reps}",
                     rpeField: "${data.exerciseRPE}",
                   );

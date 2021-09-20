@@ -37,6 +37,7 @@ class _CurrentEntriesState extends State<CurrentEntries> {
           itemCount: widget.currentEntries.length,
           itemBuilder: (BuildContext context, index) {
             return _EntryRow(
+              setCount: index + 1,
               onLongPressed: () {
                 setState(() {
                   if (_selectedLog != widget.currentEntries[index]) {
@@ -70,11 +71,12 @@ class _EntryRow extends StatelessWidget {
     this.entry,
     this.onLongPressed,
     this.selected = false,
+    this.setCount,
   }) : super(key: key);
 
   final ExerciseLog? entry;
   final VoidCallback? onLongPressed;
-
+  final int? setCount;
   final bool selected;
 
   @override
@@ -93,7 +95,7 @@ class _EntryRow extends StatelessWidget {
                 width: selected ? MediaQuery.of(context).size.width : 10,
                 decoration: BoxDecoration(
                   color: selected
-                      ? AppTheme.of(context).accentSecendery.withOpacity(0.1)
+                      ? AppTheme.of(context).accentPositive.withOpacity(0.05)
                       : null,
                   borderRadius: BorderRadius.circular(20),
                 ),
@@ -110,7 +112,7 @@ class _EntryRow extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   _Field(
-                    text: entry?.setCount.toString() ?? "SET",
+                    text: setCount?.toString() ?? "SET",
                   ),
                   _Field(
                     text: entry?.weight.toString() ?? "WEIGHT",
