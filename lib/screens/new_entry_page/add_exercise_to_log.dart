@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:workout_notes_app/data_models/exercise.dart';
 import 'package:workout_notes_app/data_models/exercise_log.dart';
 import 'package:workout_notes_app/screens/home_page/service/entries_view_model.dart';
+import 'package:workout_notes_app/screens/new_entry_page/tabs/create_entry/services/create_new_entry_provider.dart';
 import 'package:workout_notes_app/screens/new_entry_page/tabs/history_view.dart';
 import 'package:workout_notes_app/screens/new_entry_page/tabs/create_entry/log_screen.dart';
 import 'package:workout_notes_app/screens/new_entry_page/services/add_exercise_log_page_view_model.dart';
@@ -80,6 +81,10 @@ class AddExerciseToLog extends ConsumerWidget {
             ),
             body: _exerciseLogStream.when(
               data: (exerciseLog) {
+                context
+                    .read(createNewEntryProvider)
+                    .setLatestLog(exerciseLog.last);
+
                 return _body(
                   context: context,
                   exerciseLog: exerciseLog,

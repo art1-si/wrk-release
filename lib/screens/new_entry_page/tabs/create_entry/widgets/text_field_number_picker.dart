@@ -1,7 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:workout_notes_app/screens/new_entry_page/tabs/create_entry/services/create_new_entry_provider.dart';
 import 'package:workout_notes_app/screens/new_entry_page/tabs/create_entry/widgets/base_tf_num_picker.dart';
+import 'package:workout_notes_app/screens/new_entry_page/tabs/create_entry/widgets/decimal_text_field_number_picker.dart';
 
-class TextFieldNumerPicker extends StatefulWidget {
+final textController = Provider.autoDispose<TextEditingController>((ref) {
+  final _weight = ref.watch(createNewEntryProvider); //TODO: use select
+  final controller = TextEditingController(text: _weight.reps.toString());
+
+  /*  ref.onDispose(() {
+    controller.dispose();
+  }); */
+//TODO: dispose
+  return controller;
+});
+
+class TextFieldNumerPicker extends ConsumerWidget {
   const TextFieldNumerPicker({
     Key? key,
     required this.title,
@@ -16,26 +30,11 @@ class TextFieldNumerPicker extends StatefulWidget {
   final int changesByValue;
 
   @override
-  _TextFieldNumerPickerState createState() => _TextFieldNumerPickerState();
-}
-
-class _TextFieldNumerPickerState extends State<TextFieldNumerPicker> {
-  TextEditingController? _controller;
-  int? inputValue;
-//TODO: clean-up everything in here
   @override
-  void initState() {
-    inputValue = widget.initValue;
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    _controller = TextEditingController(text: inputValue.toString());
-
+  Widget build(BuildContext context, ScopedReader watch) {
     return BaseTFNumPicker(
-      width: inputValue.toString().length.toDouble() * 42,
-      title: widget.title,
+      width: initValue.toString().length.toDouble() * 36,
+      title: title,
       child: TextFormField(
         validator: (String? value) {
           if (value == null || value.isEmpty) {
@@ -48,36 +47,32 @@ class _TextFieldNumerPickerState extends State<TextFieldNumerPicker> {
           border: InputBorder.none,
         ),
         style: TextStyle(
-          fontSize: 42.0,
+          fontSize: 36.0,
           color: Colors.white,
           fontWeight: FontWeight.bold,
           letterSpacing: 2.5,
         ),
         textAlign: TextAlign.center,
-        controller: _controller,
+        controller: watch(textController),
         onChanged: (value) {
-          inputValue = value.isEmpty ? 0 : int.tryParse(value);
-          widget.onChange(inputValue!);
+          var inputValue = value.isEmpty ? 0 : int.tryParse(value);
+          context.read(createNewEntryProvider).repsSetter(inputValue!);
         },
       ),
       onPressedLeftArow: () {
-        if (inputValue! > 0) {
-          setState(() {
-            //TODO: 0.5 is greater then 0 so its true by can give negative value
-            inputValue = inputValue! - widget.changesByValue;
-            widget.onChange(inputValue!);
-          });
+        if (initValue > 0) {
+          //TODO: 0.5 is greater then 0 so its true by can give negative value
+          var inputValue = initValue - changesByValue;
+          onChange(inputValue);
         }
       },
       onPressedRightArow: () {
-        setState(() {
-          inputValue = inputValue! + widget.changesByValue;
-          widget.onChange(inputValue!);
-        });
+        var inputValue = initValue + changesByValue;
+        onChange(inputValue);
       },
-      leftSubText: "${inputValue! - widget.changesByValue}",
-      rightSubText: "${inputValue! + widget.changesByValue}",
-      reachedZero: inputValue! > 0,
+      leftSubText: "${initValue - changesByValue}",
+      rightSubText: "${initValue + changesByValue}",
+      reachedZero: initValue > 0,
     );
 
     /* Padding(

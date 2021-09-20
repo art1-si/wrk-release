@@ -23,6 +23,7 @@ class BaseTFNumPicker extends StatelessWidget {
   final double width;
   @override
   Widget build(BuildContext context) {
+    final _sideFontSize = rightSubText.length > 4 ? 20 : 24;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
       child: Column(
@@ -41,13 +42,13 @@ class BaseTFNumPicker extends StatelessWidget {
                       child: Icon(
                         Icons.keyboard_arrow_left,
                         color: reachedZero ? Colors.white : Colors.white30,
-                        size: 40,
+                        size: _sideFontSize.toDouble(),
                       ),
                     ),
                     Text(
                       leftSubText,
                       style: TextStyle(
-                        fontSize: 24.0,
+                        fontSize: _sideFontSize.toDouble(),
                         color: Colors.white38,
                         letterSpacing: 2.5,
                       ),
@@ -67,7 +68,7 @@ class BaseTFNumPicker extends StatelessWidget {
                     Text(
                       rightSubText,
                       style: TextStyle(
-                        fontSize: 24.0,
+                        fontSize: _sideFontSize.toDouble(),
                         color: Colors.white38,
                         letterSpacing: 2.5,
                       ),
@@ -76,7 +77,7 @@ class BaseTFNumPicker extends StatelessWidget {
                       child: Icon(
                         Icons.keyboard_arrow_right,
                         color: Colors.white,
-                        size: 40,
+                        size: _sideFontSize.toDouble(),
                       ),
                     ),
                   ],

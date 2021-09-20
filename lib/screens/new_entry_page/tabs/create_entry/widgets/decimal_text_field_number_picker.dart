@@ -1,7 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:workout_notes_app/screens/new_entry_page/tabs/create_entry/services/create_new_entry_provider.dart';
 import 'package:workout_notes_app/screens/new_entry_page/tabs/create_entry/widgets/base_tf_num_picker.dart';
 
-class DecimalTextFieldNumPicker extends StatefulWidget {
+final decimalTextController =
+    Provider.autoDispose<TextEditingController>((ref) {
+  final _weight = ref.watch(createNewEntryProvider); //TODO: use select
+  final controller = TextEditingController(text: _weight.weight.toString());
+
+  /* ref.onDispose(() {
+    controller.dispose();
+  }); */
+//TODO: dispose
+  return controller;
+});
+
+class DecimalTextFieldNumPicker extends ConsumerWidget {
   const DecimalTextFieldNumPicker({
     Key? key,
     required this.title,
@@ -16,25 +30,16 @@ class DecimalTextFieldNumPicker extends StatefulWidget {
   final double changesByValue;
 
   @override
-  State<DecimalTextFieldNumPicker> createState() =>
-      _DecimalTextFieldNumPickerState();
-}
-
-class _DecimalTextFieldNumPickerState extends State<DecimalTextFieldNumPicker> {
-  TextEditingController? _controller;
-  // late double? inputValue = widget.initValue;
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ScopedReader watch) {
+    print("rebuidls dtefnp");
     //TODO: make signle textfield
-    _controller = TextEditingController(text: widget.initValue.toString());
 
-    double _tfWidth = widget.initValue.toInt().toString().length.toDouble() < 3
+    double _tfWidth = initValue.toString().length.toDouble() < 3
         ? 3 * 45
-        : widget.initValue.toInt().toString().length.toDouble() * 45;
+        : (initValue.toString().length.toDouble() - 1) * 36;
     return BaseTFNumPicker(
       width: _tfWidth,
-      title: widget.title,
+      title: title,
       child: TextFormField(
         validator: (String? value) {
           if (value == null || value.isEmpty) {
@@ -47,28 +52,31 @@ class _DecimalTextFieldNumPickerState extends State<DecimalTextFieldNumPicker> {
           border: InputBorder.none,
         ),
         style: TextStyle(
-          fontSize: 42.0,
+          fontSize: 36.0,
           color: Colors.white,
           fontWeight: FontWeight.bold,
           letterSpacing: 2.5,
         ),
         textAlign: TextAlign.center,
-        controller: _controller,
+        controller: watch(decimalTextController),
         onChanged: (value) {
-          widget.onChange(value.isEmpty ? 0.0 : double.parse(value));
+          var inputValue = value.isEmpty ? 0.0 : double.parse(value);
+          context.read(createNewEntryProvider).weightSetter(inputValue);
         },
       ),
       onPressedLeftArow: () {
-        if (widget.initValue > 0) {
-          widget.onChange(widget.initValue - widget.changesByValue);
+        if (initValue > 0) {
+          var inputValue = initValue - changesByValue;
+          onChange(inputValue);
         }
       },
       onPressedRightArow: () {
-        widget.onChange(widget.initValue + widget.changesByValue);
+        var inputValue = initValue + changesByValue;
+        onChange(inputValue);
       },
-      leftSubText: "${widget.initValue - widget.changesByValue}",
-      rightSubText: "${widget.initValue + widget.changesByValue}",
-      reachedZero: widget.initValue > 0,
+      leftSubText: "${initValue - changesByValue}",
+      rightSubText: "${initValue + changesByValue}",
+      reachedZero: initValue > 0,
     );
   }
 }
