@@ -27,7 +27,7 @@ class MyGraphWidget extends StatelessWidget {
       );
     }
 
-    return _BodyContent(); //TODO:
+    return _BodyContent();
   }
 }
 
@@ -42,6 +42,7 @@ class _BodyContent extends ConsumerWidget {
     context.read(detailsProvider).points = chartData; //TODO: bad practice
     return Column(
       children: [
+        PropertiesDropDown(),
         OnPressDialog(),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 8),
@@ -60,7 +61,6 @@ class _BodyContent extends ConsumerWidget {
             ),
           ),
         ),
-        PropertiesDropDown(),
       ],
     );
   }

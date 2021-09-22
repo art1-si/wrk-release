@@ -15,9 +15,8 @@ class MyDrawGraph extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("====MyDrawGraph======");
     var _width = MediaQuery.of(context).size.width;
-    //context.read(detailsProvider).points = chartData; //TODO: bad practise
+
     return GestureDetector(
       onPanDown: (details) {
         context.read(chartProvider).handleGraphPressed();

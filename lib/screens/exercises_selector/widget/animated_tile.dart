@@ -41,6 +41,7 @@ class _AnimatedTileState extends State<AnimatedTile>
     ).animate(CurvedAnimation(
         parent: _animationController, curve: Curves.easeInOutCubic));
 
+    // ignore: unnecessary_statements
     _timer;
   }
 

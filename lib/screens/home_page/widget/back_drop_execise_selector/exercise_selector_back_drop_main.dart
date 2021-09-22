@@ -57,10 +57,6 @@ class ExerciseSelectorBackDropState extends State<ExerciseSelectorBackDrop>
     _animationController.dispose();
   }
 
-  void _handleDragDownStart(DragStartDetails details) {
-    //TODO:
-  }
-
   void _handleDragDownUpdate(DragUpdateDetails details, double crossAxle) {
     print("hande drag up");
     _animationController.value -= details.primaryDelta! / crossAxle;
@@ -84,7 +80,6 @@ class ExerciseSelectorBackDropState extends State<ExerciseSelectorBackDrop>
     }
   }
 
-//TODO: stop rebuilding to many times
   @override
   Widget build(BuildContext context) {
     print("backdrop builder");
@@ -116,7 +111,6 @@ class ExerciseSelectorBackDropState extends State<ExerciseSelectorBackDrop>
           child: LayoutBuilder(builder: (_, constraints) {
             return GestureDetector(
               onTap: () => print("backdrop tapped"),
-              onVerticalDragStart: (details) => _handleDragDownStart(details),
               onVerticalDragUpdate: (details) =>
                   _handleDragDownUpdate(details, constraints.maxHeight * 1.2),
               onVerticalDragEnd: (details) => _handleDragDownEnd(details),

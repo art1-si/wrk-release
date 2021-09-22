@@ -7,7 +7,7 @@ final graphSelector = ChangeNotifierProvider.autoDispose((ref) {
 });
 
 class GraphSelectorProvider extends ChangeNotifier {
-  GraphProperties _properties = GraphProperties.perWeight;
+  GraphProperties _properties = GraphProperties.oneRepMax;
 
   GraphProperties get graphProperties => _properties;
 

@@ -9,24 +9,26 @@ import 'package:workout_notes_app/services/providers.dart';
 
 final createNewEntryProvider =
     ChangeNotifierProvider.autoDispose<CreateNewEntryProvider>((ref) {
-  final _dateSelected = ref.watch(selectedDateProvider).daySelected;
+  final _dayDifferenceBetweenNowAndDateSelected =
+      ref.watch(selectedDateProvider).n;
   final database = ref.watch(databaseProvider);
   final _selectedExercise = ref.watch(addExerciseLogProvider).selectedExercise;
   return CreateNewEntryProvider(
       selectedExercise: _selectedExercise,
-      dateSelected: _dateSelected,
+      dayDifferenceBetweenNowAndDateSelected:
+          _dayDifferenceBetweenNowAndDateSelected,
       database: database);
 });
 
 class CreateNewEntryProvider with ChangeNotifier {
   CreateNewEntryProvider({
     required this.selectedExercise,
-    required this.dateSelected,
+    required this.dayDifferenceBetweenNowAndDateSelected,
     required this.database,
   });
 
   final Exercise selectedExercise;
-  final DateTime dateSelected;
+  final int dayDifferenceBetweenNowAndDateSelected;
   final FirestoreDatabase database;
 
   bool _editModeActive = false;
@@ -80,7 +82,7 @@ class CreateNewEntryProvider with ChangeNotifier {
   void handleOnTapDeleteOrReset() {
     if (_editModeActive) {
       database.deleteExerciseLog(_selectedLog!);
-      handleEditMode(null); //TODO works but make it pretty
+      handleEditMode(null);
     } else {
       _resetValues();
     }
@@ -97,7 +99,9 @@ class CreateNewEntryProvider with ChangeNotifier {
   Future<void> _submitEntry() async {
     final entry = _serializeEntry(
       id: documentIdFromCurrentDate(),
-      dateCreated: dateSelected.toIso8601String(), //TODO
+      dateCreated: DateTime.now()
+          .add(Duration(days: dayDifferenceBetweenNowAndDateSelected))
+          .toIso8601String(),
       setCount: null,
     );
     await database.createExerciseLog(entry);
@@ -119,7 +123,7 @@ class CreateNewEntryProvider with ChangeNotifier {
       _editModeActive = true;
     } else {
       _selectedLog = null;
-      _weight = _latestLog?.weight ?? 40; //TODO
+      _weight = _latestLog?.weight ?? 40;
 
       _reps = _latestLog?.reps ?? 12;
       _editModeActive = false;
@@ -140,7 +144,7 @@ class CreateNewEntryProvider with ChangeNotifier {
       weight: _weight,
       reps: _reps,
       setCount: null, //TODO: delete required antotation
-      dateCreated: dateSelected.toIso8601String(), //TODO:serielize date
+      dateCreated: dateCreated, //TODO:serielize date
       exerciseRPE: _rpe, //TODO: create rpe selector
     );
   }

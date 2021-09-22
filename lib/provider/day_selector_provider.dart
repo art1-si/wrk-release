@@ -50,7 +50,6 @@ class DaySelectorModel extends ChangeNotifier {
     if (n == 0) {
       return "TODAY";
     } else if (n == 1) {
-      //TODO
       return "TOMORROW";
     } else if (n == -1) {
       return "YESTERDAY";

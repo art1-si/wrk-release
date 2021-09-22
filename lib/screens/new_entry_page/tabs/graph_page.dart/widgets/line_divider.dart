@@ -17,7 +17,6 @@ class LineDividers extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, ScopedReader watch) {
-    print("line divider");
     final _chartProvider = watch(chartViewProvider);
     final _distance = data.first.nextX - data.first.x;
     return RepaintBoundary(
@@ -25,9 +24,8 @@ class LineDividers extends ConsumerWidget {
         painter: _DrawLines(
           dividerColor: AppTheme.of(context).divider,
           distance: _distance,
-          highestValue:
-              _chartProvider.maxValue, //_entriesProvider.maxValue,//TODO
-          lowestValue: _chartProvider.minValue, // _entriesProvider.minValue,
+          highestValue: _chartProvider.maxValue,
+          lowestValue: _chartProvider.minValue,
         ),
         size: Size(
           MediaQuery.of(context).size.width,

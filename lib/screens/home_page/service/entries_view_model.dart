@@ -5,6 +5,7 @@ import 'package:workout_notes_app/data_models/group_by_model.dart';
 import 'package:workout_notes_app/provider/day_selector_provider.dart';
 import 'package:workout_notes_app/screens/new_entry_page/services/add_exercise_log_page_view_model.dart';
 import 'package:workout_notes_app/services/database.dart';
+import 'package:workout_notes_app/services/logics.dart';
 import 'package:workout_notes_app/services/providers.dart';
 
 final exerciseLogProvider = Provider.autoDispose<List<ExerciseLog>>((ref) {
@@ -40,13 +41,6 @@ final exerciseLogStream = StreamProvider.autoDispose<List<ExerciseLog>>((ref) {
   final graphProvider = ref.watch(entriesViewModel).graphEntries;
   return graphProvider;
 }); */
-
-//!Shoud not be here
-bool compareDatesToDay(DateTime date1, DateTime date2) {
-  return date1.year == date2.year &&
-      date1.month == date2.month &&
-      date1.day == date2.day;
-} //TODO: get this to new file
 
 class EntriesViewModel {
   EntriesViewModel(

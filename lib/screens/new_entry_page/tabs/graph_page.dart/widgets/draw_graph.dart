@@ -82,12 +82,32 @@ class DrawGraph extends CustomPainter {
       ..style = PaintingStyle.fill
       ..strokeWidth = 1;
 
-    entries.forEach((element) {
-      print("is painting graph");
-      double _dx = element.x * size.width;
-      double _dy = element.y * size.height;
-      double _nextDx = element.nextX * size.width;
-      double _nextDy = element.nextY * size.height;
+    if (entries.length > 1) {
+      entries.forEach((element) {
+        print("is painting graph");
+        double _dx = element.x * size.width;
+        double _dy = element.y * size.height;
+        double _nextDx = element.nextX * size.width;
+        double _nextDy = element.nextY * size.height;
+        //Draw main line
+
+        canvas.drawLine(Offset(_dx, _dy), Offset(_nextDx, _nextDy), line2);
+
+        //Draw background
+        canvas.drawPath(
+          Path()
+            ..moveTo(_dx, _dy)
+            ..lineTo(_dx, size.height)
+            ..lineTo(_nextDx, size.height)
+            ..lineTo(_nextDx, _nextDy),
+          shadowLine2,
+        );
+      });
+    } else {
+      double _dx = 0;
+      double _dy = size.height / 2;
+      double _nextDx = size.width;
+      double _nextDy = size.height / 2;
       //Draw main line
 
       canvas.drawLine(Offset(_dx, _dy), Offset(_nextDx, _nextDy), line2);
@@ -101,7 +121,7 @@ class DrawGraph extends CustomPainter {
           ..lineTo(_nextDx, _nextDy),
         shadowLine2,
       );
-    });
+    }
   }
 
   @override

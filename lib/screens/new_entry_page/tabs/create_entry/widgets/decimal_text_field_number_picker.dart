@@ -31,9 +31,6 @@ class DecimalTextFieldNumPicker extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, ScopedReader watch) {
-    print("rebuidls dtefnp");
-    //TODO: make signle textfield
-
     double _tfWidth = initValue.toString().length.toDouble() < 3
         ? 3 * 45
         : (initValue.toString().length.toDouble() - 1) * 36;
