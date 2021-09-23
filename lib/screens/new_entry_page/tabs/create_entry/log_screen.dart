@@ -28,7 +28,8 @@ class _LogScreenState extends State<LogScreen> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.exerciseLog.isNotEmpty) {
+    if (widget.exerciseLog.isNotEmpty &&
+        context.read(createNewEntryProvider).latestLogIsNull) {
       context
           .read(createNewEntryProvider)
           .setLatestLog(widget.exerciseLog.last);
