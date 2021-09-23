@@ -19,6 +19,8 @@ class ExerciseLog with _$ExerciseLog {
     required int exerciseRPE,
     String? notes,
   }) = _ExerciseLog;
+
   factory ExerciseLog.fromJson(Map<String, dynamic> json) =>
       _$ExerciseLogFromJson(json);
+  //Map<String, dynamic> toJson() => _$ExerciseLogToJson(this);
 }

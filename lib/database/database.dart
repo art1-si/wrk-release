@@ -19,7 +19,12 @@ abstract class Database {
 
   Stream<List<ExerciseLog>> exerciseLogStream();
   Stream<List<Exercise>> exercisesStream();
-  Stream<List<GroupByModel<T>>> groupByValue<T>();
+  Stream<List<GroupByModel<T>>> groupByValue<T>({
+    required Stream<List<T>> data,
+    required String Function(T) groupByValue,
+    required Function(T) titleBuilder,
+    required Function(T) dataID,
+  });
 }
 
 String documentIdFromCurrentDate() => DateTime.now().toIso8601String();
