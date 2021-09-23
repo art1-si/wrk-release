@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart';
@@ -5,7 +7,7 @@ import 'package:workout_notes_app/data_models/exercise_log.dart';
 import 'package:workout_notes_app/database/sqlite/sql_crud.dart';
 import 'package:workout_notes_app/database/sqlite/sql_keys.dart';
 
-class SqliteService implements SQLCrud {
+class SqliteService {
   SqliteService._();
 
   static final instance = SqliteService._();
@@ -44,28 +46,29 @@ class SqliteService implements SQLCrud {
       """);
   }
 
-  @override
-  Future<void> createEntry<ExerciseLog>(ExerciseLog entry) async {
-    final _entryToJson = entry!.toJson;
+  Future<void> createEntry(ExerciseLog entry) async {
+    final _entryToJson = entry.toJson();
     final _dbClient = await db;
     await _dbClient.insert(SQLKeys.exerciseLogTable, _entryToJson);
   }
 
-  @override
-  Future<void> deleteEntry(String entryID) {
-    // TODO: implement deleteEntry
-    throw UnimplementedError();
+  Future<void> deleteEntry(String entryID) async {
+    final _dbClient = await db;
+    await _dbClient.delete(SQLKeys.exerciseLogTable,
+        where: "id = ?", whereArgs: [entryID]);
   }
 
-  @override
-  Future<List<T>> fetchEntries<T>() {
-    // TODO: implement fetchEntries
-    throw UnimplementedError();
+  Future<List<ExerciseLog>> fetchEntries() async {
+    final _dbClient = await db;
+    final _query = await _dbClient.rawQuery(
+        "SELECT * FROM ${SQLKeys.exerciseLogTable} ORDER BY dateCreated DESC");
+    final _res = _query.map((e) => ExerciseLog.fromJson(e)).toList();
+    return _res;
   }
 
-  @override
-  Future<void> updateEntry<T>(T entry) {
-    // TODO: implement updateEntry
-    throw UnimplementedError();
+  Future<void> updateEntry(ExerciseLog entry) async {
+    final _dbClient = await db;
+    await _dbClient.update(SQLKeys.exerciseLogTable, entry.toJson(),
+        where: '"id" = ?', whereArgs: [entry.id]);
   }
 }
