@@ -1,7 +1,11 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart';
 import 'package:workout_notes_app/database/sqlite/sql_keys.dart';
+
+final exerciseDatabase =
+    Provider.autoDispose((ref) => SqliteExerciseService._());
 
 class SqliteExerciseService {
   SqliteExerciseService._();
@@ -31,7 +35,7 @@ class SqliteExerciseService {
       ( 
         id TEXT PRIMARY KEY,
         exerciseName TEXT,
-        exerciseType TEXT,
+        exerciseType TEXT
       )
       """);
   }

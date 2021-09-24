@@ -2,7 +2,9 @@ import 'package:collection/collection.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:workout_notes_app/data_models/exercise_log.dart';
 import 'package:workout_notes_app/data_models/group_by_model.dart';
+import 'package:workout_notes_app/database/database.dart';
 import 'package:workout_notes_app/database/firebase/firebase_database.dart';
+import 'package:workout_notes_app/database/sqlite/sqlite_service.dart';
 import 'package:workout_notes_app/provider/day_selector_provider.dart';
 import 'package:workout_notes_app/screens/new_entry_page/services/add_exercise_log_page_view_model.dart';
 import 'package:workout_notes_app/services/logics.dart';
@@ -18,11 +20,13 @@ final exerciseLogProvider = Provider.autoDispose<List<ExerciseLog>>((ref) {
 
 //?Main EntriesViewProvider
 final entriesViewModel = Provider.autoDispose<EntriesViewModel>((ref) {
+  bool _offline = true;
   final database = ref.watch(databaseProvider);
+  final _sqlDatabase = ref.watch(sqlDatabase);
   final date = ref.watch(selectedDateProvider).daySelected;
   final seletedExercise = ref.watch(addExerciseLogProvider).selectedExercise.id;
   final vm = EntriesViewModel(
-    database: database,
+    database: _sqlDatabase,
     toDate: date,
     byExerciseID: seletedExercise,
   );
@@ -46,7 +50,7 @@ class EntriesViewModel {
   EntriesViewModel(
       {this.byExerciseID, required this.database, required this.toDate});
 
-  final FirestoreDatabase database;
+  final Database database;
   final DateTime toDate;
   final String? byExerciseID;
 

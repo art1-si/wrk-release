@@ -5,7 +5,7 @@ import 'package:workout_notes_app/data_models/group_by_model.dart';
 import 'package:workout_notes_app/database/database.dart';
 import 'package:workout_notes_app/services/providers.dart';
 
-final exerciseViewModelProvider = ChangeNotifierProvider(
+final exerciseViewModelProvider = ChangeNotifierProvider.autoDispose(
   (ref) => ExerciseViewModel(
     database: ref.watch(databaseProvider),
   ),

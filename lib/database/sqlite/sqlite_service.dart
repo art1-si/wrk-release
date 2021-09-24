@@ -1,9 +1,19 @@
 import 'package:collection/collection.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:workout_notes_app/data_models/group_by_model.dart';
 import 'package:workout_notes_app/data_models/exercise_log.dart';
 import 'package:workout_notes_app/data_models/exercise.dart';
 import 'package:workout_notes_app/database/database.dart';
 import 'package:workout_notes_app/database/sqlite/sql_crud.dart';
+
+final sqlDatabase = Provider.autoDispose((ref) {
+  final _exerciseService = ref.watch(exerciseSQLCrud);
+  final _exerciseLogService = ref.watch(exerciseLogSQLCrud);
+  return SqliteDatabase(
+    exercisesDatabase: _exerciseService,
+    exerciseLogDatabase: _exerciseLogService,
+  );
+});
 
 class SqliteDatabase implements Database {
   SqliteDatabase(
