@@ -6,26 +6,23 @@ part of 'workout_plan.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-// ignore: non_constant_identifier_names
-_$_WorkoutPlan _$_$_WorkoutPlanFromJson(Map<String, dynamic> json) {
-  return _$_WorkoutPlan(
-    id: json['id'] as int,
-    exerciseId: json['exerciseId'] as String,
-    planName: json['planName'] as String,
-    exerciseName: json['exerciseName'] as String,
-    minRepsPerSet: json['minRepsPerSet'] as int,
-    maxRepsPerSet: json['maxRepsPerSet'] as int,
-    sets: json['sets'] as int,
-    rpe: json['rpe'] as int,
-    notes: json['notes'] as String,
-    weekdayForWorkout: json['weekdayForWorkout'] as int,
-    restTime: (json['restTime'] as num).toDouble(),
-    orderId: json['orderId'] as int,
-  );
-}
+_$_WorkoutPlan _$$_WorkoutPlanFromJson(Map<String, dynamic> json) =>
+    _$_WorkoutPlan(
+      id: json['id'] as int,
+      exerciseId: json['exerciseId'] as String,
+      planName: json['planName'] as String,
+      exerciseName: json['exerciseName'] as String,
+      minRepsPerSet: json['minRepsPerSet'] as int,
+      maxRepsPerSet: json['maxRepsPerSet'] as int,
+      sets: json['sets'] as int,
+      rpe: json['rpe'] as int,
+      notes: json['notes'] as String,
+      weekdayForWorkout: json['weekdayForWorkout'] as int,
+      restTime: (json['restTime'] as num).toDouble(),
+      orderId: json['orderId'] as int,
+    );
 
-// ignore: non_constant_identifier_names
-Map<String, dynamic> _$_$_WorkoutPlanToJson(_$_WorkoutPlan instance) =>
+Map<String, dynamic> _$$_WorkoutPlanToJson(_$_WorkoutPlan instance) =>
     <String, dynamic>{
       'id': instance.id,
       'exerciseId': instance.exerciseId,

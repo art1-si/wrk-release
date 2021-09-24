@@ -23,7 +23,6 @@ class DaySelectorModel extends ChangeNotifier {
   int n = 0;
 
   void increment() {
-    print(DateTime.now());
     n++;
     notifyListeners();
   }

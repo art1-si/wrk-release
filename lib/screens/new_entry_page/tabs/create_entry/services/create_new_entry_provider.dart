@@ -4,7 +4,7 @@ import 'package:workout_notes_app/data_models/exercise.dart';
 import 'package:workout_notes_app/data_models/exercise_log.dart';
 import 'package:workout_notes_app/provider/day_selector_provider.dart';
 import 'package:workout_notes_app/screens/new_entry_page/services/add_exercise_log_page_view_model.dart';
-import 'package:workout_notes_app/services/database.dart';
+import 'package:workout_notes_app/database/database.dart';
 import 'package:workout_notes_app/services/providers.dart';
 
 final createNewEntryProvider =
@@ -29,7 +29,7 @@ class CreateNewEntryProvider with ChangeNotifier {
 
   final Exercise selectedExercise;
   final int dayDifferenceBetweenNowAndDateSelected;
-  final FirestoreDatabase database;
+  final Database database;
 
   bool _editModeActive = false;
   double _weight = 40.0;
@@ -42,6 +42,7 @@ class CreateNewEntryProvider with ChangeNotifier {
   double get weight => _weight;
   int get reps => _reps;
   int get rpe => _rpe;
+  bool get latestLogIsNull => _latestLog == null;
 
   void setWeightWithNewValue(double value) {
     _weight = value;
@@ -76,7 +77,6 @@ class CreateNewEntryProvider with ChangeNotifier {
       _submitEntry();
     }
     // }
-    print("empty");
   }
 
   void handleOnTapDeleteOrReset() {
@@ -114,8 +114,6 @@ class CreateNewEntryProvider with ChangeNotifier {
   }
 
   void handleEditMode(ExerciseLog? log) {
-    print("callback works, pressed log is $log");
-
     if (log != null) {
       _selectedLog = log;
       _weight = log.weight;

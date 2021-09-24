@@ -16,7 +16,7 @@ class LinerGraph extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = AppTheme.of(context);
-    print("==========graph========= ");
+
     return RepaintBoundary(
       child: CustomPaint(
         size: MediaQuery.of(context).size,
@@ -84,7 +84,6 @@ class DrawGraph extends CustomPainter {
 
     if (entries.length > 1) {
       entries.forEach((element) {
-        print("is painting graph");
         double _dx = element.x * size.width;
         double _dy = element.y * size.height;
         double _nextDx = element.nextX * size.width;

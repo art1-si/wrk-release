@@ -68,34 +68,37 @@ class _HomePageBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: AppTheme.of(context).background,
-        body: CustomScrollView(
-          physics: BouncingScrollPhysics(),
-          slivers: <Widget>[
-            SliverAppBar(
-              title: Text(
-                "Workout Notes",
-                style: Theme.of(context).textTheme.headline1,
+    return Container(
+      color: AppTheme.of(context).primary,
+      child: SafeArea(
+        child: Scaffold(
+          backgroundColor: AppTheme.of(context).background,
+          body: CustomScrollView(
+            physics: BouncingScrollPhysics(),
+            slivers: <Widget>[
+              SliverAppBar(
+                title: Text(
+                  "Workout Notes",
+                  style: Theme.of(context).textTheme.headline1,
+                ),
+                elevation: 0,
+                expandedHeight: 70,
+                backgroundColor: AppTheme.of(context).background,
               ),
-              elevation: 0,
-              expandedHeight: 70,
-              backgroundColor: AppTheme.of(context).background,
-            ),
-            SliverList(
-              delegate: SliverChildListDelegate(
-                <Widget>[
-                  ..._header(context),
-                  LogItemBuilder(),
-                  Divider(
-                    height: 40,
-                    color: Colors.transparent,
-                  ),
-                ],
+              SliverList(
+                delegate: SliverChildListDelegate(
+                  <Widget>[
+                    ..._header(context),
+                    LogItemBuilder(),
+                    Divider(
+                      height: 40,
+                      color: Colors.transparent,
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

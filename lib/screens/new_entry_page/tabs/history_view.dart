@@ -32,7 +32,7 @@ class HistoryView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, ScopedReader watch) {
     final _historyStream = watch(entriesHistoryByExerciseStreamProvider);
-    print("history page build ");
+
     if (exerciseLog.isEmpty) {
       return Center(
         child: Text(

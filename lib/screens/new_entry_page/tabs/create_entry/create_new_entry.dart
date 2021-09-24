@@ -15,7 +15,7 @@ class CreateNewEntry extends ConsumerWidget {
   @override
   Widget build(BuildContext context, ScopedReader watch) {
     final _createNewEntry = watch(createNewEntryProvider);
-    print("createNewEntry Widget rebuild");
+
     return Column(
       children: <Widget>[
         DecimalTextFieldNumPicker(

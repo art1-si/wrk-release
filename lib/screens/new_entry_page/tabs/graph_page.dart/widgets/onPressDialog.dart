@@ -13,7 +13,7 @@ class OnPressDialog extends ConsumerWidget {
   @override
   Widget build(BuildContext context, ScopedReader watch) {
     final details = watch(detailsProvider);
-    print("details: ${details.offset}");
+
     if (details.logDetails != null) {
       final _date =
           DateTime.tryParse(details.logDetails!.corespondingLog.dateCreated);
@@ -56,7 +56,6 @@ class _PopUpTable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("popUpTable rebuild with field3 value $field3");
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
       child: Container(

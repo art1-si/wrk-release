@@ -60,6 +60,12 @@ class DecimalTextFieldNumPicker extends ConsumerWidget {
           var inputValue = value.isEmpty ? 0.0 : double.parse(value);
           context.read(createNewEntryProvider).weightSetter(inputValue);
         },
+        onFieldSubmitted: (value) {
+          var inputValue = value.isEmpty ? 0.0 : double.parse(value);
+          context
+              .read(createNewEntryProvider)
+              .setWeightWithNewValue(inputValue);
+        },
       ),
       onPressedLeftArow: () {
         if (initValue > 0) {

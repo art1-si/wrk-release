@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:workout_notes_app/data_models/exercise.dart';
 import 'package:workout_notes_app/data_models/group_by_model.dart';
-import 'package:workout_notes_app/services/database.dart';
+import 'package:workout_notes_app/database/database.dart';
 import 'package:workout_notes_app/services/providers.dart';
 
 final exerciseViewModelProvider = ChangeNotifierProvider(
@@ -24,10 +24,9 @@ final exerciseStream = StreamProvider.autoDispose((ref) {
 class ExerciseViewModel with ChangeNotifier {
   ExerciseViewModel({required this.database});
   bool showExercisesForSelectedType = false;
-  final FirestoreDatabase database;
+  final Database database;
 
   Stream<List<GroupByModel<Exercise>>> get groupedExercisesByType {
-    print("hi");
     return database.groupByValue<Exercise>(
       data: exercises,
       groupByValue: (exercise) => exercise.exerciseType,

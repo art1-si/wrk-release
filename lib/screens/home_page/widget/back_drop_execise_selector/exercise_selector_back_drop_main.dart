@@ -42,7 +42,6 @@ class ExerciseSelectorBackDropState extends State<ExerciseSelectorBackDrop>
 
   @override
   void initState() {
-    print("====itemCount---${widget.itemCount}======");
     _animationController = AnimationController(
       vsync: this,
       duration: Duration(milliseconds: 150),
@@ -58,12 +57,10 @@ class ExerciseSelectorBackDropState extends State<ExerciseSelectorBackDrop>
   }
 
   void _handleDragDownUpdate(DragUpdateDetails details, double crossAxle) {
-    print("hande drag up");
     _animationController.value -= details.primaryDelta! / crossAxle;
   }
 
   void _handleDragDownEnd(DragEndDetails details) {
-    print("end");
     if (_animationController.value > 0.9) {
       _animationController.forward();
     } else if (_animationController.value < 0.9) {
@@ -72,7 +69,6 @@ class ExerciseSelectorBackDropState extends State<ExerciseSelectorBackDrop>
   }
 
   void handleAnimation() {
-    print("handles animation");
     if (_animationController.value == 1.0) {
       _animationController.reverse();
     } else {
@@ -82,8 +78,6 @@ class ExerciseSelectorBackDropState extends State<ExerciseSelectorBackDrop>
 
   @override
   Widget build(BuildContext context) {
-    print("backdrop builder");
-    print(_animationController.value);
     return Stack(
       children: [
         AnimatedBuilder(
@@ -110,7 +104,6 @@ class ExerciseSelectorBackDropState extends State<ExerciseSelectorBackDrop>
           position: _offsetAnimation,
           child: LayoutBuilder(builder: (_, constraints) {
             return GestureDetector(
-              onTap: () => print("backdrop tapped"),
               onVerticalDragUpdate: (details) =>
                   _handleDragDownUpdate(details, constraints.maxHeight * 1.2),
               onVerticalDragEnd: (details) => _handleDragDownEnd(details),

@@ -11,7 +11,6 @@ class GraphPoint extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("graph point");
     return CustomPaint(
       size: MediaQuery.of(context).size,
       painter: DrawPoint(

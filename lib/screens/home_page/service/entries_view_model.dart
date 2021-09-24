@@ -2,9 +2,9 @@ import 'package:collection/collection.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:workout_notes_app/data_models/exercise_log.dart';
 import 'package:workout_notes_app/data_models/group_by_model.dart';
+import 'package:workout_notes_app/database/firebase/firebase_database.dart';
 import 'package:workout_notes_app/provider/day_selector_provider.dart';
 import 'package:workout_notes_app/screens/new_entry_page/services/add_exercise_log_page_view_model.dart';
-import 'package:workout_notes_app/services/database.dart';
 import 'package:workout_notes_app/services/logics.dart';
 import 'package:workout_notes_app/services/providers.dart';
 
@@ -81,7 +81,6 @@ class EntriesViewModel {
           );
 
   Stream<List<GroupByModel<ExerciseLog>>> get entriesTableModelStream {
-    print("entriesTableModelStream");
     return database.groupByValue(
       data: allEntriesStreamToDate,
       groupByValue: (log) => log.exerciseID,
@@ -101,7 +100,6 @@ class EntriesViewModel {
   }
 
   Stream<List<GroupByModel<ExerciseLog>>> get entriesHistoryByExerciseStream {
-    print("entriesTableModelStream");
     return database.groupByValue(
       data: getEntriesByExercise,
       groupByValue: (log) => _formatDateCreatedToZeroHHMM(log.dateCreated),

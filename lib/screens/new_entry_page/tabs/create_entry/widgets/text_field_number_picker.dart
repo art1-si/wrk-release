@@ -57,6 +57,12 @@ class TextFieldNumerPicker extends ConsumerWidget {
           var inputValue = value.isEmpty ? 0 : int.tryParse(value);
           context.read(createNewEntryProvider).repsSetter(inputValue!);
         },
+        onFieldSubmitted: (value) {
+          var inputValue = value.isEmpty ? 0.0 : double.parse(value);
+          context
+              .read(createNewEntryProvider)
+              .setWeightWithNewValue(inputValue);
+        },
       ),
       onPressedLeftArow: () {
         if (initValue > 0) {

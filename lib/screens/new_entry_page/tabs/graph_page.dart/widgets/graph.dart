@@ -44,7 +44,7 @@ class MyDrawGraph extends StatelessWidget {
       },
       child: Consumer(builder: (context, watch, child) {
         watch(graphSelector);
-        print("Stack is Build");
+
         return Stack(
           children: [
             Consumer(
