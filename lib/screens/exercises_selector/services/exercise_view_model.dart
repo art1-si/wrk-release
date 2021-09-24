@@ -27,7 +27,6 @@ class ExerciseViewModel with ChangeNotifier {
   final Database database;
 
   Stream<List<GroupByModel<Exercise>>> get groupedExercisesByType {
-    print("hi");
     return database.groupByValue<Exercise>(
       data: exercises,
       groupByValue: (exercise) => exercise.exerciseType,

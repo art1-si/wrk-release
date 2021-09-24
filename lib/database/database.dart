@@ -1,11 +1,6 @@
-import 'package:collection/collection.dart';
-import 'package:uuid/uuid.dart';
 import 'package:workout_notes_app/data_models/exercise.dart';
 import 'package:workout_notes_app/data_models/exercise_log.dart';
 import 'package:workout_notes_app/data_models/group_by_model.dart';
-
-import 'package:workout_notes_app/constants/api_path.dart';
-import 'package:workout_notes_app/database/firebase/firebase_service.dart';
 
 abstract class Database {
   Future<void> createExercise(Exercise exercise);

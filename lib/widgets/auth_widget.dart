@@ -18,7 +18,6 @@ class AuthWidget extends ConsumerWidget {
     final authStateChanges = watch(authStateChangesProvider);
     return authStateChanges.when(
       data: (user) {
-        print(user?.email);
         return _data(context, user);
       },
       loading: () => const Scaffold(

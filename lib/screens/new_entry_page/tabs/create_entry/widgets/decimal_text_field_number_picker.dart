@@ -57,12 +57,10 @@ class DecimalTextFieldNumPicker extends ConsumerWidget {
         textAlign: TextAlign.center,
         controller: watch(decimalTextController),
         onChanged: (value) {
-          print("changed");
           var inputValue = value.isEmpty ? 0.0 : double.parse(value);
           context.read(createNewEntryProvider).weightSetter(inputValue);
         },
         onFieldSubmitted: (value) {
-          print("submited");
           var inputValue = value.isEmpty ? 0.0 : double.parse(value);
           context
               .read(createNewEntryProvider)

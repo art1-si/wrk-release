@@ -87,7 +87,7 @@ class ChartViewModel {
 
     double relativeYposition = (value - minValue) / (maxValue - minValue);
     double yOffset = height - relativeYposition * height;
-    print("yOffset is $relativeYposition");
+
     return yOffset;
   }
 

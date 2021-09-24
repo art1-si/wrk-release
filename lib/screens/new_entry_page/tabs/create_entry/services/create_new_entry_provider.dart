@@ -77,7 +77,6 @@ class CreateNewEntryProvider with ChangeNotifier {
       _submitEntry();
     }
     // }
-    print("empty");
   }
 
   void handleOnTapDeleteOrReset() {
@@ -115,8 +114,6 @@ class CreateNewEntryProvider with ChangeNotifier {
   }
 
   void handleEditMode(ExerciseLog? log) {
-    print("callback works, pressed log is $log");
-
     if (log != null) {
       _selectedLog = log;
       _weight = log.weight;

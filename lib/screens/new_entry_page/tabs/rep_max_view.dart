@@ -24,7 +24,6 @@ class RepMaxView extends StatelessWidget {
   RepMaxView({Key? key, required this.exerciseLog}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    print(" repmax page build ");
     if (exerciseLog.isEmpty) {
       return Center(
         child: Text(

@@ -21,7 +21,6 @@ class AddExerciseLogPageViewModel extends ChangeNotifier {
   List<Exercise>? get selectedExercises => _selectedExercises;
 
   void setSelectedExerciseIndex(index) {
-    print("set selected ExerciseIndex $index");
     return _exerciseIndex = index;
   }
 
@@ -43,18 +42,16 @@ class AddExerciseLogPageViewModel extends ChangeNotifier {
           _selectedExercises!.firstWhere((exercise) => exercise.id == _id);
       _results.add(_res);
     }
-    print(_results);
+
     _selectedExercises = _results;
   }
 
   void selectExercisesWithoutNotify(List<Exercise>? exercises) {
-    print("seleceting Exercises function without notifing");
     _selectedExercises = null;
     _selectedExercises = exercises;
   }
 
   void selectExercises(List<Exercise>? exercises) {
-    print("seleceting Exercises function");
     _selectedExercises = exercises;
     notifyListeners();
   }

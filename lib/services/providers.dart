@@ -10,9 +10,8 @@ final authStateChangesProvider = StreamProvider<User?>(
 
 final databaseProvider = Provider<FirestoreDatabase>((ref) {
   final auth = ref.watch(authStateChangesProvider);
-  print(auth.data?.value?.email);
+
   if (auth.data?.value?.uid != null) {
-    print("hello");
     return FirestoreDatabase(uid: auth.data!.value!.uid);
   }
   print("ops...");
