@@ -10,9 +10,6 @@ _$_Exercise _$$_ExerciseFromJson(Map<String, dynamic> json) => _$_Exercise(
       id: json['id'] as String,
       exerciseName: json['exerciseName'] as String,
       exerciseType: json['exerciseType'] as String,
-      lastWeight: (json['lastWeight'] as num?)?.toDouble(),
-      lastReps: json['lastReps'] as int?,
-      lastRPE: json['lastRPE'] as int?,
     );
 
 Map<String, dynamic> _$$_ExerciseToJson(_$_Exercise instance) =>
@@ -20,7 +17,4 @@ Map<String, dynamic> _$$_ExerciseToJson(_$_Exercise instance) =>
       'id': instance.id,
       'exerciseName': instance.exerciseName,
       'exerciseType': instance.exerciseType,
-      'lastWeight': instance.lastWeight,
-      'lastReps': instance.lastReps,
-      'lastRPE': instance.lastRPE,
     };

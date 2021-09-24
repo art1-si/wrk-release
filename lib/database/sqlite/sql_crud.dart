@@ -27,7 +27,7 @@ class SQLCrud<T> {
         .update(tableName, entry, where: '"id" = ?', whereArgs: [elementId]);
   }
 
-  Future<List<T>> fetchEntries({
+  Future<List<T>> fetchEntries<T>({
     required T entryBuilder(Map<String, dynamic> data),
   }) async {
     final _dbClient = database;

@@ -24,17 +24,11 @@ class _$ExerciseTearOff {
   _Exercise call(
       {required String id,
       required String exerciseName,
-      required String exerciseType,
-      double? lastWeight,
-      int? lastReps,
-      int? lastRPE}) {
+      required String exerciseType}) {
     return _Exercise(
       id: id,
       exerciseName: exerciseName,
       exerciseType: exerciseType,
-      lastWeight: lastWeight,
-      lastReps: lastReps,
-      lastRPE: lastRPE,
     );
   }
 
@@ -51,9 +45,6 @@ mixin _$Exercise {
   String get id => throw _privateConstructorUsedError;
   String get exerciseName => throw _privateConstructorUsedError;
   String get exerciseType => throw _privateConstructorUsedError;
-  double? get lastWeight => throw _privateConstructorUsedError;
-  int? get lastReps => throw _privateConstructorUsedError;
-  int? get lastRPE => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -65,13 +56,7 @@ mixin _$Exercise {
 abstract class $ExerciseCopyWith<$Res> {
   factory $ExerciseCopyWith(Exercise value, $Res Function(Exercise) then) =
       _$ExerciseCopyWithImpl<$Res>;
-  $Res call(
-      {String id,
-      String exerciseName,
-      String exerciseType,
-      double? lastWeight,
-      int? lastReps,
-      int? lastRPE});
+  $Res call({String id, String exerciseName, String exerciseType});
 }
 
 /// @nodoc
@@ -87,9 +72,6 @@ class _$ExerciseCopyWithImpl<$Res> implements $ExerciseCopyWith<$Res> {
     Object? id = freezed,
     Object? exerciseName = freezed,
     Object? exerciseType = freezed,
-    Object? lastWeight = freezed,
-    Object? lastReps = freezed,
-    Object? lastRPE = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -104,18 +86,6 @@ class _$ExerciseCopyWithImpl<$Res> implements $ExerciseCopyWith<$Res> {
           ? _value.exerciseType
           : exerciseType // ignore: cast_nullable_to_non_nullable
               as String,
-      lastWeight: lastWeight == freezed
-          ? _value.lastWeight
-          : lastWeight // ignore: cast_nullable_to_non_nullable
-              as double?,
-      lastReps: lastReps == freezed
-          ? _value.lastReps
-          : lastReps // ignore: cast_nullable_to_non_nullable
-              as int?,
-      lastRPE: lastRPE == freezed
-          ? _value.lastRPE
-          : lastRPE // ignore: cast_nullable_to_non_nullable
-              as int?,
     ));
   }
 }
@@ -125,13 +95,7 @@ abstract class _$ExerciseCopyWith<$Res> implements $ExerciseCopyWith<$Res> {
   factory _$ExerciseCopyWith(_Exercise value, $Res Function(_Exercise) then) =
       __$ExerciseCopyWithImpl<$Res>;
   @override
-  $Res call(
-      {String id,
-      String exerciseName,
-      String exerciseType,
-      double? lastWeight,
-      int? lastReps,
-      int? lastRPE});
+  $Res call({String id, String exerciseName, String exerciseType});
 }
 
 /// @nodoc
@@ -148,9 +112,6 @@ class __$ExerciseCopyWithImpl<$Res> extends _$ExerciseCopyWithImpl<$Res>
     Object? id = freezed,
     Object? exerciseName = freezed,
     Object? exerciseType = freezed,
-    Object? lastWeight = freezed,
-    Object? lastReps = freezed,
-    Object? lastRPE = freezed,
   }) {
     return _then(_Exercise(
       id: id == freezed
@@ -165,18 +126,6 @@ class __$ExerciseCopyWithImpl<$Res> extends _$ExerciseCopyWithImpl<$Res>
           ? _value.exerciseType
           : exerciseType // ignore: cast_nullable_to_non_nullable
               as String,
-      lastWeight: lastWeight == freezed
-          ? _value.lastWeight
-          : lastWeight // ignore: cast_nullable_to_non_nullable
-              as double?,
-      lastReps: lastReps == freezed
-          ? _value.lastReps
-          : lastReps // ignore: cast_nullable_to_non_nullable
-              as int?,
-      lastRPE: lastRPE == freezed
-          ? _value.lastRPE
-          : lastRPE // ignore: cast_nullable_to_non_nullable
-              as int?,
     ));
   }
 }
@@ -187,10 +136,7 @@ class _$_Exercise implements _Exercise {
   const _$_Exercise(
       {required this.id,
       required this.exerciseName,
-      required this.exerciseType,
-      this.lastWeight,
-      this.lastReps,
-      this.lastRPE});
+      required this.exerciseType});
 
   factory _$_Exercise.fromJson(Map<String, dynamic> json) =>
       _$$_ExerciseFromJson(json);
@@ -201,16 +147,10 @@ class _$_Exercise implements _Exercise {
   final String exerciseName;
   @override
   final String exerciseType;
-  @override
-  final double? lastWeight;
-  @override
-  final int? lastReps;
-  @override
-  final int? lastRPE;
 
   @override
   String toString() {
-    return 'Exercise(id: $id, exerciseName: $exerciseName, exerciseType: $exerciseType, lastWeight: $lastWeight, lastReps: $lastReps, lastRPE: $lastRPE)';
+    return 'Exercise(id: $id, exerciseName: $exerciseName, exerciseType: $exerciseType)';
   }
 
   @override
@@ -224,15 +164,7 @@ class _$_Exercise implements _Exercise {
                     .equals(other.exerciseName, exerciseName)) &&
             (identical(other.exerciseType, exerciseType) ||
                 const DeepCollectionEquality()
-                    .equals(other.exerciseType, exerciseType)) &&
-            (identical(other.lastWeight, lastWeight) ||
-                const DeepCollectionEquality()
-                    .equals(other.lastWeight, lastWeight)) &&
-            (identical(other.lastReps, lastReps) ||
-                const DeepCollectionEquality()
-                    .equals(other.lastReps, lastReps)) &&
-            (identical(other.lastRPE, lastRPE) ||
-                const DeepCollectionEquality().equals(other.lastRPE, lastRPE)));
+                    .equals(other.exerciseType, exerciseType)));
   }
 
   @override
@@ -240,10 +172,7 @@ class _$_Exercise implements _Exercise {
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(id) ^
       const DeepCollectionEquality().hash(exerciseName) ^
-      const DeepCollectionEquality().hash(exerciseType) ^
-      const DeepCollectionEquality().hash(lastWeight) ^
-      const DeepCollectionEquality().hash(lastReps) ^
-      const DeepCollectionEquality().hash(lastRPE);
+      const DeepCollectionEquality().hash(exerciseType);
 
   @JsonKey(ignore: true)
   @override
@@ -260,10 +189,7 @@ abstract class _Exercise implements Exercise {
   const factory _Exercise(
       {required String id,
       required String exerciseName,
-      required String exerciseType,
-      double? lastWeight,
-      int? lastReps,
-      int? lastRPE}) = _$_Exercise;
+      required String exerciseType}) = _$_Exercise;
 
   factory _Exercise.fromJson(Map<String, dynamic> json) = _$_Exercise.fromJson;
 
@@ -273,12 +199,6 @@ abstract class _Exercise implements Exercise {
   String get exerciseName => throw _privateConstructorUsedError;
   @override
   String get exerciseType => throw _privateConstructorUsedError;
-  @override
-  double? get lastWeight => throw _privateConstructorUsedError;
-  @override
-  int? get lastReps => throw _privateConstructorUsedError;
-  @override
-  int? get lastRPE => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$ExerciseCopyWith<_Exercise> get copyWith =>

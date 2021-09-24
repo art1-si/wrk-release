@@ -11,9 +11,6 @@ class Exercise with _$Exercise {
     required String id,
     required String exerciseName,
     required String exerciseType,
-    double? lastWeight,
-    int? lastReps,
-    int? lastRPE,
   }) = _Exercise;
   factory Exercise.fromJson(Map<String, dynamic> json) =>
       _$ExerciseFromJson(json);
