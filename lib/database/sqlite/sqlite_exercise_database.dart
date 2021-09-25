@@ -33,7 +33,7 @@ class SqliteExerciseService {
     await database.execute("""
       CREATE TABLE ${SQLKeys.exerciseTable}
       ( 
-        id TEXT PRIMARY KEY,
+        id TEXT,
         exerciseName TEXT,
         exerciseType TEXT
       )

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:workout_notes_app/data_models/exercise_log.dart';
@@ -32,31 +34,34 @@ class EntriesTable extends ConsumerWidget {
               ),
               itemCount: model.length,
               itemBuilder: (context, i) {
-                return _Items(
-                  itemContent: _ItemContent(
-                    log: model[i].data,
+                return _Animator(
+                  index: i,
+                  child: _Items(
+                    itemContent: _ItemContent(
+                      log: model[i].data,
+                    ),
+                    title: model[i].title,
+                    onPressed: () {
+                      context
+                          .read(addExerciseLogProvider)
+                          .selectExercisesWithoutNotify(data);
+                      context
+                          .read(addExerciseLogProvider)
+                          .setExercisesToCorrespondingItems(model);
+                      context
+                          .read(addExerciseLogProvider)
+                          .setSelectedExerciseIndex(i);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            /*  */
+                            return AddExerciseToLog();
+                          },
+                        ),
+                      );
+                    },
                   ),
-                  title: model[i].title,
-                  onPressed: () {
-                    context
-                        .read(addExerciseLogProvider)
-                        .selectExercisesWithoutNotify(data);
-                    context
-                        .read(addExerciseLogProvider)
-                        .setExercisesToCorrespondingItems(model);
-                    context
-                        .read(addExerciseLogProvider)
-                        .setSelectedExerciseIndex(i);
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) {
-                          /*  */
-                          return AddExerciseToLog();
-                        },
-                      ),
-                    );
-                  },
                 );
               },
             ),
@@ -264,6 +269,78 @@ class _TableItem extends StatelessWidget {
           text: rpeField!,
         ),
       ],
+    );
+  }
+}
+
+class _Animator extends StatefulWidget {
+  const _Animator({
+    Key? key,
+    required this.child,
+    required this.index,
+  }) : super(key: key);
+  final Widget child;
+  final int index;
+  @override
+  __AnimatorState createState() => __AnimatorState();
+}
+
+class __AnimatorState extends State<_Animator>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _controller = AnimationController(
+    duration: const Duration(milliseconds: 400),
+    vsync: this,
+  );
+  late final Animation<Offset> _offsetAnimation = Tween<Offset>(
+    begin: Offset(0.0, 1.5),
+    end: Offset.zero,
+  ).animate(CurvedAnimation(
+    parent: _controller,
+    curve: Curves.easeOut,
+  ));
+  late final Animation<double> _opacityAnimation = Tween<double>(
+    begin: 0.1,
+    end: 1,
+  ).animate(CurvedAnimation(
+    parent: _controller,
+    curve: Curves.easeInExpo,
+  ));
+  late final Animation<double> _scaleAnimation = Tween<double>(
+    begin: 0.9,
+    end: 1,
+  ).animate(CurvedAnimation(
+    parent: _controller,
+    curve: Curves.easeOut,
+  ));
+  int get _duration => widget.index * 100;
+  late final Timer _timer;
+  @override
+  void initState() {
+    _timer = Timer(Duration(milliseconds: _duration), () async {
+      await _controller.forward();
+    });
+    _timer;
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ScaleTransition(
+      scale: _scaleAnimation,
+      child: FadeTransition(
+        opacity: _opacityAnimation,
+        child: SlideTransition(
+          position: _offsetAnimation,
+          child: widget.child,
+        ),
+      ),
     );
   }
 }

@@ -14,10 +14,8 @@ _$_ExerciseLog _$$_ExerciseLogFromJson(Map<String, dynamic> json) =>
       exerciseType: json['exerciseType'] as String,
       weight: (json['weight'] as num).toDouble(),
       reps: json['reps'] as int,
-      setCount: json['setCount'] as int?,
       dateCreated: json['dateCreated'] as String,
       exerciseRPE: json['exerciseRPE'] as int,
-      notes: json['notes'] as String?,
     );
 
 Map<String, dynamic> _$$_ExerciseLogToJson(_$_ExerciseLog instance) =>
@@ -28,8 +26,6 @@ Map<String, dynamic> _$$_ExerciseLogToJson(_$_ExerciseLog instance) =>
       'exerciseType': instance.exerciseType,
       'weight': instance.weight,
       'reps': instance.reps,
-      'setCount': instance.setCount,
       'dateCreated': instance.dateCreated,
       'exerciseRPE': instance.exerciseRPE,
-      'notes': instance.notes,
     };

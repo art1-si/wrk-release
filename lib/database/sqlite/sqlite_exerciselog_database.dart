@@ -33,15 +33,14 @@ class SqliteExerciseLogService {
     await database.execute("""
       CREATE TABLE ${SQLKeys.exerciseLogTable}
       ( 
-        id TEXT PRIMARY KEY,
+        id TEXT,
         exerciseID TEXT,
         exerciseName TEXT,
         exerciseType TEXT,
         weight INTEGER,
         reps INTEGER,
         dateCreated TEXT,
-        exerciseRPE INTEGER,
-        notes TEXT
+        exerciseRPE INTEGER
       )
       """);
   }

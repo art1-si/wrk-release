@@ -28,10 +28,8 @@ class _$ExerciseLogTearOff {
       required String exerciseType,
       required double weight,
       required int reps,
-      required int? setCount,
       required String dateCreated,
-      required int exerciseRPE,
-      String? notes}) {
+      required int exerciseRPE}) {
     return _ExerciseLog(
       id: id,
       exerciseID: exerciseID,
@@ -39,10 +37,8 @@ class _$ExerciseLogTearOff {
       exerciseType: exerciseType,
       weight: weight,
       reps: reps,
-      setCount: setCount,
       dateCreated: dateCreated,
       exerciseRPE: exerciseRPE,
-      notes: notes,
     );
   }
 
@@ -62,10 +58,8 @@ mixin _$ExerciseLog {
   String get exerciseType => throw _privateConstructorUsedError;
   double get weight => throw _privateConstructorUsedError;
   int get reps => throw _privateConstructorUsedError;
-  int? get setCount => throw _privateConstructorUsedError;
   String get dateCreated => throw _privateConstructorUsedError;
   int get exerciseRPE => throw _privateConstructorUsedError;
-  String? get notes => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -85,10 +79,8 @@ abstract class $ExerciseLogCopyWith<$Res> {
       String exerciseType,
       double weight,
       int reps,
-      int? setCount,
       String dateCreated,
-      int exerciseRPE,
-      String? notes});
+      int exerciseRPE});
 }
 
 /// @nodoc
@@ -107,10 +99,8 @@ class _$ExerciseLogCopyWithImpl<$Res> implements $ExerciseLogCopyWith<$Res> {
     Object? exerciseType = freezed,
     Object? weight = freezed,
     Object? reps = freezed,
-    Object? setCount = freezed,
     Object? dateCreated = freezed,
     Object? exerciseRPE = freezed,
-    Object? notes = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -137,10 +127,6 @@ class _$ExerciseLogCopyWithImpl<$Res> implements $ExerciseLogCopyWith<$Res> {
           ? _value.reps
           : reps // ignore: cast_nullable_to_non_nullable
               as int,
-      setCount: setCount == freezed
-          ? _value.setCount
-          : setCount // ignore: cast_nullable_to_non_nullable
-              as int?,
       dateCreated: dateCreated == freezed
           ? _value.dateCreated
           : dateCreated // ignore: cast_nullable_to_non_nullable
@@ -149,10 +135,6 @@ class _$ExerciseLogCopyWithImpl<$Res> implements $ExerciseLogCopyWith<$Res> {
           ? _value.exerciseRPE
           : exerciseRPE // ignore: cast_nullable_to_non_nullable
               as int,
-      notes: notes == freezed
-          ? _value.notes
-          : notes // ignore: cast_nullable_to_non_nullable
-              as String?,
     ));
   }
 }
@@ -171,10 +153,8 @@ abstract class _$ExerciseLogCopyWith<$Res>
       String exerciseType,
       double weight,
       int reps,
-      int? setCount,
       String dateCreated,
-      int exerciseRPE,
-      String? notes});
+      int exerciseRPE});
 }
 
 /// @nodoc
@@ -195,10 +175,8 @@ class __$ExerciseLogCopyWithImpl<$Res> extends _$ExerciseLogCopyWithImpl<$Res>
     Object? exerciseType = freezed,
     Object? weight = freezed,
     Object? reps = freezed,
-    Object? setCount = freezed,
     Object? dateCreated = freezed,
     Object? exerciseRPE = freezed,
-    Object? notes = freezed,
   }) {
     return _then(_ExerciseLog(
       id: id == freezed
@@ -225,10 +203,6 @@ class __$ExerciseLogCopyWithImpl<$Res> extends _$ExerciseLogCopyWithImpl<$Res>
           ? _value.reps
           : reps // ignore: cast_nullable_to_non_nullable
               as int,
-      setCount: setCount == freezed
-          ? _value.setCount
-          : setCount // ignore: cast_nullable_to_non_nullable
-              as int?,
       dateCreated: dateCreated == freezed
           ? _value.dateCreated
           : dateCreated // ignore: cast_nullable_to_non_nullable
@@ -237,10 +211,6 @@ class __$ExerciseLogCopyWithImpl<$Res> extends _$ExerciseLogCopyWithImpl<$Res>
           ? _value.exerciseRPE
           : exerciseRPE // ignore: cast_nullable_to_non_nullable
               as int,
-      notes: notes == freezed
-          ? _value.notes
-          : notes // ignore: cast_nullable_to_non_nullable
-              as String?,
     ));
   }
 }
@@ -255,10 +225,8 @@ class _$_ExerciseLog implements _ExerciseLog {
       required this.exerciseType,
       required this.weight,
       required this.reps,
-      required this.setCount,
       required this.dateCreated,
-      required this.exerciseRPE,
-      this.notes});
+      required this.exerciseRPE});
 
   factory _$_ExerciseLog.fromJson(Map<String, dynamic> json) =>
       _$$_ExerciseLogFromJson(json);
@@ -276,17 +244,13 @@ class _$_ExerciseLog implements _ExerciseLog {
   @override
   final int reps;
   @override
-  final int? setCount;
-  @override
   final String dateCreated;
   @override
   final int exerciseRPE;
-  @override
-  final String? notes;
 
   @override
   String toString() {
-    return 'ExerciseLog(id: $id, exerciseID: $exerciseID, exerciseName: $exerciseName, exerciseType: $exerciseType, weight: $weight, reps: $reps, setCount: $setCount, dateCreated: $dateCreated, exerciseRPE: $exerciseRPE, notes: $notes)';
+    return 'ExerciseLog(id: $id, exerciseID: $exerciseID, exerciseName: $exerciseName, exerciseType: $exerciseType, weight: $weight, reps: $reps, dateCreated: $dateCreated, exerciseRPE: $exerciseRPE)';
   }
 
   @override
@@ -308,17 +272,12 @@ class _$_ExerciseLog implements _ExerciseLog {
                 const DeepCollectionEquality().equals(other.weight, weight)) &&
             (identical(other.reps, reps) ||
                 const DeepCollectionEquality().equals(other.reps, reps)) &&
-            (identical(other.setCount, setCount) ||
-                const DeepCollectionEquality()
-                    .equals(other.setCount, setCount)) &&
             (identical(other.dateCreated, dateCreated) ||
                 const DeepCollectionEquality()
                     .equals(other.dateCreated, dateCreated)) &&
             (identical(other.exerciseRPE, exerciseRPE) ||
                 const DeepCollectionEquality()
-                    .equals(other.exerciseRPE, exerciseRPE)) &&
-            (identical(other.notes, notes) ||
-                const DeepCollectionEquality().equals(other.notes, notes)));
+                    .equals(other.exerciseRPE, exerciseRPE)));
   }
 
   @override
@@ -330,10 +289,8 @@ class _$_ExerciseLog implements _ExerciseLog {
       const DeepCollectionEquality().hash(exerciseType) ^
       const DeepCollectionEquality().hash(weight) ^
       const DeepCollectionEquality().hash(reps) ^
-      const DeepCollectionEquality().hash(setCount) ^
       const DeepCollectionEquality().hash(dateCreated) ^
-      const DeepCollectionEquality().hash(exerciseRPE) ^
-      const DeepCollectionEquality().hash(notes);
+      const DeepCollectionEquality().hash(exerciseRPE);
 
   @JsonKey(ignore: true)
   @override
@@ -354,10 +311,8 @@ abstract class _ExerciseLog implements ExerciseLog {
       required String exerciseType,
       required double weight,
       required int reps,
-      required int? setCount,
       required String dateCreated,
-      required int exerciseRPE,
-      String? notes}) = _$_ExerciseLog;
+      required int exerciseRPE}) = _$_ExerciseLog;
 
   factory _ExerciseLog.fromJson(Map<String, dynamic> json) =
       _$_ExerciseLog.fromJson;
@@ -375,13 +330,9 @@ abstract class _ExerciseLog implements ExerciseLog {
   @override
   int get reps => throw _privateConstructorUsedError;
   @override
-  int? get setCount => throw _privateConstructorUsedError;
-  @override
   String get dateCreated => throw _privateConstructorUsedError;
   @override
   int get exerciseRPE => throw _privateConstructorUsedError;
-  @override
-  String? get notes => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$ExerciseLogCopyWith<_ExerciseLog> get copyWith =>

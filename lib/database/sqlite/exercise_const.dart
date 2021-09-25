@@ -1,4 +1,6 @@
-[
+class ExerciseJson {
+  static const exercises = """
+  [
     {
         "exerciseName": "Cable Crossover",
         "exerciseType": "Chest",
@@ -315,3 +317,5 @@
         "id": "63"
     }
 ]
+  """;
+}

@@ -141,7 +141,7 @@ class CreateNewEntryProvider with ChangeNotifier {
       exerciseType: selectedExercise.exerciseType,
       weight: _weight,
       reps: _reps,
-      setCount: null, //TODO: delete required antotation
+      //TODO: delete required antotation
       dateCreated: dateCreated, //TODO:serielize date
       exerciseRPE: _rpe, //TODO: create rpe selector
     );
