@@ -104,14 +104,26 @@ class AddExerciseToLog extends ConsumerWidget {
     return TabBar(
         indicatorWeight: 0.1,
         indicatorColor: Colors.transparent,
-        labelStyle: TextStyle(fontSize: 14),
+        labelStyle: TextStyle(fontSize: 16),
         labelColor: Colors.white,
-        unselectedLabelStyle: TextStyle(fontSize: 12),
+        unselectedLabelStyle: TextStyle(fontSize: 14),
         tabs: <Widget>[
-          Text("LOG"),
-          Text("GRAPH"),
-          Text("HISTORY"),
-          Text("%RM"),
+          SizedBox(
+            height: 40,
+            child: Center(child: Text("LOG")),
+          ),
+          SizedBox(
+            height: 40,
+            child: Center(child: Text("GRAPH")),
+          ),
+          SizedBox(
+            height: 40,
+            child: Center(child: Text("HISTORY")),
+          ),
+          SizedBox(
+            height: 40,
+            child: Center(child: Text("%RM")),
+          ),
         ]);
   }
 

@@ -10,7 +10,7 @@ import 'package:workout_notes_app/services/logics.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:workout_notes_app/theme/app_theme.dart';
 
-class LogScreen extends StatefulWidget {
+class LogScreen extends StatelessWidget {
   LogScreen({
     Key? key,
     required this.exerciseLog,
@@ -20,46 +20,32 @@ class LogScreen extends StatefulWidget {
   final Exercise exercise;
 
   @override
-  _LogScreenState createState() => _LogScreenState();
-}
-
-class _LogScreenState extends State<LogScreen> {
-  final _formKey = GlobalKey<FormState>();
-
-  @override
   Widget build(BuildContext context) {
-    if (widget.exerciseLog.isNotEmpty &&
+    if (exerciseLog.isNotEmpty &&
         context.read(createNewEntryProvider).latestLogIsNull) {
-      context
-          .read(createNewEntryProvider)
-          .setLatestLog(widget.exerciseLog.last);
+      context.read(createNewEntryProvider).setLatestLog(exerciseLog.last);
     }
-    return Form(
-      key: _formKey,
-      child: Consumer(builder: (context, watch, child) {
-        return ListView(
-          children: <Widget>[
-            CreateNewEntry(
-              bottomButtons: RowWithBottomButtons(),
-            ),
-            Divider(
-              color: AppTheme.of(context).divider,
-              thickness: 0.5,
-              height: 20,
-            ),
-            CurrentEntries(
-              onLongPressed: (log) =>
-                  context.read(createNewEntryProvider).handleEditMode(log),
-              currentEntries: widget.exerciseLog
-                  .where((element) => compareDatesToDay(
-                        DateTime.tryParse(element.dateCreated)!,
-                        context.read(selectedDateProvider).daySelected,
-                      ))
-                  .toList(),
-            ),
-          ],
-        );
-      }),
+    return ListView(
+      children: <Widget>[
+        CreateNewEntry(
+          bottomButtons: RowWithBottomButtons(),
+        ),
+        Divider(
+          color: AppTheme.of(context).divider,
+          thickness: 0.5,
+          height: 20,
+        ),
+        CurrentEntries(
+          onLongPressed: (log) =>
+              context.read(createNewEntryProvider).handleEditMode(log),
+          currentEntries: exerciseLog
+              .where((element) => compareDatesToDay(
+                    DateTime.tryParse(element.dateCreated)!,
+                    context.read(selectedDateProvider).daySelected,
+                  ))
+              .toList(),
+        ),
+      ],
     );
   }
 }

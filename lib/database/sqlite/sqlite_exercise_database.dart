@@ -4,8 +4,12 @@ import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart';
 import 'package:workout_notes_app/database/sqlite/sql_keys.dart';
 
-final exerciseDatabase =
-    Provider.autoDispose((ref) => SqliteExerciseService._());
+final exerciseDatabase = Provider.autoDispose((ref) {
+  ref.onDispose(() {
+    SqliteExerciseService.instance.dispose();
+  });
+  return SqliteExerciseService.instance;
+});
 
 class SqliteExerciseService {
   SqliteExerciseService._();
@@ -38,5 +42,11 @@ class SqliteExerciseService {
         exerciseType TEXT
       )
       """);
+  }
+
+  void dispose() {
+    if (_db != null) {
+      _db!.close();
+    }
   }
 }

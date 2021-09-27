@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:collection/collection.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:workout_notes_app/data_models/group_by_model.dart';
@@ -9,6 +11,7 @@ import 'package:workout_notes_app/database/sqlite/sql_crud.dart';
 final sqlDatabase = Provider.autoDispose((ref) {
   final _exerciseService = ref.watch(exerciseSQLCrud);
   final _exerciseLogService = ref.watch(exerciseLogSQLCrud);
+  //TODO dispose stream
   return SqliteDatabase(
     exercisesDatabase: _exerciseService,
     exerciseLogDatabase: _exerciseLogService,
@@ -18,8 +21,13 @@ final sqlDatabase = Provider.autoDispose((ref) {
 class SqliteDatabase implements Database {
   SqliteDatabase(
       {required this.exercisesDatabase, required this.exerciseLogDatabase});
+
   final SQLCrud exercisesDatabase;
+
   final SQLCrud exerciseLogDatabase;
+
+  final _exerciseLog = StreamController<List<ExerciseLog>>.broadcast();
+  List<ExerciseLog> _log = [];
 
   @override
   Future<void> createExercise(Exercise exercise) async {
@@ -29,6 +37,7 @@ class SqliteDatabase implements Database {
   @override
   Future<void> createExerciseLog(ExerciseLog exerciseLog) async {
     await exerciseLogDatabase.createEntry(entry: exerciseLog.toJson());
+    exerciseLogStream();
   }
 
   @override
@@ -39,17 +48,21 @@ class SqliteDatabase implements Database {
   @override
   Future<void> deleteExerciseLog(ExerciseLog exerciseLog) async {
     await exerciseLogDatabase.deleteEntry(exerciseLog.id);
+    exerciseLogStream();
   }
 
   @override
   Stream<List<ExerciseLog>> exerciseLogStream() {
+    print("fetch data exerciseLog");
     final _result = exerciseLogDatabase.fetchEntries(
         entryBuilder: (entry) => ExerciseLog.fromJson(entry));
-    return Stream.fromFuture(_result);
+    _exerciseLog.sink.addStream(_result.asStream());
+    return _exerciseLog.stream;
   }
 
   @override
   Stream<List<Exercise>> exercisesStream() {
+    print("fetch data exercise");
     final _result = exercisesDatabase.fetchEntries(
         entryBuilder: (entry) => Exercise.fromJson(entry));
     return Stream.fromFuture(_result);
@@ -69,6 +82,7 @@ class SqliteDatabase implements Database {
       entry: exerciseLog.toJson(),
       elementId: exerciseLog.id,
     );
+    exerciseLogStream();
   }
 
   @override
@@ -93,5 +107,9 @@ class SqliteDatabase implements Database {
       }
       return entiresToReturn;
     });
+  }
+
+  void dispose() {
+    _exerciseLog.close();
   }
 }

@@ -288,7 +288,7 @@ class _Animator extends StatefulWidget {
 class __AnimatorState extends State<_Animator>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller = AnimationController(
-    duration: const Duration(milliseconds: 400),
+    duration: const Duration(milliseconds: 350),
     vsync: this,
   );
   late final Animation<Offset> _offsetAnimation = Tween<Offset>(

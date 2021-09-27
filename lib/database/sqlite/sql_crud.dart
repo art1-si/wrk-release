@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:workout_notes_app/database/sqlite/sql_keys.dart';
@@ -13,7 +14,7 @@ final exerciseSQLCrud = Provider.autoDispose((ref) {
   return _exerciseService;
 });
 final exerciseLogSQLCrud = Provider.autoDispose((ref) {
-  final _exerciseLogDB = ref.watch(exerciseLogDatabase).db;
+  final _exerciseLogDB = ref.watch(exerciseLogDatabase);
   final _exerciseService = SQLCrud(
     database: _exerciseLogDB,
     tableName: SQLKeys.exerciseLogTable,

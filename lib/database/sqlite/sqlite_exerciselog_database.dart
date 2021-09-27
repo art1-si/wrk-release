@@ -4,8 +4,12 @@ import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart';
 import 'package:workout_notes_app/database/sqlite/sql_keys.dart';
 
-final exerciseLogDatabase =
-    Provider.autoDispose((ref) => SqliteExerciseLogService._());
+final exerciseLogDatabase = Provider.autoDispose((ref) {
+  ref.onDispose(() {
+    SqliteExerciseLogService.instance.dispose();
+  });
+  return SqliteExerciseLogService.instance.db;
+});
 
 class SqliteExerciseLogService {
   SqliteExerciseLogService._();
@@ -45,6 +49,11 @@ class SqliteExerciseLogService {
       """);
   }
 
+  void dispose() {
+    if (_db != null) {
+      _db!.close();
+    }
+  }
 /*   Future<void> createEntry(ExerciseLog entry) async {
     final _entryToJson = entry.toJson();
     final _dbClient = await db;
