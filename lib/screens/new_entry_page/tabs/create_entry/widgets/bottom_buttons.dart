@@ -16,9 +16,8 @@ class RowWithBottomButtons extends ConsumerWidget {
     final submitColor = _createEntry.editModeActive
         ? _theme.accentSecendery
         : _theme.accentPrimary;
-    final resetColor = _createEntry.editModeActive
-        ? _theme.accentNegative
-        : _theme.accentPositive;
+    final resetColor = _theme.accentNegative;
+
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Row(
@@ -31,8 +30,9 @@ class RowWithBottomButtons extends ConsumerWidget {
             titleColor: submitColor,
           ),
           ElevatedHomePageButton(
+            disable: !_createEntry.editModeActive,
             onPress: _createEntry.handleOnTapDeleteOrReset,
-            title: _createEntry.editModeActive ? "Delete" : "Reset",
+            title: "Delete",
             backgroundColor: resetColor.withOpacity(0.05),
             titleColor: resetColor.withOpacity(0.7),
           ),

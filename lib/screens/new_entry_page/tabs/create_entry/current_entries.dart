@@ -29,7 +29,7 @@ class _CurrentEntriesState extends State<CurrentEntries> {
             top: 16.0,
             bottom: 8.0,
           ),
-          child: _EntryRow(),
+          child: _TableHeader(),
         ),
         ListView.separated(
           shrinkWrap: true,
@@ -57,8 +57,38 @@ class _CurrentEntriesState extends State<CurrentEntries> {
             indent: 100,
             endIndent: 100,
             thickness: 2,
+            height: 1,
             color: AppTheme.of(context).divider,
           ),
+        ),
+      ],
+    );
+  }
+}
+
+class _TableHeader extends StatelessWidget {
+  const _TableHeader({Key? key}) : super(key: key);
+  static const TextStyle _style = TextStyle(fontSize: 10, letterSpacing: 2.0);
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        _Field(
+          text: "SET",
+          textStyle: _style,
+        ),
+        _Field(
+          text: "WEIGHT",
+          textStyle: _style,
+        ),
+        _Field(
+          text: "REPS",
+          textStyle: _style,
+        ),
+        _Field(
+          text: "RPE",
+          textStyle: _style,
         ),
       ],
     );
@@ -84,14 +114,14 @@ class _EntryRow extends StatelessWidget {
     return GestureDetector(
       onTap: onLongPressed,
       child: SizedBox(
-        height: 30,
+        height: 40,
         child: Stack(
           children: [
             Center(
               child: AnimatedContainer(
                 duration: Duration(milliseconds: 250),
                 curve: Curves.easeInOutCubic,
-                height: selected ? 30 : 10,
+                height: selected ? 40 : 10,
                 width: selected ? MediaQuery.of(context).size.width : 10,
                 decoration: BoxDecoration(
                   color: selected
@@ -104,7 +134,7 @@ class _EntryRow extends StatelessWidget {
             AnimatedDefaultTextStyle(
               style: TextStyle(
                 color: selected ? Colors.white : Colors.white54,
-                fontSize: selected ? 18 : 14,
+                fontSize: selected ? 18 : 16,
                 fontWeight: selected ? FontWeight.bold : FontWeight.w400,
               ),
               duration: Duration(milliseconds: 250),
@@ -137,15 +167,20 @@ class _Field extends StatelessWidget {
   const _Field({
     Key? key,
     required this.text,
+    this.textStyle,
   }) : super(key: key);
   final String text;
+  final TextStyle? textStyle;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: MediaQuery.of(context).size.width / 5,
       child: Center(
-        child: Text(text),
+        child: Text(
+          text,
+          style: textStyle,
+        ),
       ),
     );
   }

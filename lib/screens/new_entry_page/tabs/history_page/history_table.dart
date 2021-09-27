@@ -2,17 +2,15 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:workout_notes_app/constants/strings.dart';
 import 'package:workout_notes_app/data_models/exercise_log.dart';
 import 'package:workout_notes_app/data_models/group_by_model.dart';
 import 'package:workout_notes_app/screens/exercises_selector/services/exercise_view_model.dart';
-import 'package:workout_notes_app/screens/new_entry_page/add_exercise_to_log.dart';
-import 'package:workout_notes_app/screens/new_entry_page/services/add_exercise_log_page_view_model.dart';
-import 'package:workout_notes_app/constants/strings.dart';
 import 'package:workout_notes_app/theme/app_theme.dart';
 import 'package:workout_notes_app/widgets/center_progress_indicator.dart';
 
-class EntriesTable extends ConsumerWidget {
-  const EntriesTable({
+class HistoryTable extends ConsumerWidget {
+  const HistoryTable({
     Key? key,
     required this.model,
   }) : super(key: key);
@@ -41,26 +39,7 @@ class EntriesTable extends ConsumerWidget {
                       log: model[i].data,
                     ),
                     title: model[i].title,
-                    onPressed: () {
-                      context
-                          .read(addExerciseLogProvider)
-                          .selectExercisesWithoutNotify(data);
-                      context
-                          .read(addExerciseLogProvider)
-                          .setExercisesToCorrespondingItems(model);
-                      context
-                          .read(addExerciseLogProvider)
-                          .setSelectedExerciseIndex(i);
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) {
-                            /*  */
-                            return AddExerciseToLog();
-                          },
-                        ),
-                      );
-                    },
+                    onPressed: () {},
                   ),
                 );
               },

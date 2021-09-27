@@ -9,12 +9,14 @@ class ElevatedHomePageButton extends StatefulWidget {
     required this.onPress,
     required this.backgroundColor,
     required this.titleColor,
+    this.disable = false,
   }) : super(key: key);
 
   final String title;
   final VoidCallback onPress;
   final Color backgroundColor;
   final Color titleColor;
+  final bool disable;
 
   @override
   State<ElevatedHomePageButton> createState() => _ElevatedHomePageButtonState();
@@ -41,24 +43,42 @@ class _ElevatedHomePageButtonState extends State<ElevatedHomePageButton> {
   Widget build(BuildContext context) {
     return Center(
       child: GestureDetector(
-        onTapCancel: () => _onTapEnd(),
-        onTapDown: (_) => _onTapDown(),
-        onTapUp: (_) => _onTapEnd(),
-        onTap: widget.onPress,
+        onTapCancel: () {
+          if (!widget.disable) {
+            _onTapEnd();
+          }
+        },
+        onTapDown: (_) {
+          if (!widget.disable) {
+            _onTapDown();
+          }
+        },
+        onTapUp: (_) {
+          if (!widget.disable) {
+            _onTapEnd();
+          }
+        },
+        onTap: () {
+          if (!widget.disable) {
+            widget.onPress();
+          }
+        },
         child: Container(
           height: 42,
           width: 125,
           decoration: BoxDecoration(
-            color: _backgroundColor,
+            color: widget.disable
+                ? Colors.grey.withOpacity(0.02)
+                : _backgroundColor,
             borderRadius: BorderRadius.circular(10),
           ),
           child: Center(
             child: Text(
               widget.title,
-              style: Theme.of(context)
-                  .textTheme
-                  .button!
-                  .copyWith(color: widget.titleColor),
+              style: Theme.of(context).textTheme.button!.copyWith(
+                  color: widget.disable
+                      ? Colors.grey.withOpacity(0.2)
+                      : widget.titleColor),
             ),
           ),
         ),
