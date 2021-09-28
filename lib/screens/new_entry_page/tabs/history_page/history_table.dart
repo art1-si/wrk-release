@@ -108,9 +108,9 @@ class _ItemContent extends StatelessWidget {
       children: [
         _TableItem(
           header: true,
-          middleField: Strings.weight,
-          leftField: Strings.setString,
-          rightField: Strings.reps,
+          middleField: Strings.weight.toUpperCase(),
+          leftField: Strings.setString.toUpperCase(),
+          rightField: Strings.reps.toUpperCase(),
           rpeField: Strings.rpe,
         ),
         ListView.separated(
@@ -120,12 +120,15 @@ class _ItemContent extends StatelessWidget {
           itemCount: log.length,
           itemBuilder: (context, index) {
             final data = log[index];
-            return _TableItem(
-              showRPEfield: true,
-              middleField: "${data.weight}",
-              leftField: "${index + 1}",
-              rightField: "${data.reps}",
-              rpeField: "${data.exerciseRPE}",
+            return _Animator(
+              index: index,
+              child: _TableItem(
+                showRPEfield: true,
+                middleField: "${data.weight}",
+                leftField: "${index + 1}",
+                rightField: "${data.reps}",
+                rpeField: "${data.exerciseRPE}",
+              ),
             );
           },
           separatorBuilder: (BuildContext context, int index) => Divider(
@@ -173,36 +176,39 @@ class _TableItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final numberOfFields = showRPEfield ? 4 : 3;
-    return SizedBox(
-      height: 30,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          //set
-          _rowField(
-            width: size.width / numberOfFields * 0.3,
-            text: leftField,
-          ),
-          //reps
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+      child: SizedBox(
+        height: 30,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            //set
+            _rowField(
+              width: size.width / numberOfFields * 0.3,
+              text: leftField,
+            ),
+            //reps
 
-          _rowField(
-            width: size.width / numberOfFields,
-            text: middleField,
-          ),
+            _rowField(
+              width: size.width / numberOfFields,
+              text: middleField,
+            ),
 
-          //weight
+            //weight
 
-          _rowField(
-            width: size.width / numberOfFields * 0.5,
-            text: rightField,
-          ),
-          //RPE
-          if (showRPEfield)
             _rowField(
               width: size.width / numberOfFields * 0.5,
-              text: rpeField!,
+              text: rightField,
             ),
-        ],
+            //RPE
+            if (showRPEfield)
+              _rowField(
+                width: size.width / numberOfFields * 0.5,
+                text: rpeField!,
+              ),
+          ],
+        ),
       ),
     );
   }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:workout_notes_app/screens/new_entry_page/tabs/create_entry/services/create_new_entry_provider.dart';
 import 'package:workout_notes_app/screens/new_entry_page/tabs/create_entry/widgets/decimal_text_field_number_picker.dart';
+import 'package:workout_notes_app/screens/new_entry_page/tabs/create_entry/widgets/rpe_picker.dart';
 import 'package:workout_notes_app/screens/new_entry_page/tabs/create_entry/widgets/text_field_number_picker.dart';
 
 class CreateNewEntry extends ConsumerWidget {
@@ -30,6 +31,7 @@ class CreateNewEntry extends ConsumerWidget {
           onChange: _createNewEntry.setRepsWithNewValue,
           changesByValue: 1,
         ),
+        RPEPicker(),
         bottomButtons,
       ],
     );
