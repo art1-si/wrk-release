@@ -54,6 +54,11 @@ class CreateNewEntryProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  void setRPEWithNewValue(int value) {
+    _rpe = value;
+    notifyListeners();
+  }
+
   void weightSetter(double value) {
     _weight = value;
   }
@@ -92,6 +97,7 @@ class CreateNewEntryProvider with ChangeNotifier {
     final entry = _selectedLog!.copyWith(
       weight: _weight,
       reps: _reps,
+      exerciseRPE: _rpe,
     );
     await database.upadateExerciseLog(entry);
   }
@@ -110,6 +116,7 @@ class CreateNewEntryProvider with ChangeNotifier {
   void _resetValues() {
     _weight = _latestLog?.weight ?? 40;
     _reps = _latestLog?.reps ?? 12;
+    _rpe = _latestLog?.exerciseRPE ?? 10;
     notifyListeners();
   }
 
@@ -118,12 +125,14 @@ class CreateNewEntryProvider with ChangeNotifier {
       _selectedLog = log;
       _weight = log.weight;
       _reps = log.reps;
+      _rpe = log.exerciseRPE;
       _editModeActive = true;
     } else {
       _selectedLog = null;
       _weight = _latestLog?.weight ?? 40;
 
       _reps = _latestLog?.reps ?? 12;
+      _rpe = _latestLog?.exerciseRPE ?? 10;
       _editModeActive = false;
     }
     notifyListeners();
@@ -141,9 +150,9 @@ class CreateNewEntryProvider with ChangeNotifier {
       exerciseType: selectedExercise.exerciseType,
       weight: _weight,
       reps: _reps,
-      //TODO: delete required antotation
+
       dateCreated: dateCreated, //TODO:serielize date
-      exerciseRPE: _rpe, //TODO: create rpe selector
+      exerciseRPE: _rpe,
     );
   }
 }

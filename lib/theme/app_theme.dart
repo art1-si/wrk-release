@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
 class AppThemeData {
+  final Color backgroundDark;
   final Color background;
   final Color primary;
+  final Color primaryDark;
   final Color accentPrimary;
   final Color accentNegative;
   final Color accentSecendery;
@@ -10,8 +12,10 @@ class AppThemeData {
   final Color divider;
 
   const AppThemeData({
+    required this.backgroundDark,
     required this.background,
     required this.primary,
+    required this.primaryDark,
     required this.accentPrimary,
     required this.accentNegative,
     required this.accentSecendery,
@@ -44,8 +48,10 @@ class AppTheme extends InheritedWidget {
 
 class Themes {
   static const AppThemeData theme = AppThemeData(
+    backgroundDark: Color(0xff0E1114),
     background: Color(0xff12151A),
     primary: Color(0xff191D24),
+    primaryDark: Color(0xff15191F),
     accentPrimary: Color(0xff6886e6),
     accentNegative: Color(0xffFF4B58),
     accentSecendery: Color(0xff556ccd),

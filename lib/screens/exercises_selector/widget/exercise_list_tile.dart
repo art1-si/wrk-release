@@ -30,30 +30,33 @@ class ExerciseListTile extends ConsumerWidget {
                 context.read(addExerciseLogProvider).selectExercises(null),
           ),
           Expanded(
-            child: ListView.builder(
-              shrinkWrap: true,
-              physics: exercises.selectedExercises!.length > 9
-                  ? BouncingScrollPhysics()
-                  : NeverScrollableScrollPhysics(),
-              padding: EdgeInsets.only(bottom: 20.0),
-              itemCount: exercises.selectedExercises!.length,
-              itemBuilder: (context, index) {
-                return AnimatedTile(
-                  index: index,
-                  title: exercises.selectedExercises![index].exerciseName,
-                  onTap: () {
-                    context
-                        .read(addExerciseLogProvider)
-                        .setSelectedExerciseIndex(index);
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => AddExerciseToLog(),
-                      ),
-                    );
-                  },
-                );
-              },
+            child: Container(
+              color: AppTheme.of(context).backgroundDark,
+              child: ListView.builder(
+                shrinkWrap: true,
+                physics: exercises.selectedExercises!.length > 9
+                    ? BouncingScrollPhysics()
+                    : NeverScrollableScrollPhysics(),
+                padding: EdgeInsets.only(bottom: 20.0),
+                itemCount: exercises.selectedExercises!.length,
+                itemBuilder: (context, index) {
+                  return AnimatedTile(
+                    index: index,
+                    title: exercises.selectedExercises![index].exerciseName,
+                    onTap: () {
+                      context
+                          .read(addExerciseLogProvider)
+                          .setSelectedExerciseIndex(index);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => AddExerciseToLog(),
+                        ),
+                      );
+                    },
+                  );
+                },
+              ),
             ),
           ),
         ],

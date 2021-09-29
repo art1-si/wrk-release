@@ -23,28 +23,26 @@ class HistoryTable extends ConsumerWidget {
       data: (data) {
         return Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Container(
-            child: ListView.separated(
-              padding: EdgeInsets.zero,
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              separatorBuilder: (_, __) => const SizedBox(
-                height: 12,
-              ),
-              itemCount: model.length,
-              itemBuilder: (context, i) {
-                return _Animator(
-                  index: i,
-                  child: _Items(
-                    itemContent: _ItemContent(
-                      log: model[i].data,
-                    ),
-                    title: model[i].title,
-                    onPressed: () {},
-                  ),
-                );
-              },
+          child: ListView.separated(
+            padding: EdgeInsets.zero,
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            separatorBuilder: (_, __) => const SizedBox(
+              height: 12,
             ),
+            itemCount: model.length,
+            itemBuilder: (context, i) {
+              return _Animator(
+                index: i,
+                child: _Items(
+                  itemContent: _ItemContent(
+                    log: model[i].data,
+                  ),
+                  title: model[i].title,
+                  onPressed: () {},
+                ),
+              );
+            },
           ),
         );
       },

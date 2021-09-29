@@ -31,7 +31,10 @@ class CreateNewEntry extends ConsumerWidget {
           onChange: _createNewEntry.setRepsWithNewValue,
           changesByValue: 1,
         ),
-        RPEPicker(),
+        RPEPicker(
+          value: _createNewEntry.rpe,
+          onChanged: _createNewEntry.setRPEWithNewValue,
+        ),
         bottomButtons,
       ],
     );

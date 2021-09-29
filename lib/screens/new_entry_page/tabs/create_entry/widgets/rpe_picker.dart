@@ -4,45 +4,42 @@ import 'package:workout_notes_app/theme/app_theme.dart';
 
 typedef void VoidIntCallback(int i);
 
-class RPEPicker extends StatefulWidget {
-  const RPEPicker({Key? key}) : super(key: key);
-
+class RPEPicker extends StatelessWidget {
+  const RPEPicker({
+    Key? key,
+    required this.onChanged,
+    required this.value,
+  }) : super(key: key);
+  final ValueChanged<int> onChanged;
+  final int value;
   @override
-  State<RPEPicker> createState() => _RPEPickerState();
-}
-
-class _RPEPickerState extends State<RPEPicker> {
-  int _selectedRPE = 10;
-  void handleOnPressed(int rpe) {
-    setState(() {
-      _selectedRPE = rpe;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text("RPE"),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: ConstLists.rpePicker
-                .map(
-                  (rpe) => _Item(
-                    onPressed: handleOnPressed,
-                    selectedColor: AppTheme.of(context).accentPrimary,
-                    rpe: rpe,
-                    selected: rpe == _selectedRPE,
-                  ),
-                )
-                .toList(),
-          ),
-        ],
+      child: SizedBox(
+        height: 90,
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text("RPE"),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: ConstLists.rpePicker
+                  .map(
+                    (rpe) => _Item(
+                      onPressed: onChanged,
+                      selectedColor: AppTheme.of(context).accentNegative,
+                      rpe: rpe,
+                      selected: rpe == value,
+                    ),
+                  )
+                  .toList(),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -76,7 +73,7 @@ class _Item extends StatelessWidget {
         ),
         duration: Duration(milliseconds: 250),
         child: SizedBox(
-          height: 50,
+          height: 40,
           child: Center(
             child: AnimatedDefaultTextStyle(
               duration: Duration(milliseconds: 250),
@@ -84,7 +81,7 @@ class _Item extends StatelessWidget {
                   fontSize: selected ? 24 : 14,
                   color: selected
                       ? selectedColor.withOpacity(0.7)
-                      : Colors.white70,
+                      : Colors.white54,
                   fontWeight: selected ? FontWeight.bold : null),
               child: Text(
                 rpe.toString(),
