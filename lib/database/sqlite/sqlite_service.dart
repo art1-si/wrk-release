@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'package:rxdart/rxdart.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:workout_notes_app/data_models/group_by_model.dart';
@@ -26,7 +26,7 @@ class SqliteDatabase implements Database {
 
   final SQLCrud exerciseLogDatabase;
 
-  final _exerciseLog = StreamController<List<ExerciseLog>>.broadcast();
+  final _exerciseLog = BehaviorSubject<List<ExerciseLog>>();
   List<ExerciseLog> _log = [];
 
   @override
@@ -48,6 +48,7 @@ class SqliteDatabase implements Database {
   @override
   Future<void> deleteExerciseLog(ExerciseLog exerciseLog) async {
     await exerciseLogDatabase.deleteEntry(exerciseLog.id);
+
     exerciseLogStream();
   }
 

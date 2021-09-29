@@ -41,6 +41,7 @@ dependencies:
       path: packages/email_password_sign_in_ui
   
   collection: ^1.14.12
+  rxdart: ^0.27.2
   uuid: ^3.0.4
   animations: ^1.1.2
   freezed: ^0.14.5

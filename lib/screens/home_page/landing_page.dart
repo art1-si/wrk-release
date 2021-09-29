@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:workout_notes_app/constants/offline_mode.dart';
 import 'package:workout_notes_app/screens/home_page/home_page.dart';
 import 'package:workout_notes_app/screens/home_page/sign_in_page.dart';
-import 'package:workout_notes_app/screens/onboarding/onboarding_page.dart';
-import 'package:workout_notes_app/screens/onboarding/onboarding_view_model.dart';
 import 'package:workout_notes_app/widgets/auth_widget.dart';
 
 class LandingPage extends ConsumerWidget {
@@ -11,12 +10,13 @@ class LandingPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, ScopedReader watch) {
-    return AuthWidget(
-      nonSignedInBuilder: (_) => Consumer(builder: (context, watch, _) {
-        final didCompleteOnBoarding = watch(onboardingViewModelProvider);
-        return didCompleteOnBoarding ? OnboardingPage() : SignInPage();
-      }),
-      signedInBuilder: (_) => MyHomePage(),
-    );
+    return OfflineMode.offline
+        ? MyHomePage()
+        : AuthWidget(
+            nonSignedInBuilder: (_) => Consumer(builder: (context, watch, _) {
+              return SignInPage();
+            }),
+            signedInBuilder: (_) => MyHomePage(),
+          );
   }
 }
