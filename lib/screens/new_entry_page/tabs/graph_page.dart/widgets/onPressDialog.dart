@@ -26,6 +26,7 @@ class OnPressDialog extends ConsumerWidget {
             borderRadius: BorderRadius.circular(10),
           ),
           child: _PopUpTable(
+            rpeCount: details.logDetails!.corespondingLog.exerciseRPE,
             field1: "WEIGHT ${details.logDetails!.corespondingLog.weight}",
             field2: "${details.logDetails!.corespondingLog.reps}",
             field4: "Date: $_formatedDate",
@@ -47,12 +48,14 @@ class _PopUpTable extends StatelessWidget {
     required this.field2,
     required this.field3,
     required this.field4,
+    required this.rpeCount,
   }) : super(key: key);
 
   final String field1;
   final String field2;
   final String? field3;
   final String field4;
+  final int rpeCount;
 
   @override
   Widget build(BuildContext context) {
@@ -62,11 +65,38 @@ class _PopUpTable extends StatelessWidget {
         height: 70,
         child: Stack(
           children: [
-            Align(
-              alignment: Alignment.topLeft,
-              child: Text(
-                "$field1 x $field2",
-                style: Theme.of(context).textTheme.headline5,
+            AnimatedContainer(
+              duration: Duration(milliseconds: 350),
+              width: field3 == null
+                  ? MediaQuery.of(context).size.width
+                  : MediaQuery.of(context).size.width * (3 / 5),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: Text(
+                      "$field1 x $field2",
+                      style: Theme.of(context).textTheme.headline5,
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: Column(
+                      children: [
+                        Text(
+                          "RPE:",
+                          style: TextStyle(fontSize: 10),
+                        ),
+                        Text(
+                          "$rpeCount",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 22),
+                        ), //TODO:
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ),
             AnimatedAlign(

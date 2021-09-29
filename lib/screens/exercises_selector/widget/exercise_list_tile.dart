@@ -25,9 +25,17 @@ class ExerciseListTile extends ConsumerWidget {
       return Column(
         children: [
           const _Divider(),
-          _BackArowButton(
-            onPressed: () =>
-                context.read(addExerciseLogProvider).selectExercises(null),
+          Row(
+            children: [
+              _BackArowButton(
+                onPressed: () =>
+                    context.read(addExerciseLogProvider).selectExercises(null),
+              ),
+              Text(
+                exercises.selectedExercises!.first.exerciseType,
+                style: TextStyle(fontSize: 16, color: Colors.white),
+              ),
+            ],
           ),
           Expanded(
             child: Container(
