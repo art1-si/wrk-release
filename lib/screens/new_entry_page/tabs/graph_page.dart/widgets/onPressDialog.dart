@@ -92,7 +92,7 @@ class _PopUpTable extends StatelessWidget {
                           "$rpeCount",
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 22),
-                        ), //TODO:
+                        ),
                       ],
                     ),
                   ),

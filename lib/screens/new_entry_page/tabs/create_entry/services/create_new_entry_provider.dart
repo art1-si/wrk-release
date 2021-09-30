@@ -150,8 +150,7 @@ class CreateNewEntryProvider with ChangeNotifier {
       exerciseType: selectedExercise.exerciseType,
       weight: _weight,
       reps: _reps,
-
-      dateCreated: dateCreated, //TODO:serielize date
+      dateCreated: dateCreated,
       exerciseRPE: _rpe,
     );
   }

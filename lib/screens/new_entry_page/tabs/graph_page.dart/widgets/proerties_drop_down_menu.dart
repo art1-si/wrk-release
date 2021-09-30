@@ -34,7 +34,7 @@ class PropertiesDropDown extends ConsumerWidget {
             value: _selector.graphProperties,
             onChanged: (GraphProperties? newValue) {
               context.read(graphSelector).setGraphProperties(newValue!);
-            }, //!: is this correct?
+            },
             items: GraphProperties.values.map((GraphProperties properties) {
               return DropdownMenuItem<GraphProperties>(
                 value: properties,

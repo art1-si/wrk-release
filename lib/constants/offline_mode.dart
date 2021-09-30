@@ -1,3 +1,3 @@
 class OfflineMode {
-  static const bool offline = false;
+  static const bool offline = true;
 }

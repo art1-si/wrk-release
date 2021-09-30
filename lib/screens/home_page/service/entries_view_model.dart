@@ -18,7 +18,6 @@ final exerciseLogProvider = Provider.autoDispose<List<ExerciseLog>>((ref) {
 
 //?Main EntriesViewProvider
 final entriesViewModel = Provider.autoDispose<EntriesViewModel>((ref) {
-  bool _offline = true;
   final database = ref.watch(databaseProvider);
   final date = ref.watch(selectedDateProvider).daySelected;
   final seletedExercise = ref.watch(addExerciseLogProvider).selectedExercise.id;

@@ -25,8 +25,7 @@ class SignInPage extends ConsumerWidget {
         if (model.error != null) {
           Text(
             "Sign In failed",
-          ); //TODO: make it pretty
-
+          );
         }
       },
       child: SignInPageContents(

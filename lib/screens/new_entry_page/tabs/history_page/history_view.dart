@@ -4,7 +4,6 @@ import 'package:workout_notes_app/data_models/exercise_log.dart';
 import 'package:workout_notes_app/data_models/group_by_model.dart';
 import 'package:workout_notes_app/provider/day_selector_provider.dart';
 import 'package:workout_notes_app/screens/home_page/service/entries_view_model.dart';
-import 'package:workout_notes_app/screens/home_page/widget/entries_table.dart';
 import 'package:workout_notes_app/screens/new_entry_page/services/add_exercise_log_page_view_model.dart';
 import 'package:workout_notes_app/screens/new_entry_page/tabs/history_page/history_table.dart';
 import 'package:workout_notes_app/services/providers.dart';

@@ -1,11 +1,8 @@
-import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:workout_notes_app/data_models/exercise.dart';
 import 'package:workout_notes_app/data_models/group_by_model.dart';
 import 'package:workout_notes_app/database/database.dart';
-import 'package:workout_notes_app/database/sqlite/exercise_const.dart';
 import 'package:workout_notes_app/services/providers.dart';
 
 final exerciseViewModelProvider = ChangeNotifierProvider.autoDispose(
@@ -41,18 +38,4 @@ class ExerciseViewModel with ChangeNotifier {
   Stream<List<Exercise>> get exercises {
     return database.exercisesStream();
   }
-
-  void _a() {
-    var _res = [];
-    print("hihhhhh");
-    List entries = jsonDecode(ExerciseJson.exercises);
-    print(entries);
-
-    var _results = entries.forEach((element) {
-      _res.add(Exercise.fromJson(element));
-      database.createExercise(Exercise.fromJson(element));
-    });
-
-    _results;
-  } //TODO: get out
 }

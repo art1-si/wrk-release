@@ -4,13 +4,9 @@ import 'package:workout_notes_app/screens/new_entry_page/tabs/create_entry/servi
 import 'package:workout_notes_app/screens/new_entry_page/tabs/create_entry/widgets/base_tf_num_picker.dart';
 
 final textController = Provider.autoDispose<TextEditingController>((ref) {
-  final _weight = ref.watch(createNewEntryProvider); //TODO: use select
+  final _weight = ref.watch(createNewEntryProvider);
   final controller = TextEditingController(text: _weight.reps.toString());
 
-  /*  ref.onDispose(() {
-    controller.dispose();
-  }); */
-//TODO: dispose
   return controller;
 });
 

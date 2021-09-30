@@ -11,11 +11,15 @@ import 'package:workout_notes_app/database/sqlite/sql_crud.dart';
 final sqlDatabase = Provider.autoDispose((ref) {
   final _exerciseService = ref.watch(exerciseSQLCrud);
   final _exerciseLogService = ref.watch(exerciseLogSQLCrud);
-  //TODO dispose stream
-  return SqliteDatabase(
+  final _sqlDatabase = SqliteDatabase(
     exercisesDatabase: _exerciseService,
     exerciseLogDatabase: _exerciseLogService,
   );
+  ref.onDispose(() {
+    _sqlDatabase.dispose();
+  });
+
+  return _sqlDatabase;
 });
 
 class SqliteDatabase implements Database {
@@ -27,7 +31,6 @@ class SqliteDatabase implements Database {
   final SQLCrud exerciseLogDatabase;
 
   final _exerciseLog = BehaviorSubject<List<ExerciseLog>>();
-  List<ExerciseLog> _log = [];
 
   @override
   Future<void> createExercise(Exercise exercise) async {
