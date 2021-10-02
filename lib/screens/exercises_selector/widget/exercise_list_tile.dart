@@ -20,7 +20,60 @@ class ExerciseListTile extends ConsumerWidget {
   @override
   Widget build(BuildContext context, ScopedReader watch) {
     final exercises = watch(addExerciseLogProvider);
-
+    _Body(
+      items: Expanded(
+        child: ListView.builder(
+          shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
+          padding: EdgeInsets.symmetric(
+            vertical: 8,
+          ),
+          itemCount: data.length,
+          itemBuilder: (context, index) {
+            return AnimatedTile(
+              index: index,
+              title: data[index].title,
+              onTap: () {
+                context
+                    .read(addExerciseLogProvider)
+                    .selectExercises(data[index].data);
+              },
+            );
+          },
+        ),
+      ),
+      subItems: Expanded(
+        child: Container(
+          color: AppTheme.of(context).backgroundDark,
+          child: ListView.builder(
+            shrinkWrap: true,
+            physics: exercises.selectedExercises!.length > 9
+                ? BouncingScrollPhysics()
+                : NeverScrollableScrollPhysics(),
+            padding: EdgeInsets.only(bottom: 20.0),
+            itemCount: exercises.selectedExercises!.length,
+            itemBuilder: (context, index) {
+              return AnimatedTile(
+                index: index,
+                title: exercises.selectedExercises![index].exerciseName,
+                onTap: () {
+                  context
+                      .read(addExerciseLogProvider)
+                      .setSelectedExerciseIndex(index);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => AddExerciseToLog(),
+                    ),
+                  );
+                },
+              );
+            },
+          ),
+        ),
+      ),
+      showSubItems: exercises.selectedExercises != null,
+    );
     if (exercises.selectedExercises != null) {
       return Column(
         children: [
@@ -37,36 +90,6 @@ class ExerciseListTile extends ConsumerWidget {
               ),
             ],
           ),
-          Expanded(
-            child: Container(
-              color: AppTheme.of(context).backgroundDark,
-              child: ListView.builder(
-                shrinkWrap: true,
-                physics: exercises.selectedExercises!.length > 9
-                    ? BouncingScrollPhysics()
-                    : NeverScrollableScrollPhysics(),
-                padding: EdgeInsets.only(bottom: 20.0),
-                itemCount: exercises.selectedExercises!.length,
-                itemBuilder: (context, index) {
-                  return AnimatedTile(
-                    index: index,
-                    title: exercises.selectedExercises![index].exerciseName,
-                    onTap: () {
-                      context
-                          .read(addExerciseLogProvider)
-                          .setSelectedExerciseIndex(index);
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => AddExerciseToLog(),
-                        ),
-                      );
-                    },
-                  );
-                },
-              ),
-            ),
-          ),
         ],
       );
     }
@@ -74,27 +97,6 @@ class ExerciseListTile extends ConsumerWidget {
     return Column(
       children: [
         const _Divider(),
-        Expanded(
-          child: ListView.builder(
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            padding: EdgeInsets.symmetric(
-              vertical: 8,
-            ),
-            itemCount: data.length,
-            itemBuilder: (context, index) {
-              return AnimatedTile(
-                index: index,
-                title: data[index].title,
-                onTap: () {
-                  context
-                      .read(addExerciseLogProvider)
-                      .selectExercises(data[index].data);
-                },
-              );
-            },
-          ),
-        ),
       ],
     );
   }
@@ -146,6 +148,41 @@ class _Divider extends StatelessWidget {
           width: 80,
         ),
       ),
+    );
+  }
+}
+
+class _Body extends StatelessWidget {
+  const _Body({
+    Key? key,
+    required this.items,
+    required this.subItems,
+    required this.showSubItems,
+  }) : super(key: key);
+
+  final Widget items;
+  final Widget subItems;
+  final bool showSubItems;
+  final String itemTitle;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        const _Divider(),
+        Row(
+          children: [
+            _BackArowButton(
+              onPressed: () =>
+                  context.read(addExerciseLogProvider).selectExercises(null),
+            ),
+            Text(
+              style: TextStyle(fontSize: 16, color: Colors.white),
+            ),
+          ],
+        ),
+        showSubItems ? subItems : items,
+      ],
     );
   }
 }

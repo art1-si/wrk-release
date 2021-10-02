@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:rxdart/rxdart.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -6,6 +7,7 @@ import 'package:workout_notes_app/data_models/group_by_model.dart';
 import 'package:workout_notes_app/data_models/exercise_log.dart';
 import 'package:workout_notes_app/data_models/exercise.dart';
 import 'package:workout_notes_app/database/database.dart';
+import 'package:workout_notes_app/database/sqlite/exercise_const.dart';
 import 'package:workout_notes_app/database/sqlite/sql_crud.dart';
 
 final sqlDatabase = Provider.autoDispose((ref) {
@@ -31,6 +33,7 @@ class SqliteDatabase implements Database {
   final SQLCrud exerciseLogDatabase;
 
   final _exerciseLog = BehaviorSubject<List<ExerciseLog>>();
+  final _exercise = BehaviorSubject<List<Exercise>>();
 
   @override
   Future<void> createExercise(Exercise exercise) async {
@@ -69,7 +72,10 @@ class SqliteDatabase implements Database {
     print("fetch data exercise");
     final _result = exercisesDatabase.fetchEntries(
         entryBuilder: (entry) => Exercise.fromJson(entry));
-    return Stream.fromFuture(_result);
+    _result.whenComplete(
+        () => _exercise.sink.addStream(Stream.fromFuture(_result)));
+
+    return _exercise;
   }
 
   @override

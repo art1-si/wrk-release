@@ -48,7 +48,7 @@ class ChartViewModel {
   }
 
   void _findOffsets() {
-    _setMinAndMaxValue(); //TODO bad practice
+    _setMinAndMaxValue();
     var _results = <GraphModel>[];
     final double width = 1.0;
     bool isLast = false;

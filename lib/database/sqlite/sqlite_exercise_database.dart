@@ -19,6 +19,7 @@ class SqliteExerciseService {
 
   static final instance = SqliteExerciseService._();
   static Database? _db;
+  bool _onCreateTable = false;
 
   Future<Database> get db async {
     if (_db != null) {
@@ -34,14 +35,19 @@ class SqliteExerciseService {
     final _database =
         await openDatabase(path, version: 1, onCreate: _createDatabase);
     List entries = jsonDecode(ExerciseJson.exercises);
-    entries.forEach((element) {
-      print("addig exercise");
-      _database.insert(SQLKeys.exerciseTable, element);
-    });
+    if (_onCreateTable) {
+      entries.forEach((element) {
+        print("addig exercise");
+        _database.insert(SQLKeys.exerciseTable, element);
+      });
+    }
+    _onCreateTable = false;
     return _database;
   }
 
   Future<void> _createDatabase(Database database, int version) async {
+    print("onCreate ");
+    _onCreateTable = true;
     await database.execute("""
       CREATE TABLE ${SQLKeys.exerciseTable}
       ( 

@@ -62,7 +62,6 @@ class TextFieldNumerPicker extends ConsumerWidget {
       ),
       onPressedLeftArow: () {
         if (initValue > 0) {
-          //TODO: 0.5 is greater then 0 so its true by can give negative value
           var inputValue = initValue - changesByValue;
           onChange(inputValue);
         }

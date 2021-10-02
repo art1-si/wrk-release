@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:453630765085:android:0e18f1ae1ba7e3933e7ef4",
         "android_client_info": {
-          "package_name": "com.example.workout_notes_app"
+          "package_name": "workout.notes_app"
         }
       },
       "oauth_client": [
@@ -36,5 +36,5 @@
       }
     }
   ],
-  "configuration_version": "1"
+  "configuration_version": "0.1"
 }

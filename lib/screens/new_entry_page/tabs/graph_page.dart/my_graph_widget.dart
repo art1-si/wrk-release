@@ -39,7 +39,7 @@ class _BodyContent extends ConsumerWidget {
   @override
   Widget build(BuildContext context, ScopedReader watch) {
     final chartData = watch(chartViewProvider).graphPoints;
-    context.read(detailsProvider).points = chartData; //TODO: bad practice
+    context.read(detailsProvider).points = chartData;
     return Column(
       children: [
         PropertiesDropDown(),
