@@ -40,7 +40,7 @@ class _BodyContent extends ConsumerWidget {
   Widget build(BuildContext context, ScopedReader watch) {
     final chartData = watch(chartViewProvider).graphPoints;
     context.read(detailsProvider).points = chartData;
-    return Column(
+    return ListView(
       children: [
         PropertiesDropDown(),
         OnPressDialog(),

@@ -26,15 +26,15 @@ class RowWithBottomButtons extends ConsumerWidget {
           ElevatedHomePageButton(
             onPress: _createEntry.handleOnTapSubmitEditButton,
             title: _createEntry.editModeActive ? "Edit" : "Submit",
-            backgroundColor: submitColor.withOpacity(0.05),
+            backgroundColor: submitColor.withOpacity(0.1),
             titleColor: submitColor,
           ),
           ElevatedHomePageButton(
             disable: !_createEntry.editModeActive,
             onPress: _createEntry.handleOnTapDeleteOrReset,
             title: "Delete",
-            backgroundColor: resetColor.withOpacity(0.05),
-            titleColor: resetColor.withOpacity(0.7),
+            backgroundColor: resetColor.withOpacity(0.1),
+            titleColor: resetColor,
           ),
         ],
       ),

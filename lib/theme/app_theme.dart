@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class AppThemeData {
   final Color backgroundDark;
   final Color background;
+  final Color backgroundLight;
   final Color primary;
   final Color primaryDark;
   final Color accentPrimary;
@@ -14,6 +15,7 @@ class AppThemeData {
   const AppThemeData({
     required this.backgroundDark,
     required this.background,
+    required this.backgroundLight,
     required this.primary,
     required this.primaryDark,
     required this.accentPrimary,
@@ -50,8 +52,9 @@ class Themes {
   static const AppThemeData theme = AppThemeData(
     backgroundDark: Color(0xff0E1114),
     background: Color(0xff12151A),
-    primary: Color(0xff191D24),
-    primaryDark: Color(0xff15191F),
+    backgroundLight: Color(0xff15191F),
+    primary: Color(0xff20252E),
+    primaryDark: Color(0xff1A1F26),
     accentPrimary: Color(0xff6886e6),
     accentNegative: Color(0xffFF4B58),
     accentSecendery: Color(0xff556ccd),

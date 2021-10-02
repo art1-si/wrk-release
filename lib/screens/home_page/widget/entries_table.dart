@@ -90,7 +90,7 @@ class _Items extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: AppTheme.of(context).primary,
+        color: AppTheme.of(context).primaryDark,
         borderRadius: BorderRadius.circular(10),
       ),
       child: GestureDetector(
@@ -227,33 +227,19 @@ class _TableItem extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        Container(
-          width: 1,
-          height: 24,
-          color: AppTheme.of(context).primary,
-        ),
         //set
         _rowField(
           width: size.width / numberOfFields * 0.3,
           text: leftField,
         ),
         //reps
-        Container(
-          width: 1,
-          height: 24,
-          color: AppTheme.of(context).primary,
-        ),
+
         _rowField(
           width: size.width / numberOfFields,
           text: middleField,
         ),
 
         //weight
-        Container(
-          width: 1,
-          height: 24,
-          color: AppTheme.of(context).primary,
-        ),
 
         _rowField(
           width: size.width / numberOfFields * 0.5,
@@ -261,15 +247,10 @@ class _TableItem extends StatelessWidget {
         ),
         //RPE
         if (showRPEfield)
-          Container(
-            width: 1,
-            height: 24,
-            color: AppTheme.of(context).primary,
+          _rowField(
+            width: size.width / numberOfFields * 0.5,
+            text: rpeField!,
           ),
-        _rowField(
-          width: size.width / numberOfFields * 0.5,
-          text: rpeField!,
-        ),
       ],
     );
   }

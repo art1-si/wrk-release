@@ -9,6 +9,7 @@ class ElevatedHomePageButton extends StatefulWidget {
     required this.onPress,
     required this.backgroundColor,
     required this.titleColor,
+    this.width = 150,
     this.disable = false,
   }) : super(key: key);
 
@@ -17,6 +18,7 @@ class ElevatedHomePageButton extends StatefulWidget {
   final Color backgroundColor;
   final Color titleColor;
   final bool disable;
+  final double width;
 
   @override
   State<ElevatedHomePageButton> createState() => _ElevatedHomePageButtonState();
@@ -28,7 +30,7 @@ class _ElevatedHomePageButtonState extends State<ElevatedHomePageButton> {
   void _onTapDown() {
     print("onTapDown");
     setState(() {
-      _backgroundColor = _backgroundColor.withAlpha(25);
+      _backgroundColor = _backgroundColor.withAlpha(50);
     });
   }
 
@@ -65,7 +67,7 @@ class _ElevatedHomePageButtonState extends State<ElevatedHomePageButton> {
         },
         child: Container(
           height: 42,
-          width: 125,
+          width: widget.width,
           decoration: BoxDecoration(
             color: widget.disable
                 ? Colors.grey.withOpacity(0.02)

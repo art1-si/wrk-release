@@ -13,7 +13,7 @@ class DaySelector extends ConsumerWidget {
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
       child: Container(
         decoration: BoxDecoration(
-          color: AppTheme.of(context).primary,
+          color: AppTheme.of(context).primaryDark,
           borderRadius: BorderRadius.circular(10),
         ),
         height: 42,

@@ -23,14 +23,14 @@ class ExerciseSelectorBackDropState extends State<ExerciseSelectorBackDrop>
   late final AnimationController _animationController;
 
   late Animation<Offset> _offsetAnimation = Tween<Offset>(
-    begin: const Offset(0, 2),
+    begin: const Offset(0, 1.5),
     end: _endOffset,
   ).animate(CurvedAnimation(
     parent: _animationController,
     curve: Curves.linear,
   ));
 
-  Offset get _endOffset => Offset(0, 0.23 * 1.2);
+  Offset get _endOffset => Offset(0, 0.25);
 
   late Animation<double> _fadeAnimation = Tween<double>(
     begin: 0.0,

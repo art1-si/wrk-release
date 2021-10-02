@@ -52,8 +52,8 @@ class _HomePageBody extends StatelessWidget {
       ElevatedHomePageButton(
         onPress: onExerciseButtonPress,
         title: Strings.exercise,
-        backgroundColor: AppTheme.of(context).accentPrimary.withOpacity(0.05),
-        titleColor: AppTheme.of(context).accentPrimary.withOpacity(0.7),
+        backgroundColor: AppTheme.of(context).accentPrimary.withOpacity(0.1),
+        titleColor: AppTheme.of(context).accentPrimary,
       ),
       const Divider(
         height: 40,
