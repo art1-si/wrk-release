@@ -38,6 +38,7 @@ class SqliteDatabase implements Database {
   @override
   Future<void> createExercise(Exercise exercise) async {
     await exercisesDatabase.createEntry(entry: exercise.toJson());
+    exercisesStream();
   }
 
   @override
@@ -49,6 +50,7 @@ class SqliteDatabase implements Database {
   @override
   Future<void> deleteExercise(Exercise exercise) async {
     await exercisesDatabase.deleteEntry(exercise.id);
+    exercisesStream();
   }
 
   @override
@@ -121,5 +123,6 @@ class SqliteDatabase implements Database {
 
   void dispose() {
     _exerciseLog.close();
+    _exercise.close();
   }
 }

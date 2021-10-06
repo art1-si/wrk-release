@@ -8,11 +8,15 @@ class AnimatedTile extends StatefulWidget {
     required this.title,
     required this.onTap,
     required this.index,
+    this.showTrailing = false,
+    this.onTrailingPressed,
   }) : super(key: key);
 
   final String title;
   final VoidCallback onTap;
   final int index;
+  final bool showTrailing;
+  final VoidCallback? onTrailingPressed;
 
   @override
   State<AnimatedTile> createState() => _AnimatedTileState();
@@ -60,6 +64,9 @@ class _AnimatedTileState extends State<AnimatedTile>
         child: Column(
           children: [
             ListTile(
+              trailing: widget.showTrailing
+                  ? _ThreeDotIcon(onPressed: widget.onTrailingPressed!)
+                  : null,
               title: Text(
                 widget.title,
                 style: Theme.of(context).textTheme.headline6,
@@ -69,6 +76,29 @@ class _AnimatedTileState extends State<AnimatedTile>
               },
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class _ThreeDotIcon extends StatelessWidget {
+  const _ThreeDotIcon({
+    Key? key,
+    required this.onPressed,
+  }) : super(key: key);
+
+  final VoidCallback onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onPressed,
+      child: SizedBox(
+        width: 20,
+        child: Icon(
+          Icons.delete,
+          color: Colors.white,
         ),
       ),
     );

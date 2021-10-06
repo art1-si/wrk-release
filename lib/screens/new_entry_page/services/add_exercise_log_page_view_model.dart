@@ -20,6 +20,10 @@ class AddExerciseLogPageViewModel extends ChangeNotifier {
 
   List<Exercise>? get selectedExercises => _selectedExercises;
 
+  void removeExercise(Exercise exercise) {
+    _selectedExercises!.remove(exercise);
+  }
+
   void setSelectedExerciseIndex(index) {
     return _exerciseIndex = index;
   }

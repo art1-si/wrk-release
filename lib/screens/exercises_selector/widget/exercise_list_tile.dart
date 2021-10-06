@@ -7,6 +7,7 @@ import 'package:workout_notes_app/screens/exercises_selector/widget/animated_til
 import 'package:workout_notes_app/screens/home_page/widget/buttons.dart';
 import 'package:workout_notes_app/screens/new_entry_page/add_exercise_to_log.dart';
 import 'package:workout_notes_app/screens/new_entry_page/services/add_exercise_log_page_view_model.dart';
+import 'package:workout_notes_app/services/providers.dart';
 import 'package:workout_notes_app/theme/app_theme.dart';
 
 class ExerciseListTile extends ConsumerWidget {
@@ -49,6 +50,24 @@ class ExerciseListTile extends ConsumerWidget {
                 itemCount: exercises.selectedExercises!.length,
                 itemBuilder: (context, index) {
                   return AnimatedTile(
+                    showTrailing: true,
+                    onTrailingPressed: () {
+                      context
+                          .read(databaseProvider)
+                          .deleteExercise(exercises.selectedExercises![index]);
+                      if (context
+                              .read(addExerciseLogProvider)
+                              .selectedExercises!
+                              .length <=
+                          1) {
+                        context
+                            .read(addExerciseLogProvider)
+                            .selectExercises(null);
+                      } else {
+                        context.read(addExerciseLogProvider).removeExercise(
+                            exercises.selectedExercises![index]);
+                      }
+                    },
                     index: index,
                     title: exercises.selectedExercises![index].exerciseName,
                     onTap: () {
@@ -156,43 +175,6 @@ class _Divider extends StatelessWidget {
           width: 80,
         ),
       ),
-    );
-  }
-}
-
-class _Body extends StatelessWidget {
-  const _Body({
-    Key? key,
-    required this.items,
-    required this.subItems,
-    required this.showSubItems,
-    required this.itemTitle,
-  }) : super(key: key);
-
-  final Widget items;
-  final Widget subItems;
-  final bool showSubItems;
-  final String itemTitle;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const _Divider(),
-        Row(
-          children: [
-            _BackArowButton(
-              onPressed: () =>
-                  context.read(addExerciseLogProvider).selectExercises(null),
-            ),
-            Text(
-              itemTitle,
-              style: TextStyle(fontSize: 16, color: Colors.white),
-            ),
-          ],
-        ),
-        showSubItems ? subItems : items,
-      ],
     );
   }
 }
