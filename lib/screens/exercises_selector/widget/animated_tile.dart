@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:workout_notes_app/constants/lists.dart';
+import 'package:workout_notes_app/theme/app_theme.dart';
 
 class AnimatedTile extends StatefulWidget {
   const AnimatedTile({
@@ -9,14 +11,14 @@ class AnimatedTile extends StatefulWidget {
     required this.onTap,
     required this.index,
     this.showTrailing = false,
-    this.onTrailingPressed,
+    this.onTrailingValueChanged,
   }) : super(key: key);
 
   final String title;
   final VoidCallback onTap;
   final int index;
   final bool showTrailing;
-  final VoidCallback? onTrailingPressed;
+  final ValueChanged<String>? onTrailingValueChanged;
 
   @override
   State<AnimatedTile> createState() => _AnimatedTileState();
@@ -65,7 +67,7 @@ class _AnimatedTileState extends State<AnimatedTile>
           children: [
             ListTile(
               trailing: widget.showTrailing
-                  ? _ThreeDotIcon(onPressed: widget.onTrailingPressed!)
+                  ? _ThreeDotIcon(onChanged: widget.onTrailingValueChanged!)
                   : null,
               title: Text(
                 widget.title,
@@ -82,25 +84,37 @@ class _AnimatedTileState extends State<AnimatedTile>
   }
 }
 
-class _ThreeDotIcon extends StatelessWidget {
+class _ThreeDotIcon extends StatefulWidget {
   const _ThreeDotIcon({
     Key? key,
-    required this.onPressed,
+    required this.onChanged,
   }) : super(key: key);
 
-  final VoidCallback onPressed;
+  final ValueChanged<String> onChanged;
 
   @override
+  State<_ThreeDotIcon> createState() => _ThreeDotIconState();
+}
+
+class _ThreeDotIconState extends State<_ThreeDotIcon> {
+  @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onPressed,
-      child: SizedBox(
-        width: 20,
-        child: Icon(
-          Icons.delete,
-          color: Colors.white,
-        ),
-      ),
+    return DropdownButton<String>(
+      //value: dropdownValue,
+      icon: const Icon(Icons.more_vert),
+      dropdownColor: AppTheme.of(context).primary,
+      iconSize: 24,
+      elevation: 0,
+      style: const TextStyle(color: Colors.white60),
+      underline: SizedBox(),
+      onChanged: (value) => widget.onChanged(value!),
+      items: <String>[...ConstLists.dropdownValuesForExerciseListTile]
+          .map<DropdownMenuItem<String>>((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Text(value),
+        );
+      }).toList(),
     );
   }
 }

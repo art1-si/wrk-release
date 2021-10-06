@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:workout_notes_app/constants/lists.dart';
+import 'package:workout_notes_app/constants/strings.dart';
 import 'package:workout_notes_app/data_models/exercise.dart';
 import 'package:workout_notes_app/data_models/group_by_model.dart';
 import 'package:workout_notes_app/screens/exercises_selector/create_new_exercise.dart';
@@ -19,6 +21,78 @@ class ExerciseListTile extends ConsumerWidget {
 
   const ExerciseListTile({Key? key, required this.data}) : super(key: key);
   final List<GroupByModel<Exercise>> data;
+
+  void _showDialogOnDelete(BuildContext context, Exercise exercise) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: true, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: AppTheme.of(context).background,
+          title: const Text(
+            'Delete Exercise',
+            style: TextStyle(fontSize: 24),
+          ),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text(
+                  'Are you sure you want to delete ${exercise.exerciseName}?',
+                  style: TextStyle(color: Colors.white),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 16.0),
+                  child: Text(
+                    'You will lose existing log for this exercise!',
+                    style: TextStyle(color: Colors.white70),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text(
+                'DELETE',
+                style: TextStyle(color: AppTheme.of(context).accentNegative),
+              ),
+              onPressed: () {
+                context.read(databaseProvider).deleteExercise(exercise);
+                if (context
+                        .read(addExerciseLogProvider)
+                        .selectedExercises!
+                        .length <=
+                    1) {
+                  context.read(addExerciseLogProvider).selectExercises(null);
+                } else {
+                  context.read(addExerciseLogProvider).removeExercise(exercise);
+                }
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _handleOnPressedMenu({
+    required String value,
+    required BuildContext context,
+    required Exercise exercise,
+  }) {
+    switch (value) {
+      case Strings.delete:
+        _showDialogOnDelete(context, exercise);
+        //TODO: delete dialog
+        print("delete");
+        break;
+      case Strings.edit:
+        //TODO: edit
+        print("edit");
+        break;
+    }
+  }
 
   @override
   Widget build(BuildContext context, ScopedReader watch) {
@@ -51,23 +125,12 @@ class ExerciseListTile extends ConsumerWidget {
                 itemBuilder: (context, index) {
                   return AnimatedTile(
                     showTrailing: true,
-                    onTrailingPressed: () {
-                      context
-                          .read(databaseProvider)
-                          .deleteExercise(exercises.selectedExercises![index]);
-                      if (context
-                              .read(addExerciseLogProvider)
-                              .selectedExercises!
-                              .length <=
-                          1) {
-                        context
-                            .read(addExerciseLogProvider)
-                            .selectExercises(null);
-                      } else {
-                        context.read(addExerciseLogProvider).removeExercise(
-                            exercises.selectedExercises![index]);
-                      }
-                    },
+                    onTrailingValueChanged: (String value) =>
+                        _handleOnPressedMenu(
+                      value: value,
+                      context: context,
+                      exercise: exercises.selectedExercises![index],
+                    ),
                     index: index,
                     title: exercises.selectedExercises![index].exerciseName,
                     onTap: () {

@@ -41,6 +41,12 @@ class SQLCrud<T> {
     await _dbClient.delete(tableName, where: "id = ?", whereArgs: [entryID]);
   }
 
+  Future<void> deleteEntryWhere<T>(
+      {required T value, required String key}) async {
+    final _dbClient = await database;
+    await _dbClient.delete(tableName, where: "$key = ?", whereArgs: [value]);
+  }
+
   Future<void> updateEntry(
       {required Map<String, dynamic> entry, required String elementId}) async {
     final _dbClient = await database;

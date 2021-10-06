@@ -50,7 +50,10 @@ class SqliteDatabase implements Database {
   @override
   Future<void> deleteExercise(Exercise exercise) async {
     await exercisesDatabase.deleteEntry(exercise.id);
+    await exerciseLogDatabase.deleteEntryWhere(
+        value: exercise.id, key: "exerciseID");
     exercisesStream();
+    exerciseLogStream();
   }
 
   @override
