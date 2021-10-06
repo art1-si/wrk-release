@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 
 class ElevatedHomePageButton extends StatefulWidget {
@@ -26,7 +24,7 @@ class ElevatedHomePageButton extends StatefulWidget {
 
 class _ElevatedHomePageButtonState extends State<ElevatedHomePageButton> {
   late Color _backgroundColor = widget.backgroundColor;
-  late Timer _timer;
+
   void _onTapDown() {
     print("onTapDown");
     setState(() {

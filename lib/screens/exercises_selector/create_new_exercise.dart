@@ -82,6 +82,16 @@ class _CreateNewExerciseState extends State<CreateNewExercise> {
                     AppTheme.of(context).accentPrimary.withOpacity(0.1),
                 titleColor: AppTheme.of(context).accentPrimary,
               ),
+            ),
+            ElevatedHomePageButton(
+              width: MediaQuery.of(context).size.width,
+              title: "Go back",
+              onPress: () {
+                Navigator.pop(context);
+              },
+              backgroundColor:
+                  AppTheme.of(context).accentPositive.withOpacity(0.1),
+              titleColor: AppTheme.of(context).accentPositive,
             )
           ],
         ),

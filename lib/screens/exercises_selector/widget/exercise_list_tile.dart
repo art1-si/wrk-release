@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:workout_notes_app/constants/lists.dart';
 import 'package:workout_notes_app/constants/strings.dart';
 import 'package:workout_notes_app/data_models/exercise.dart';
 import 'package:workout_notes_app/data_models/group_by_model.dart';
@@ -84,7 +83,7 @@ class ExerciseListTile extends ConsumerWidget {
     switch (value) {
       case Strings.delete:
         _showDialogOnDelete(context, exercise);
-        //TODO: delete dialog
+
         print("delete");
         break;
       case Strings.edit:

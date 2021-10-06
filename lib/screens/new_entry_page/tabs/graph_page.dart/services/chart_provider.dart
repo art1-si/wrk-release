@@ -104,7 +104,7 @@ class ChartViewModel {
       });
     } else if (exerciseLog.isNotEmpty && exerciseLog.length < 2) {
       _maxValue = exerciseLog.first.weight * 2;
-      //TODO:
+
       _minValue = 0;
     }
   }

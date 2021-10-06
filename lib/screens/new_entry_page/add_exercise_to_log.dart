@@ -32,7 +32,7 @@ class AddExerciseToLog extends ConsumerWidget {
           }
         },
         child: Container(
-          color: AppTheme.of(context).primary,
+          color: AppTheme.of(context).background,
           child: SafeArea(
             child: Scaffold(
               backgroundColor: AppTheme.of(context).background,

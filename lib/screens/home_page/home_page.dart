@@ -69,7 +69,7 @@ class _HomePageBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: AppTheme.of(context).primary,
+      color: AppTheme.of(context).background,
       child: SafeArea(
         child: Scaffold(
           backgroundColor: AppTheme.of(context).background,

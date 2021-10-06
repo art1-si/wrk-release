@@ -5,6 +5,6 @@ class ConstLists {
 
   static const List<String> dropdownValuesForExerciseListTile = [
     Strings.delete,
-    Strings.edit
+    //Strings.edit
   ];
 }
