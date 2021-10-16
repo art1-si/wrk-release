@@ -44,3 +44,4 @@ app.*.map.json
 
 #play store related
 android/key.properties
+android/app/android.keystore.jks
