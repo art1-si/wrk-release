@@ -10,7 +10,7 @@ class ThemesData {
     textTheme: TextTheme(
         headline1: TextStyle(
           color: Colors.white,
-          fontSize: 24,
+          fontSize: 28,
           fontWeight: FontWeight.w600,
         ),
         headline2: TextStyle(

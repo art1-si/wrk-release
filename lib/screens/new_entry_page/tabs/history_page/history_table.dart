@@ -1,6 +1,8 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:workout_notes_app/constants/strings.dart';
 import 'package:workout_notes_app/data_models/exercise_log.dart';
@@ -68,6 +70,7 @@ class _Items extends StatelessWidget {
     return Column(
       children: [
         Container(
+          height: 50,
           decoration: BoxDecoration(
             color: AppTheme.of(context).primary,
             borderRadius: BorderRadius.circular(10),
@@ -82,6 +85,7 @@ class _Items extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 18.0,
                   letterSpacing: 1.25,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
             ),
@@ -162,7 +166,9 @@ class _TableItem extends StatelessWidget {
       child: Text(
         text,
         style: TextStyle(
-          fontSize: header ? 12 : 16.0,
+          fontSize: header ? 10 : 16.0,
+          color: header ? Colors.white60 : Colors.white,
+          fontWeight: header ? FontWeight.normal : FontWeight.bold,
           letterSpacing: 2.0,
         ),
       ),
@@ -176,9 +182,9 @@ class _TableItem extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
       child: SizedBox(
-        height: 30,
+        height: 25,
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             //set
             _rowField(

@@ -56,7 +56,7 @@ class _HomePageBody extends StatelessWidget {
         titleColor: AppTheme.of(context).accentPrimary,
       ),
       const Divider(
-        height: 40,
+        height: 20,
         color: Colors.transparent,
       ),
       DaySelector(),
@@ -82,7 +82,7 @@ class _HomePageBody extends StatelessWidget {
                   style: Theme.of(context).textTheme.headline1,
                 ),
                 elevation: 0,
-                expandedHeight: 70,
+                expandedHeight: 90,
                 backgroundColor: AppTheme.of(context).background,
               ),
               SliverList(

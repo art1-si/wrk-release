@@ -156,10 +156,10 @@ class _ItemContent extends StatelessWidget {
             children: [
               _TableItem(
                 header: true,
-                middleField: Strings.weight,
-                leftField: Strings.setString,
-                rightField: Strings.reps,
-                rpeField: Strings.rpe,
+                middleField: Strings.weight.toUpperCase(),
+                leftField: Strings.setString.toUpperCase(),
+                rightField: Strings.reps.toUpperCase(),
+                rpeField: Strings.rpe.toUpperCase(),
               ),
               ListView.separated(
                 padding: EdgeInsets.zero,
@@ -206,7 +206,9 @@ class _TableItem extends StatelessWidget {
   final String rightField;
   final String? rpeField;
 
-  Widget _rowField({required double width, required String text}) {
+  Widget _rowField(
+      {required double width, required String text, bool isSet = false}) {
+    final _textColor = header || isSet ? Colors.white60 : Colors.white;
     return SizedBox(
       height: 30,
       width: width - 1,
@@ -214,8 +216,8 @@ class _TableItem extends StatelessWidget {
         child: Text(
           text,
           style: TextStyle(
-            color: header ? Colors.white60 : Colors.white,
-            fontSize: header ? 12 : 16.0,
+            color: _textColor,
+            fontSize: header ? 10 : 16.0,
             letterSpacing: 2.5,
             fontWeight: header ? FontWeight.w600 : FontWeight.bold,
           ),
@@ -233,6 +235,7 @@ class _TableItem extends StatelessWidget {
       children: [
         //set
         _rowField(
+          isSet: true,
           width: size.width / numberOfFields * 0.3,
           text: leftField,
         ),

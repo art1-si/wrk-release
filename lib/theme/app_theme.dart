@@ -53,7 +53,7 @@ class Themes {
     backgroundDark: Color(0xff0E1114),
     background: Color(0xff12151A),
     backgroundLight: Color(0xff15191F),
-    primary: Color(0xff20252E),
+    primary: Color(0xff1F262E),
     primaryDark: Color(0xff1A1F26),
     accentPrimary: Color(0xff6886e6),
     accentNegative: Color(0xffFF4B58),
