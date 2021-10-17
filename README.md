@@ -1,16 +1,15 @@
 # workout notes
 
-A new Flutter project.
+This is an app that will help you track your workouts. 
+The app was made in mind to make for a user process easy and simple to log and view progress in a gym.
+[Play Store](https://play.google.com/store/apps/details?id=workout.notes_app)
 
-## Getting Started
+## Project Goals
+Showcase basic understanding of app design, data models, firebase API, flutter framework, dart language, animation in flutter and riverpod package for state management, as well as code generators like freezed and JSON serializable.
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
+## Offline to Firebase conversion
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+The release version of an app uses sqlfile as a database, 
+but the code is set up in the way that you can yourself quickly make it online with firebase by changing and adding a bit of code,
+more about it soon.
