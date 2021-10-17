@@ -110,7 +110,7 @@ class ExerciseSelectorBackDropState extends State<ExerciseSelectorBackDrop>
               child: Container(
                 height: constraints.maxHeight * 0.8,
                 decoration: BoxDecoration(
-                  color: AppTheme.of(context).background,
+                  color: AppTheme.of(context).backgroundLight,
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(10),
                     topRight: Radius.circular(10),

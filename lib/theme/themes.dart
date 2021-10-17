@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 enum Themes { defult }
@@ -24,25 +25,27 @@ class ThemesData {
         ),
         headline5: TextStyle(
           color: Colors.white,
-          fontSize: 28,
+          fontSize: 24,
+          fontWeight: FontWeight.bold,
         ),
         headline6: TextStyle(
           color: Colors.white,
           fontSize: 16,
+          fontWeight: FontWeight.bold,
         ),
         bodyText1: TextStyle(
           color: Colors.white,
           fontWeight: FontWeight.w400,
         ),
         bodyText2: TextStyle(
-          color: Colors.white70,
+          color: Colors.white,
           fontSize: 14,
           fontWeight: FontWeight.w400,
         ),
         subtitle1: TextStyle(color: Colors.blue),
         button: TextStyle(
           color: Colors.white,
-          fontWeight: FontWeight.w600,
+          fontWeight: FontWeight.bold,
         ),
         caption: TextStyle(
           color: Colors.white60,

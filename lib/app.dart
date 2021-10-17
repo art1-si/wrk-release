@@ -12,6 +12,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final firebaseAuth = context.read(firebaseAuthProvider);
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       builder: (context, Widget? child) {
         return ScrollConfiguration(
           behavior: MyBehavior(),

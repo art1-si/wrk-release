@@ -125,9 +125,8 @@ class _EntryRow extends StatelessWidget {
                 width: selected ? MediaQuery.of(context).size.width : 10,
                 decoration: BoxDecoration(
                   color: selected
-                      ? AppTheme.of(context).accentPositive.withOpacity(0.05)
+                      ? AppTheme.of(context).accentPositive.withOpacity(0.1)
                       : null,
-                  borderRadius: BorderRadius.circular(20),
                 ),
               ),
             ),

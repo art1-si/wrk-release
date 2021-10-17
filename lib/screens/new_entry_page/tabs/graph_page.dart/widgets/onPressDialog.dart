@@ -83,6 +83,7 @@ class _PopUpTable extends StatelessWidget {
                   Align(
                     alignment: Alignment.centerRight,
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
                           "RPE:",

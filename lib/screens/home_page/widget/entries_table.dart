@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:workout_notes_app/data_models/exercise_log.dart';
@@ -90,7 +91,7 @@ class _Items extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: AppTheme.of(context).primaryDark,
+        color: AppTheme.of(context).primary,
         borderRadius: BorderRadius.circular(10),
       ),
       child: GestureDetector(
@@ -107,6 +108,7 @@ class _Items extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 18.0,
                     letterSpacing: 1.25,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
@@ -212,8 +214,10 @@ class _TableItem extends StatelessWidget {
         child: Text(
           text,
           style: TextStyle(
+            color: header ? Colors.white60 : Colors.white,
             fontSize: header ? 12 : 16.0,
-            letterSpacing: 2.0,
+            letterSpacing: 2.5,
+            fontWeight: header ? FontWeight.w600 : FontWeight.bold,
           ),
         ),
       ),
