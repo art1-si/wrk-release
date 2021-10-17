@@ -1,4 +1,4 @@
-# workout_notes_app
+# workout notes
 
 A new Flutter project.
 
