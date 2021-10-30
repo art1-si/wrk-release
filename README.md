@@ -11,5 +11,12 @@ Showcase basic understanding of app design, data models, firebase API, flutter f
 ## Offline to Firebase conversion
 
 The release version of an app uses sqlfile as a database, 
-but the code is set up in the way that you can yourself quickly make it online with firebase by changing and adding a bit of code,
-more about it soon.
+but the code is set up in the way that you can yourself quickly make it online with firebase by changing and adding a bit of code.
+### Step 1 add firebase to flutter project
+tutorial for android you can find here https://firebase.google.com/docs/flutter/setup?platform=android
+and for IOS you can find here https://firebase.google.com/docs/flutter/setup?platform=ios
+
+### Step 2 enable online mode
+at \lib\constants\offline_mode.dart file just change value to false and it should work.
+
+If you have any questions, feel free to text me.
